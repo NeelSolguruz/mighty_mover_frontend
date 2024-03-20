@@ -1,6 +1,6 @@
 export const ENTERPRISE_STRING = {
     WHY_USE_PORTER: 'Why use Porter for Enterprise?',
-    FOR_ENTERPRISE:"For Enterprise",
+    FOR_ENTERPRISE:"For Enterprises",
     FORM_DATA:[
         "Select Cities",
         "Name",
@@ -38,4 +38,18 @@ export const ENTERPRISE_STRING = {
         "200+"
     ],
     REQUEST_CALLBACK:"Request Callback",
+    WHY_USE_PORTER_LOGO:[
+        {
+            DATA:"Pay Per Use",
+            DESC:"No fixed monthly contracts. Pay only for the time & distance you use."
+        },
+        {
+            DATA:"Greater Control",
+            DESC:"Get visibility of all your hub level logistics movement"
+        },
+        {
+            DATA:"Hassle Free Accounting",
+            DESC:"Get rid of order level payment & reimbursement. Pay centrally for Pan India usage."
+        },
+    ]
 }
