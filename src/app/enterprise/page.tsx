@@ -15,7 +15,7 @@ export default function page() {
 
         <div className="flex w-full justify-between p-10 ">
           <div>logo</div>
-          <div>
+          <div className="mr-4 w-1/2 p-6 rounded shadow-gray-400 shadow-md">
             <form>
               <div className="flex flex-col gap-6 ">
                 <div>{ENTERPRISE_STRING.FOR_ENTERPRISE}</div>
@@ -66,7 +66,7 @@ export default function page() {
                   </>
                 ))}
                 <div>
-                    
+                    <button className="w-full bg-amber-500 p-2 rounded text-blue-950 text-lg font-semibold hover:scale-105 transition-all transition-300">{ENTERPRISE_STRING.REQUEST_CALLBACK}</button>
                 </div>
               </div>
             </form>
