@@ -1,5 +1,5 @@
 // import regularTrip from "../assets/Images/regularTrip.png"
-import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad} from "../assets/Images/imageassets";
+import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/Images/imageassets";
 import {
   regularTrip,
   BetterEearning,
@@ -9,20 +9,6 @@ import {
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
   PARTNER_BANNER_LINE2: `Earn money by delivering goods, courier and packages. Get a part time or full time delivery job`,
-
-export const ENTERPRISE_STRING = {
-  WHY_USE_PORTER: "Why use Porter for Enterprise?",
-  FOR_ENTERPRISE: "For Enterprises",
-  FORM_DATA: [
-    "Select Cities",
-    "Name",
-    "Company Name",
-    "Mobile Number",
-    "Monthly Trips",
-    "Email address",
-    "Contact Designation",
-  ],
-
   FORM_CITIES: [
     "Ahmedabad",
     "Banglore",
@@ -120,8 +106,41 @@ export const ENTERPRISE_STRING = {
       title: "Discount on Vehicle Purchase",
       description:"Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!"
     },
-  ]
-
+  ],
+}
+export const ENTERPRISE_STRING = {
+  WHY_USE_PORTER: "Why use Porter for Enterprise?",
+  FOR_ENTERPRISE: "For Enterprises",
+  FORM_DATA: [
+    "Select Cities",
+    "Name",
+    "Company Name",
+    "Mobile Number",
+    "Monthly Trips",
+    "Email address",
+    "Contact Designation",
+  ],
+  FORM_CITIES: [
+    "Ahmedabad",
+    "Banglore",
+    "Chandigarh",
+    "Chennai",
+    "Coimbatore",
+    "Delhi NCR",
+    "Hyderbad",
+    "Indore",
+    "Jaipur",
+    "Kochi",
+    "Kolkata",
+    "Lucknow",
+    "Ludhiana",
+    "Mumbai",
+    "Nagpur",
+    "Pune",
+    "Surat",
+    "Vadodara",
+  ],
+ 
   POPULAR_CITIES:[
     {
         CITY:"Mumbai",

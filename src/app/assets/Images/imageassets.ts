@@ -6,4 +6,10 @@ import delhi from "./gatewayofindia-125649.svg"
 import hyderabad from "./charminar-125651.svg"
 import kerela from "./kerala-125650.svg"
 import truck from "./Truck.svg"
-export {enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad}
+import BetterEearning from "./BetterEarning.png"
+import  regularTrip from "./regularTrip.png"
+import Delivery from "./delivery.jpg";
+import onTImePayment from "./onTImePayment.png"; 
+ import driverExperience from "./driver_experience.gif";
+
+export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad}
