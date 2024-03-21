@@ -4,6 +4,8 @@ import {
   regularTrip,
   BetterEearning,
   onTImePayment,
+  profilePic,
+  ownVehicles
 } from "../assets/Images/imageassets";
 
 export const DELIVERY_PARTNER_STRING = {
@@ -105,6 +107,76 @@ export const DELIVERY_PARTNER_STRING = {
         images: regularTrip,
       title: "Discount on Vehicle Purchase",
       description:"Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!"
+    },
+  ],
+
+  PEOPLE_LIFE:"CHANGING LIFE OF PEOPLE",
+
+  PEOPLE_LIFE_DATA:[
+    {
+        img:profilePic,
+        name:"Utkarsh",
+        loc:"Hyderabad",
+        desc:`Getting business at vehicle stand has become very tough today due to intense competition. But with Porter's partner driver app, transparent fare structure and standard pricing, my life has become easier. Now I don't worry about finding customers and getting payments.`
+    },{
+        img:profilePic,
+        name:"Prit",
+        loc:"Mumbai",
+        desc:`Earlier there were many restrictions on earnings because I got limited trips in market which were only from my known customers and to nearby places. I gave my truck on rent with Porter there are no such restrictions, there are a lot of orders throughout city. I enjoy being a part of Porter family.`
+    },{
+        img:profilePic,
+        name:"Neel",
+        loc:"Ahmedabad",
+        desc: `I was new to Chennai and went ahead to attach my tata ace with Porter. Porter app's inbuilt map and navigational capability never made me feel new to city. Payment is done on time and their vendor helpdesk provides immediate solutions to all my issues.`
+    }
+  ],
+  OWN_MULTI_VEHICLES_TITLE: `OWN MULTIPLE VEHICLES?`,
+  OWN_MULTI_VEHICLES_IMAGES:ownVehicles,
+  OWN_MULTI_VEHICLES_LINE1: `If you are a fleet owner and own multiple vehicles.`,
+  OWN_MULTI_VEHICLES_LINE2: `With Porter, you can attach multiple vehicles to your fleet. You can also use Porter's partner driver app to get a delivery job and deliver goods, packages, and courier.`,
+  OWN_MULTI_VEHICLES_BUTTON:`CONTACT US`,
+
+  DELIVERY_PARTNER_FAQ_TITLE:"FREQUENTLY ASKED QUESTIONS",
+  DELIVERY_PARTNER_FAQ_QUESTIONS:[
+    {
+        QUESTION:"How to attach Tata ace or any goods vehicle in Porter?",
+        ANSWER:"Become a Porter partner by downloading the app, registering, submitting documents, and starting trips seamlessly from home."
+    },
+    {
+        QUESTION:"How to attach two wheeler in Porter?",
+        ANSWER:"To attach a two-wheeler in Porter, download the Porter Partner Driver App, register, submit documents, and complete a dummy order for verification."
+    },
+    {
+        QUESTION:"Can I attach my tata ace on a monthly contract or rent mini trucks on monthly basis?",
+        ANSWER:"You can attach your commercial vehicle to Porter on a daily, weekly or monthly basis for a part-time or full-time engagement."
+    },
+    {
+        QUESTION:"What documents and permits do I need to on-board Porter?",
+        ANSWER:"For commercial vehicle attachment following documents are required: RC book | Fitness certificate | Insurance | Pollution Control | Owner/Driver documents : Driving License | PAN card | Bank Details | Address Proof"
+    },
+    {
+        QUESTION:"Is there any registration fee to join Porter?",
+        ANSWER:"Porter charges nominal fees at the time of on-boarding for vehicle attachment. Fee varies as per the vehicle type."
+    },
+    {
+        QUESTION:"Which type of vehicle one can attach to Porter?",
+        ANSWER:"You can attach 2 wheelers such as bike and scooter, and commercial vehicles with carrying capacity of 1 ton, 2 ton, and 3 ton for our On Demand Services."
+    },
+    {
+        QUESTION:"How much can you earn in Porter's mini truck & bike delivery job?",
+        ANSWER:"Porter has served more than a million customers so far. When you enroll as Porter Partner you get regular trips from this wide & ever-growing customer base."
+    },
+    {
+        QUESTION:"How much you can earn per week?",
+        ANSWER:"Your earnings are dependent on the time you spend on Porter platform. Longer engagement with the platform lead to more trips which in turn ensures high earning."
+    },
+    {
+        QUESTION:"How I can check my earning & payouts?",
+        ANSWER:"Porter has an advanced driver app which provides all details pertaining to daily earning and weekly payouts."
+    },
+    {
+        QUESTION:"Can I refer my friends and colleagues to join Porter?",
+        ANSWER:"Yes! We encourage our driver partners to promote Porter among their peers and refer them to join us. In return they deserve a goodwill bonus on each successful on-boarding of all vehicle types with carrying capacity of 1 ton, 2 ton and 3 ton."
     },
   ],
 }

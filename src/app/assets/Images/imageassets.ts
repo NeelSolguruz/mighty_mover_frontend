@@ -10,6 +10,7 @@ import BetterEearning from "./BetterEarning.png"
 import  regularTrip from "./regularTrip.png"
 import Delivery from "./delivery.jpg";
 import onTImePayment from "./onTImePayment.png"; 
- import driverExperience from "./driver_experience.gif";
-
-export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad}
+import driverExperience from "./driver_experience.gif";
+import profilePic from "./profile_pic.png";
+import ownVehicles from "./own_vehicles.png";
+export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad,profilePic,ownVehicles}

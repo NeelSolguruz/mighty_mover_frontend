@@ -5,9 +5,16 @@ import { DELIVERY_PARTNER_STRING } from "../constant/constant";
 // import Delivery from "../assets/Images/delivery.jpg";
 import { FormData } from "../dto/data.type";
 // import  regularTrip from "../assets/Images/regularTrip.png"
-import { Delivery, driverExperience } from "../assets/Images/imageassets";
+import { Delivery, driverExperience, ownVehicles } from "../assets/Images/imageassets";
 
 export default function DeliveryPage(): JSX.Element {
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+  
   const [formData, setFormData] = useState<FormData>({
     name: "",
     mobileNumber: "",
@@ -183,6 +190,7 @@ export default function DeliveryPage(): JSX.Element {
           </div>
         </div>
       </div>
+      {/* making your life easy__ section___ start from here */}
       <div className="w-full bg-black text-white h-auto">
         <div className="text-3xl font-semibold text-center w-full p-8 text-white">
             {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY}
@@ -220,7 +228,129 @@ export default function DeliveryPage(): JSX.Element {
       </div>
     </div>
 
+  {/* this is a CHANGING LIFE OF PEOPLE __section___ start from here */}
+  <div className="w-full bg-black text-white h-auto flex justify-center">
+  <div className="flex flex-wrap justify-center">
+    {
+      DELIVERY_PARTNER_STRING.PEOPLE_LIFE_DATA.map((item, index) => (
+        <div key={index} className="flex flex-col justify-between max-w-xs mx-4 my-4 rounded-xl overflow-hidden bg-gray-900 hover:bg-gray-800 hover:scale-105 transition-all">
+          <div className="p-4">
+            <div className="flex items-center">
+              <Image
+                src={item.img}
+                alt="profile pic"
+                width={80}
+                height={80}
+                className="rounded-full"
+              />
+              <div className="ml-4">
+                <p className="text-lg font-semibold">{item.name}</p>
+                <p className="text-sm">{item.loc}</p>
+              </div>
+            </div>
+            <div className="mt-2 p-3">
+              <p className="text-xl">{item.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
 
+{/* OWN MULTIPLE VEHICLES? sections */}
+
+<div className="w-full h-auto">
+        <div className="text-3xl font-semibold text-center w-full p-8">
+            {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_TITLE}
+          </div>
+        <div className="mainSection  w-full">
+          <div className="float-left w-full h-96   flex gap-10 items-center justify-center">
+            <div className=" w-1/5 ">
+              <Image
+              src={ownVehicles}
+              // className="w-auto bg-black"
+              className="w-full h-full rounded-lg  object-contain  shadow-md transition-all hover:scale-105"
+              alt="Picture of the Delivery"
+              ></Image>
+            </div>
+            <div className="w-2/5 font-medium  text-wrap  flex flex-wrap">
+              <div className="font-bold">{DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_LINE1}</div>
+              <br />
+      
+              {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_LINE2}
+              <br />
+              <br />
+            <div >
+              <button
+                type="button"
+                className="w-full bg-amber-500 p-2 rounded text-blue-950 text-lg font-semibold hover:scale-105 transition-all transition-300"
+              >
+                {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_BUTTON}
+              </button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DELIVERY_PARTNER_FAQ __ section__ start from here */}
+
+      <div className="flex w-full justify-center p-10 flex-wrap gap-10">
+          <div className="text-4xl font-semibold">{DELIVERY_PARTNER_STRING.DELIVERY_PARTNER_FAQ_TITLE}</div>
+        </div>
+
+        <div className="flex flex-col gap-2 justify-center items-center">
+          {DELIVERY_PARTNER_STRING.DELIVERY_PARTNER_FAQ_QUESTIONS.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 p-4 w-3/4 rounded-lg shadow-md shadow-gray-400 transition duration-300 hover:scale-105"
+            >
+              <button
+                onClick={() => toggleAccordion(index)}
+                className="flex justify-between w-full"
+              >
+                <span className="text-gray-600 text-md font-semibold">
+                  {item.QUESTION}
+                </span>
+                <svg
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
+                  width="16"
+                  height="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    y="7"
+                    width="16"
+                    height="2"
+                    rx="1"
+                    className="transform origin-center transition duration-200 ease-out"
+                  />
+                  <rect
+                    y="7"
+                    width="16"
+                    height="2"
+                    rx="1"
+                    className="transform origin-center rotate-90 transition duration-200 ease-out"
+                  />
+                </svg>
+              </button>
+              <div
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                  openIndex === index
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <span className="text-sm text-black">{item.ANSWER}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
     </>
   );
 }
