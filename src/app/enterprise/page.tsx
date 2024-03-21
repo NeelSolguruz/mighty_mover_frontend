@@ -5,10 +5,10 @@ import { ENTERPRISE_STRING } from "../constant/constant";
 import { enterprise } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
-import truck from "../assets/Images/Truck.svg"
+import truck from "../assets/Images/Truck.svg";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { useState } from "react";
-import faq from "../assets/Images/faq.svg"
+import faq from "../assets/Images/faq.svg";
 interface FAQItem {
   QUESTION: string;
   ANSWER: string;
@@ -24,7 +24,7 @@ export default function page() {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   return (
-    <div>
+    <div className="w-full ss:w-full">
       <div className="w-full flex flex-col gap-10">
         <div>
           <Image
@@ -35,37 +35,37 @@ export default function page() {
         </div>
 
         <div className="flex w-full justify-center p-10 flex-wrap gap-10">
-          <div className="text-4xl font-semibold">
+          <div className="text-4xl font-semibold ss:text-2xl text-center ms:text-4xl">
             {ENTERPRISE_STRING.WHY_USE_PORTER}
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-between">
-          <div className="w-1/2 flex gap-10 ml-24">
+        <div className="flex flex-col justify-between ss:gap-10 laptop:flex-row ">
+          <div className="w-1/2 flex flex-col gap-10 ms:ml-24 ml-24 ss:ml-20 s:ml-28 middle:flex middle:flex-row  middle:ml-24 md:w-11/12 md:ml-10 justify-center random:w-random">
             {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO.map((item, index) => (
               <>
-                <div className="flex flex-col justify-center gap-8 items-center p-2 w-2/5 ">
+                <div className="flex flex-col justify-center gap-8 items-center w-1/2 ss:w-full ss:mr-6">
                   <div>
                     <Image
                       src={Logo}
                       alt="Logo"
-                      className="w-42 h-42 rounded-full shadow-gray-400 shadow-md transition-all hover:scale-105"
+                      className="w-42 h-42 rounded-full shadow-gray-400 shadow-md transition-all hover:scale-105 "
                     ></Image>
                   </div>
-                  <div className="text-xl font-semibold w-auto">
+                  <div className="text-xl font-semibold w-auto ss:text-2xl ss:text-center ms:text-2xl">
                     {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DATA}
                   </div>
-                  <div className="flex text-sm font-light text-center">
+                  <div className="flex text-sm font-light text-center ss:text-md">
                     {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DESC}
                   </div>
                 </div>
               </>
             ))}
           </div>
-          <div className="mr-14 w-4/12 p-10 rounded-3xl shadow-gray-400 shadow-md">
+          <div className="w-4/12 p-10  rounded-3xl shadow-gray-400 shadow-md ss:w-auto ss:m-2 random:w-5/12">
             <form>
               <div className="flex flex-col gap-6">
-                <div className="flex justify-center text-4xl font-semibold text-blue-950">
+                <div className="flex justify-center text-4xl font-semibold text-blue-950 ss:text-center">
                   {ENTERPRISE_STRING.FOR_ENTERPRISE}
                 </div>
 
@@ -128,17 +128,17 @@ export default function page() {
         </div>
 
         <div className=" flex flex-col bg-black text-white justify-center items-center p-16 gap-24">
-          <div className="text-6xl font-semibold">
+          <div className="text-6xl font-semibold ss:text-center">
             {ENTERPRISE_STRING.OUR_GROWING_NETWORK}
           </div>
-          <div className="font-semibold flex gap-24">
+          <div className="font-semibold justify-center flex gap-24 w-full p-2 ss:flex-col md:flex-row md:gap-12">
             {ENTERPRISE_STRING.ACHIEVEMENTS.map((item) => (
               <>
-                <div className="flex flex-col justify-center items-center gap-4 text-center">
-                  <div className="text-4xl font-semibold text-center">
+                <div className="flex flex-col justify-center items-center gap-4 text-center ">
+                  <div className="text-4xl font-semibold text-center laptop:text-5xl">
                     {item.DATA}
                   </div>
-                  <div className="text-lg font-semibold text-zinc-600">
+                  <div className="text-lg font-semibold text-zinc-600 w-auto laptop:text-xl">
                     {item.DESC}
                   </div>
                 </div>
@@ -148,10 +148,10 @@ export default function page() {
         </div>
 
         <div className="flex flex-col justify-center items-center p-10 gap-2 text-zinc-600">
-          <div className="font-semibold text-3xl">
+          <div className="font-semibold text-3xl ss:text-center">
             {ENTERPRISE_STRING.WE_ARE_TRANSFORMING_CITIES}
           </div>
-          <div className="text-sm text-center font-medium p-10">
+          <div className="text-sm text-center font-medium p-10 ss:p-0">
             {ENTERPRISE_STRING.CITIES_DESC}
           </div>
           <div className="flex justify-center w-full p-8 flex-wrap gap-6">
@@ -170,40 +170,42 @@ export default function page() {
           </div>
         </div>
 
-        <div className="flex flex-col bg-black text-white justify-center items-center p-16 gap-24">
-          <div className="text-4xl font-semibold ">
+        <div className="flex flex-col bg-black text-white justify-center items-center p-16 gap-24 ">
+          <div className="text-4xl font-semibold ss:text-center ss:text-3xl">
             {ENTERPRISE_STRING.SOME_WORDS_FROM_OUR_HAPPY_CUSTOMERS}
           </div>
-          <div className="flex gap-8 items-center">
+          <div className="flex gap-4 items-center ss:flex-col md:flex-row">
             {ENTERPRISE_STRING.CUSTOMERS_DETAILS.map((item) => (
               <>
-                <div className="flex flex-col items-left  gap-4 p-2 w-1/3 bg-white text-black text-left h-80 rounded-lg shadow-white shadow-md  transition-all hover:scale-105">
-                  <div className="text-3xl font-semibold">
+                <div className="flex flex-col items-left  gap-4 p-2 w-1/3 bg-white text-black text-left h-80 rounded-lg shadow-white shadow-md  transition-all hover:scale-105 ss:w-full ss:p-2 ss:h-auto md:h-80 ">
+                  <div className="text-3xl font-semibold ss:text-xl ss:p-2">
                     {item.DESIGNATION}
                   </div>
                   <div className="text-base font-semibold text-zinc-600">
                     {item.FIRM}
                   </div>
-                  <div className="text-base font-medium">{item.REVIEW}</div>
+                  <div className="text-base font-medium lg:text-sm md:text-xs">
+                    {item.REVIEW}
+                  </div>
                 </div>
               </>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center p-10">
-          <div className="font-semibold text-3xl">
+        <div className="flex flex-col justify-center items-center p-10 gap-10">
+          <div className="font-semibold text-3xl ss:text-center">
             {ENTERPRISE_STRING.INDUSTRIES_WE_SERVE}
           </div>
-          <div className="text-md text-center font-medium p-16">
+          <div className="text-md text-center font-medium p-16 ss:p-0">
             {ENTERPRISE_STRING.INDUSTRIES_DATA}
           </div>
-          <div className="w-full flex justify-center items-center gap-20">
+          <div className="w-full flex justify-center items-center gap-20 ss:flex-col md:flex-row">
             <div>
               <Image
                 src={industry_1}
                 alt="industires"
-                className="w-auto h-auto"
+                className="w-11/12 h-11/12 ss:w-full"
               ></Image>
             </div>
             <div className="flex flex-col gap-2">
@@ -219,21 +221,17 @@ export default function page() {
         </div>
 
         <div className="flex w-full justify-center p-10 flex-wrap gap-10">
-          <div className="text-4xl font-semibold">
+          <div className="text-4xl font-semibold ss:text-center">
             {ENTERPRISE_STRING.FOR_ANY_MORE_QUERY}
           </div>
         </div>
 
         <div className="w-full flex justify-center items-center">
-          <div className="flex border-2 shadow-md shadow-gray-400 p-10 justify-center items-center w-3/4 gap-8">
+          <div className="flex border-2 shadow-md shadow-gray-400 p-10 justify-center items-center w-3/4 gap-8 ss:flex-col md:flex-row">
             <div>
-              <Image
-                src={truck}
-                alt="truck"
-                className="scale-120"
-              ></Image>
+              <Image src={truck} alt="truck" className="scale-120"></Image>
             </div>
-            <div className="flex flex-col text-sm text-gray-600 gap-4 p-4">
+            <div className="flex flex-col text-sm text-gray-600 gap-4 p-4 ss:p-0 ss:text-xs">
               <div className="font-medium">
                 {ENTERPRISE_STRING.FOR_MORE_QUERY_DATA}
               </div>
@@ -248,7 +246,7 @@ export default function page() {
               </div>
 
               <div>
-                <button className="border-0 mt-1 w-auto h-12 p-2  bg-amber-500 font-semibold text-xl text-blue-800 shadow-md trasition duration-300 rounded-lg shadow-gray-400 hover:scale-105">
+                <button className="border-0 mt-1 w-auto h-12 p-2  bg-amber-500 font-semibold text-xl text-blue-800 shadow-md trasition duration-300 rounded-lg shadow-gray-400 hover:scale-105 ss:h-auto">
                   {ENTERPRISE_STRING.REQUEST_CALLBACK}
                 </button>
               </div>
@@ -256,7 +254,7 @@ export default function page() {
           </div>
         </div>
 
-        <div className="flex w-full justify-center p-10 flex-wrap gap-10">
+        <div className="flex w-full justify-center p-10 flex-wrap gap-10 ss:text-center">
           <div className="text-4xl font-semibold">{ENTERPRISE_STRING.FAQ}</div>
         </div>
 
@@ -313,20 +311,23 @@ export default function page() {
         </div>
 
         <div className="w-full bg-amber-100">
-            <div className="w-full flex flex-wrap justify-center items-center gap-8 p-10">
-                <div>
-
-    <Image src={faq} alt="faq"></Image>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <div className="text-2xl font-bold text-blue-800">{ENTERPRISE_STRING.Still_have_questions_about_our_Enterprise_Services}</div>
-                    <div>
-                        <button className="bg-amber-500 p-2 w-auto h-10 rounded-md font-semibold text-blue-900 transition duration-300 hover:scale-105">{ENTERPRISE_STRING.READ_FAQ}</button>
-                    </div>
-                    
-                </div>
+          <div className="w-full flex flex-wrap justify-center items-center gap-8 p-10">
+            <div>
+              <Image src={faq} alt="faq"></Image>
             </div>
-
+            <div className="flex flex-col gap-2">
+              <div className="text-2xl font-bold text-blue-800 ss:text-center">
+                {
+                  ENTERPRISE_STRING.Still_have_questions_about_our_Enterprise_Services
+                }
+              </div>
+              <div className="w-full flex justify-center items-center">
+                <button className="bg-amber-500 p-2 w-auto h-10 rounded-md font-semibold text-blue-900 transition duration-300 hover:scale-105">
+                  {ENTERPRISE_STRING.READ_FAQ}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
