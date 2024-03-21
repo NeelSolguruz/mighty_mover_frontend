@@ -171,7 +171,7 @@ export const ENTERPRISE_STRING = {
   REQUEST_CALLBACK: "Request Callback",
   WHY_USE_PORTER_LOGO: [
     {
-      DATA: "Pay Per Use",
+      DATA: "Pay Per Usages",
       DESC: "No fixed monthly contracts. Pay only for the time & distance you use.",
     },
     {
@@ -179,7 +179,7 @@ export const ENTERPRISE_STRING = {
       DESC: "Get visibility of all your hub level logistics movement",
     },
     {
-      DATA: "Hassle Free Accounting",
+      DATA: "Hassle Free Account",
       DESC: "Get rid of order level payment & reimbursement. Pay centrally for Pan India usage.",
     },
   ],
@@ -191,7 +191,7 @@ export const ENTERPRISE_STRING = {
     },
     {
       DATA: "5000+",
-      DESC: "ENTERPRISE CLIENTS",
+      DESC: "ENTERPRISE",
     },
     {
       DATA: "500,000+",
@@ -199,7 +199,7 @@ export const ENTERPRISE_STRING = {
     },
     {
       DATA: "150,000+",
-      DESC: "MONTHLY ENTERPRISE TRIP",
+      DESC: "MONTHLY TRIP",
     },
   ],
   WE_ARE_TRANSFORMING_CITIES: "WE ARE TRANSFORMING CITIES",
