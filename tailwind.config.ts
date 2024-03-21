@@ -21,7 +21,7 @@ const config: Config = {
         'tablet': '640px',
         "random":"1220px",
         'laptop': '1024px',
-          'desktop': '1440px',
+        'desktop': '1440px',
       },
       width: {
         'random': '50%',
