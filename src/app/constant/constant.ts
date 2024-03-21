@@ -85,7 +85,7 @@ export const DELIVERY_PARTNER_STRING = {
   ],
   MAKING_YOUR_LIFE_EASY:"MAKING YOUR LIFE EASY",
   MAKING_YOUR_LIFE_EASY_DATA: `Attach your two wheeler or commercial vehicle\nIf you got a 2 wheeler, or a tata ace commercial vehicle, you are good to go! With Porter, get a delivery job and deliver goods, packages, and courier.\n\n\n### No more waiting on the stand\nAttach tata ace with Porter to have a steady stream of trips with minimum assured income and added incentives, so that there is no waiting and idle time at the stand!\n\n### No more bargaining. Standard Rates\nThe rates and calculation methods are standardized and completely transparent. No more wasting time in fixing the rates for every trip.\n\n\n### Hassle Free Navigation\nWith our GPS-based navigation you can drive anywhere across your city without worrying about the directions. Get real-time navigation assistance on the go!`,
-
+  ADDITIONAL_BENEFITS_TITLE:" ADDITIONAL_BENEFITS",
   ADDITIONAL_BENEFITS: [
     {
         images: regularTrip,
