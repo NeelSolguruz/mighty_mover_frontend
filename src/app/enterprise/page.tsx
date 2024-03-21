@@ -5,20 +5,11 @@ import { ENTERPRISE_STRING } from "../constant/constant";
 import { enterprise } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
-
 import truck from "../assets/Images/Truck.svg";
 import { BiSolidPhoneCall } from "react-icons/bi";
-
 import { useState } from "react";
 import faq from "../assets/Images/faq.svg";
-interface FAQItem {
-  QUESTION: string;
-  ANSWER: string;
-}
-
-interface FAQAccordionProps {
-  ENTERPRISE_FAQ: FAQItem[];
-}
+import  {FAQItem,FAQAccordionProps}  from "../dto/data.type";
 export default function page() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -43,7 +34,7 @@ export default function page() {
         </div>
 
         <div className="flex flex-col justify-between ss:gap-10 laptop:flex-row ">
-          <div className="w-1/2 flex flex-col gap-10 ms:ml-24 ml-24 ss:ml-20 s:ml-28 middle:flex middle:flex-row  middle:ml-24 md:w-11/12 md:ml-10 justify-center random:w-random">
+          <div className="w-1/2 flex flex-col gap-10 ms:ml-24 ml-24 ss:ml-20 s:ml-28 middle:flex-row  middle:justify-center middle:w-full middle:ml-0 middle:m-2 md:w-11/12 md:ml-10 justify-center random:w-random ">
             {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO.map((item, index) => (
               <>
                 <div className="flex flex-col justify-center gap-8 items-center w-1/2 ss:w-full ss:mr-6">
@@ -240,7 +231,7 @@ export default function page() {
 
               <div className="flex font-bold gap-1">
                 <span className="text-amber-500 mt-0.5">
-                  {/* <BiSolidPhoneCall /> */}
+                  <BiSolidPhoneCall />
                 </span>
                 <span className="text-amber-500">
                   {ENTERPRISE_STRING.FOR_ANY_MORE_NUMBER}
