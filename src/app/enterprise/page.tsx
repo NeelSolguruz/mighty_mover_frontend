@@ -6,7 +6,7 @@ import { enterprise } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
 import truck from "../assets/Images/Truck.svg"
-import { BiSolidPhoneCall } from "react-icons/bi";
+// import { BiSolidPhoneCall } from "react-icons/bi";
 import { useState } from "react";
 import faq from "../assets/Images/faq.svg"
 interface FAQItem {
@@ -240,7 +240,7 @@ export default function page() {
 
               <div className="flex font-bold gap-1">
                 <span className="text-amber-500 mt-0.5">
-                  <BiSolidPhoneCall />
+                  {/* <BiSolidPhoneCall /> */}
                 </span>
                 <span className="text-amber-500">
                   {ENTERPRISE_STRING.FOR_ANY_MORE_NUMBER}
