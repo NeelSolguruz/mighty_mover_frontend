@@ -13,4 +13,11 @@ import onTImePayment from "./onTImePayment.png";
 import driverExperience from "./driver_experience.gif";
 import profilePic from "./profile_pic.png";
 import ownVehicles from "./own_vehicles.png";
-export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad,profilePic,ownVehicles}
+import bike_image from ".//two_wheeler.jpg"
+import truck_image from ".//trucks.jpg"
+import packers_image from ".//packers.jpg"
+import all_india from ".//all_india_parcel.jpg"
+import profile from ".//two_profile.jpg"
+
+
+export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad,profilePic,ownVehicles,bike_image,truck_image,packers_image,all_india,profile}
