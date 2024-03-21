@@ -5,7 +5,7 @@ import { DELIVERY_PARTNER_STRING } from "../constant/constant";
 // import Delivery from "../assets/Images/delivery.jpg";
 import { FormData } from "../dto/data.type";
 // import  regularTrip from "../assets/Images/regularTrip.png"
-import { Delivery, driverExperience, ownVehicles } from "../assets/Images/imageassets";
+import { Delivery, driverExperience, ownVehicles } from "../assets/images/imageassets";
 
 export default function DeliveryPage(): JSX.Element {
 

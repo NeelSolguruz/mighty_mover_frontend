@@ -1,12 +1,12 @@
 // import regularTrip from "../assets/Images/regularTrip.png"
-import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/Images/imageassets";
+import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/images/imageassets";
 import {
   regularTrip,
   BetterEearning,
   onTImePayment,
   profilePic,
   ownVehicles
-} from "../assets/Images/imageassets";
+} from "../assets/images/imageassets";
 
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
@@ -364,3 +364,210 @@ export const ENTERPRISE_STRING = {
   Still_have_questions_about_our_Enterprise_Services:"Still have questions about our Enterprise Services?",
   READ_FAQ:"READ OUR FAQs"
 };
+
+
+
+
+// utkarsh 
+import { bike_image,truck_image,packers_image,all_india,profile } from "../assets/images/imageassets";
+
+export const IMAGES_CAPTION = [
+    {
+        image:bike_image,
+        caption:"Two Wheelers",
+        url:"two-wheelers"
+    },{
+        image:truck_image,
+        caption:"Trucks",
+        url:"trucks"
+    },{
+        image:packers_image,
+        caption:"Packers & Movers",
+        url:"packers-and-movers"
+    },{
+        image:all_india,
+        caption:"All India Parcel",
+        url:"all-india-parcel"
+    },
+]
+
+
+export const QUICK_LINKS = [
+    {name:"Services", url:"services"},
+    {name:"API Integrations",url:"api-integrations"},
+    {name:"Courier",url:"courier"},
+    {name:"Packers and Movers",url:"packers-and-movers"},
+    {name:"Two Wheelers",url:"two-wheelers"},
+    {name:"Trucks",url:"trucks"},
+    {name:"Porter For Enterprise",url:"porter-for-enterprise"}
+]
+
+
+export const COMPANY = [
+    { name: "About Us", url: "about-us" },
+    { name: "Careers", url: "careers" },
+    { name: "Blog", url: "blog" }
+];
+
+export const SUPPORT = [
+    { name: "Contact Us", url: "contact-us" },
+    { name: "Privacy Policy", url: "privacy-policy" },
+    { name: "Terms of Service", url: "terms-of-service" },
+    { name: "Insurance FAQs", url: "insurance-faqs" },
+    { name: "Driver Partner Terms and Conditions", url: "driver-partner-terms-and-conditions" },
+    { name: "Zero Tolerance Policy", url: "zero-tolerance-policy" }
+];
+
+
+
+export const LOCATIONS = [
+    'Delhi NCR','Chandigarh','Ahmedabad','Coimbatore','Hyderabad','Jaipur','Surat','Ludhiana','Bangalore','Chennai','Nagpur','Kochi','Mumbai','Kolkata','Lucknow','Nashik','Vadodara','Indore','Pune','Kanpur'
+]
+
+
+
+export const SLIDER = [
+    {
+        title:"API Integrations",
+        description:"Automate your deliveries by Integrating our APIs",
+        color:"black"
+    },{
+        title:"2 Wheelers",
+        description:"Instant delivery for up to 20 kgs.",
+        color:"blue"
+    },{
+        title:"Trucks",
+        description:"Hassle-free goods delivery up to 2500 kgs.",
+        color:"orange"
+    },{
+        title:"Packers & Movers",
+        description:"House shifting hai? Ho Jayega",
+        color:"red",
+    },{
+        title:"Porter for Enterprise",
+        description:"Streamlining to drive business growth",
+        color:"magenta"
+    },{
+        title:"Courier Service",
+        description:"Guaranteed Doorstep Pickup & Delivery",
+        color:"purple"
+    }
+]
+
+
+
+export const STATS = [
+    {
+        num:"20+",
+        val:"Cities"
+    },{
+        num:"5 Lakh+",
+        val:"Driver Partners"
+    },{
+        num:"1 Crore+",
+        val:"Customers"
+    },{
+        num:"10 Crore+",
+        val:"Trips"
+    }
+]
+
+
+
+
+export const REVIEWS = [
+    {
+        img:profile,
+        name:"Utkarsh",
+        type:"Trucks",
+        rating:"4.0",
+        loc:"Nagpur",
+        desc:'“Way better than naaka waalas. Have shifted all my logistics needs to Porter and I can now safely focus on my business growth. Amazing service!”'
+    },{
+        img:profile,
+        name:"Prit",
+        type:"Trucks",
+        rating:"5.0",
+        loc:"Mumbai",
+        desc:'“Excellent service by multiple drivers. I own a business and do multiple shiftings. Rather than ask local drivers and bargain every time, I use porter which fulfils all my need. Thanks a lot!”'
+    },{
+        img:profile,
+        name:"Neel",
+        type:"Trucks",
+        rating:"5.0",
+        loc:"Ahmedabad",
+        desc:'“Have had an amazing experience. Had three successful deliveries where it’s a struggle to arrange a tempo service for your desired pickup and drop off. Must try this app!”'
+    },{
+        img:profile,
+        name:"Ketan",
+        type:"Customer",
+        rating:"5.0",
+        loc:"Hyderabad",
+        desc:"“Smooth experience with Porter's packers and movers! The team was fantastic, handling every detail. Highly recommend their services!“"
+    }
+]
+
+
+
+export const HOME_PAGE_STRING = {
+  thanks:"And thanks to you, we are growing each & every day!",
+  celebrate:"🎉 Maharba Dubai! We are now live & ready to take care of all your logistical needs.",
+  serving:"We are serving in Delhi NCR, Bengaluru, Mumbai, Hyderabad, Ahmedabad, Jaipur, Pune, Kolkata, Surat, Chennai, Coimbatore, Indore, Nagpur, Chandigarh, Lucknow, Vadodara, Ludhiana, Kochi, Nashik and Kanpur."
+}
+
+export const FAQ = {
+  title:"Frequently Asked Questions",
+  title_desc:"In case you have more questions, feel free to reach out to ",
+  questions:[
+    {
+      question:"What is Porter App?",
+      answer:"Porter is a tech-enabled logistics company offering a variety of intracity and intercity delivery services. Just download and register yourself on the app, choose the service that best fits yours logistic needs and make your booking! With Porter, you will get a verified driver and vehicle right at your doorstep."
+    },{
+      question:"How do I use Porter App?",
+      answer:`Follow these simple steps to start leveraging hassle-free logistics from Porter:
+
+      1.Download the Porter app 2.Choose the service you want to use 3.Select your pick up and delivery locations 4.Add any extra stops, if applicable 5.Choose the most appropriate vehicle type as per your requirements (2wheeler, three-wheelers or trucks) 6.Select the type of goods you’re sending 7.Choose your payment method 8.Click on “Book Now” and your vehicle is on its way!`
+    },{
+      question:"How do I book a tempo/mini truck/bike or intercity courier services online from the Porter app?",
+      answer:`Get reliable and affordable logistics services from the Porter app by following these steps:
+
+      Sign in to the Porter app
+      Choose the service you want - trucks, 2wheeler or intercity courier services
+      Set your pick up and drop off location
+      Browse through the list of available vehicles (Tata Ace, Pickup 8ft, 2wheeler etc) and pick the one that suits your moving needs
+      Enter a few additional details, apply coupons to get exciting discounts, and confirm your booking.
+      Sit back and relax - our verified driver partners will do the rest.`
+    },{
+      question:"Does Porter provide intercity or interstate service?",
+      answer:"Porter provides intracity & intercity services. For instant goods delivery within the city, you can choose Porter 2-wheelers and trucks. We also have intercity outstation services within a 300km radius of the city center. You can also send goods across India with Porter intercity courier services at economical rates. Porter also provides intercity and intracity house shifting services."
+    },{
+      question:"What are the charges for a Porter truck and Porter bike delivery service?",
+      answer:"The charges for hiring a Porter truck or bike are based on the number of kilometres travelled and the type of vehicle chosen and this differs from locality to locality. You can also check the estimate tab on the Porter website to get an exact idea of your final trip amount. Alternatively, the final trip amount can be determined when making the booking on the app."
+    },{
+      question:"Does Porter provide Packers and Movers services?",
+      answer:"Yes, Porter caters to all kinds of house shifting needs through Porter Packers & Movers. If you have an immediate moving requirement, we also have the option to hire a mini truck with labour. Intracity shifting services through Porter Packers and Movers is available in Mumbai, Delhi NCR, Bangalore, Hyderabad, Chennai, Pune, Kolkata, Ahmedabad, Surat, Coimbatore, Indore, Jaipur, Lucknow and Nagpur. Intercity Packers and Movers services can be availed between any of the following cities - Mumbai, Delhi NCR, Bangalore, Hyderabad, Chennai, Pune, Kolkata and Ahmedabad. If you don’t see your city in the above list, don’t worry; the service will be launching soon in other cities. To enquire about Porter Packers and Movers or avail the service, call 4410 4410 (add your city code)."
+    },{
+      question:"What does Porter deliver?",
+      answer:"From a pin to an entire house, we will deliver anything, anywhere, anytime. However, Porter does not deliver item(s) which are illegal, dangerous or hazardous in nature or which are prohibited by any statue or law."
+    },{
+      question:"How long does it take to deliver?",
+      answer:"In the case of intracity deliveries, the distance & traffic play a major role in determining the delivery time however the instant availability of vehicles allows you to send goods up to 2500 kgs. Porter intercity courier services allows you to deliver goods at economical rates within a couple of days."
+    },{
+      question:"Does Porter provide mini trucks like tata ace on monthly contract?",
+      answer:"We provide on-demand availability of mini trucks like Tata Ace. For bulk orders and frequent uses, we provide Porter for Enterprise service with one app-multi-city-mutli user access."
+    },{
+      question:"How does an API Integration with Porter work?",
+      answer:"Porter's APIs are simple to integrate and use. The simple layouts will be easily adaptable and will start creating orders directly from your order management system."
+    },{
+      question:"How does an API integration solve business problems?",
+      answer:"An API Integration with Porter helps companies with webhook updates, live tracking, and delivery authentication across 16 cities. Utilise a standardised 2-wheeler service with zero hassles."
+    },{
+      question:"What vehicle categories are available via the APIs?",
+      answer:"Porter's APIs are currently available on 2-wheelers. API integration on other vehicles will be launched soon."
+    }
+  ]
+}
+
+
+
+
