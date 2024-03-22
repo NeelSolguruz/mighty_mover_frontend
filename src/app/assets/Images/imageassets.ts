@@ -18,6 +18,7 @@ import truck_image from ".//trucks.jpg"
 import packers_image from ".//packers.jpg"
 import all_india from ".//all_india_parcel.jpg"
 import profile from ".//two_profile.jpg"
+import google_play from ".//googleplay.png"
+import app_store from ".//appstore.png"
 
-
-export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad,profilePic,ownVehicles,bike_image,truck_image,packers_image,all_india,profile}
+export {Delivery,regularTrip,BetterEearning, onTImePayment, driverExperience,enterprise,ahmedabad,chennai,rajasthan,delhi,kerela,hyderabad,profilePic,ownVehicles,bike_image,truck_image,packers_image,all_india,profile,google_play,app_store}
