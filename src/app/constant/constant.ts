@@ -414,7 +414,7 @@ export const SUPPORT = [
     { name: "Privacy Policy", url: "privacy-policy" },
     { name: "Terms of Service", url: "terms-of-service" },
     { name: "Insurance FAQs", url: "insurance-faqs" },
-    { name: "Driver Partner Terms and Conditions", url: "driver-partner-terms-and-conditions" },
+    { name: "Driver Partner T&C", url: "driver-partner-terms-and-conditions" },
     { name: "Zero Tolerance Policy", url: "zero-tolerance-policy" }
 ];
 
@@ -430,7 +430,7 @@ export const SLIDER = [
     {
         title:"API Integrations",
         description:"Automate your deliveries by Integrating our APIs",
-        color:"black"
+        color:"green"
     },{
         title:"2 Wheelers",
         description:"Instant delivery for up to 20 kgs.",
@@ -450,7 +450,7 @@ export const SLIDER = [
     },{
         title:"Courier Service",
         description:"Guaranteed Doorstep Pickup & Delivery",
-        color:"purple"
+        color:"BlueViolet"
     }
 ]
 
@@ -517,7 +517,7 @@ export const HOME_PAGE_STRING = {
 
 export const FAQ = {
   title:"Frequently Asked Questions",
-  title_desc:"In case you have more questions, feel free to reach out to ",
+  title_desc:"In case you have more questions, feel free to reach out to us.",
   questions:[
     {
       question:"What is Porter App?",

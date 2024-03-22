@@ -179,7 +179,7 @@ export default function Home() {
 
 
         {/* FAQ */}
-        <div className="flex w-full justify-center p-10 flex-wrap gap-10 bg-white text-black">
+        <div className="flex flex-col w-full items-center p-10 flex-wrap gap-10 bg-white text-black">
           <div className="text-4xl font-semibold">{FAQ.title}</div>
           <div className="text-2xl">{FAQ.title_desc}</div>
         </div>

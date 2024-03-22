@@ -6,13 +6,18 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube,FaTwitter } from "react-icons/fa";
+import { google_play,app_store } from "../assets/images/imageassets";
 
 export default function Footer(){
     return(
         <>
         <div className="bg-black text-white p-5">
-            <div className=" grid grid-cols-4 mb-3 ml-4 max-md:grid-cols-2 max-sm:grid-cols-1">
-                <div className="w-max text-2xl font-semibold flex flex-col">
+            <div className="text-sm grid grid-cols-5 mb-3 ml-4 
+            max-lg:grid-cols-3
+            gap-5">
+                <div className="w-max text-2xl font-semibold flex flex-col
+                max-lg:hidden
+                ">
                     <Image
                         src={brand_logo}
                         width={50}
@@ -30,7 +35,7 @@ export default function Footer(){
                         ))}
                     </ul>
                 </div>
-                <div className="w-max max-md:mt-5  max-sm:mt-2 mb-2">
+                <div>
                     <h1 className="text-xl font-semibold">Quick Links</h1>
                     <ul>
                         {QUICK_LINKS.map((item,index)=>(
@@ -38,7 +43,9 @@ export default function Footer(){
                         ))}
                     </ul>
                 </div>
-                <div className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2 ">
+                <div className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2 
+                max-lg:hidden
+                ">
                     <h1 className="text-xl font-semibold">Support</h1>
                     <ul>    
                         {SUPPORT.map((item,index)=>(
@@ -46,13 +53,29 @@ export default function Footer(){
                         ))}
                     </ul>
                 </div>
+                <div className="flex flex-col gap-3
+                max-lg:hidden
+                ">
+                    <Image
+                    src={google_play}
+                    alt="google play logo"
+                    width={190}
+                    />
+                    <Image
+                    src={app_store}
+                    alt="app store logo"
+                    width={190}
+                    />
+                </div>
             </div>
             <div className=" mt-10 text-xl font-semibold ml-4">
                 We Are Here
             </div>
-            <div className=" grid grid-cols-5 max-md:grid-cols-3 ml-4 max-sm:grid-cols-2">
+            <div className="text-sm grid grid-cols-5 ml-4 gap-5
+            max-lg:grid-cols-2 gap-0
+            ">
             <div>
-                <ul>
+                <ul >
                    <li>{LOCATIONS[0]}</li>
                    <li>{LOCATIONS[1]}</li>
                    <li>{LOCATIONS[2]}</li>
