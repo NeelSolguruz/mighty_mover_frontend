@@ -369,7 +369,7 @@ export const ENTERPRISE_STRING = {
 
 
 // utkarsh 
-import { bike_image,truck_image,packers_image,all_india,profile } from "../assets/images/imageassets";
+import { bike_image,truck_image,packers_image,all_india,profile,nav_logo } from "../assets/images/imageassets";
 
 export const IMAGES_CAPTION = [
     {
@@ -571,3 +571,135 @@ export const FAQ = {
 
 
 
+// Support Page
+export const SUPPORT_STRING = {
+  main_title:"HELP CENTER",
+  main_desc:"Need assistance? We're happy to help, reach us out through the appropriate channels below.",
+  SECTION_ONE:[
+    {
+      image:"customer support",
+      title:"CUSTOMER SUPPORT",
+      desc:`Click here to read our FAQs
+      For support with your bookings and other queries, email us at help @mightymovers.com or call us on 022 4410 4410`
+    },{
+      image:"packers and movers",
+      title:"PACKERS AND MOVERS",
+      desc:"For queries and support regarding your house shifting booking, email us at packermover@mightymovers.com or call us on 022 4410 4444 or 022 6268 4444"
+    },{
+      image:"enterprise services",
+      title:"ENTERPRISE SERVICES",
+      desc:`If you are an enterprise client and need trucks in bulk for your business, Click here or mail us at help@mightymovers.com`
+    },{
+      image:"drive with porter",
+      title:"DRIVE WITH PORTER",
+      desc:"Are you a tempo truck owner? Increase your earnings by partnering with us. Click here or reach us out on 022 4410 4410(add your city code)"
+    }
+  ],
+  office_heading:"Our Offices",
+  head_office_heading:"HEAD OFFICE",
+  head_office:{
+    city:"Ahmedabad",
+    add:"Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
+    url_text:"GET DIRECTIONS >",
+    url:"https://maps.app.goo.gl/E5myQhxEfBsJPCPEA````"
+  },
+  regional_office_heading:"REGIONAL OFFICES",
+  SECTION_TWO:[
+    {
+      city:"Mumbai",
+      add:"SmartShift Logistics Solutions Pvt. Ltd., No. A - 501, A – 502, B – 504, B – 505 and B - 506, Universal Business Park, Chandivali Farm Road, Off. Saki Vihar Road, Andheri (East), Mumbai, Maharashtra - 400 072",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Delhi NCR",
+      add:"Plot No. F-7B, Okhla Industrial Area, Phase - 1, New Delhi - 110020",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Hyderabad",
+      add:"Smartshift Logistics Solutions Pvt. Ltd, Darshak Chambers, Ground Floor & 1st Floor, No. 1-8-303/48/32/A, Situated near Patigadda, Rasoolpura, Secunderabad, Telangana - 500003",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Chennai",
+      add:"Smartshift Logistics Solutions Pvt. Ltd (Porter) No. 33, Ground Floor, Velachery Road, Little mount, Saidapet, Chennai - 600015",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Bangalore",
+      add:"Porter Head Office, BCM Prime 1st Cross, BDA Layout, Bannerghatta Main Rd, New Gurappana Palya, Tavarekere Extension, Bengaluru, Karnataka 560041",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Jaipur",
+      add:"149, First Floor, Rathore Nagar, Amrapali Marg, Vaishali Nagar, Jaipur - 302021",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Pune",
+      add:"Office No 305 Elite Primo Building Dasara Chowk Balewadi Pune- 411045",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Kolkata",
+      add:"Smartshift Logistics Solutions Pvt Ltd. Asyst Park, 6th Floor, Zone A, GN 37/1, Salt Lake City, Sector V, Kolkata 700091",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Surat",
+      add:"359, The Galleria Shopping hub, Opp.370 Kitchen Restaurant, Nr.Sanjeev Kumar Auditorium, Pal, Adajan, Surat, Gujarat 395009",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Lucknow",
+      add:"B-42, Vibhuti Khand,Adjacent to R.K.Timber Gomti Nagar, Lucknow, Uttar Pradesh-226010",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Coimbatore",
+      add:"No.260, VV Complex , 1st Floor ,Avaram Palayam Road,New Siddhapudur, Coimbatore , Tamil Nadu 641044",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Indore",
+      add:"Office no 105 , Saviri Empire , Om Gurudev Plaza Bhamori , Near new Duniya Office , Indore 452010",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Nagpur",
+      add:"Office No.117 and Flat No.121, 1st Floor, Shree Ganesha Heights, Khamla Square, Ring Road, Nagpur, Maharashtra, 440025",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Chandigarh",
+      add:"Plot no 434 Industrial Area Phase 9 Mohali-160062,Punjab",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Vadodara",
+      add:"202- Pratham Complex, Sampat Rao Colony, Nr- Laxmi hall lane, R.C Dutt road, Alkapuri, Vadodara, Gujarat - 390007",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Ludhiana",
+      add:"2nd Floor,35G, BRS Nagar, Opposite Sarabha Nagar Police station, Ludhiana, Punjab-141001",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Kochi",
+      add:"Smartshift Logistics Solutions Pvt Ltd, Door No.43/1624, Chacko Chambers, Near Signal Jn, Civil Line Road, Palarivattom, Kochi-682025",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Nashik",
+      add:"Smartshift Logistics Solutions Pvt Ltd, Impact Spaces - Shree Sai Siddhi Plaza, Office No 1,2nd Floor, Trambakeshwar Rd, next to Indian Oil Petrol Pump, near ITI Signal, Mahatma Nagar, Nashik, Maharashtra 422005",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    },{
+      city:"Kanpur",
+      add:"MCS Honda Building, 96/5, 2nd Floor, Chunni Ganj, Kanpur - 208001",
+      url_text:"GET DIRECTIONS >",
+      url:""
+    }
+  ]
+}
