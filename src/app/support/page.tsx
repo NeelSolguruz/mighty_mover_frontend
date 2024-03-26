@@ -10,7 +10,7 @@ export default function Support() {
         <div className="bg-black py-10">
             {/* title */}
             <div className="
-                    flex flex-col items-center
+                    flex flex-col items-center my-10
                     ">
                 <div>
                     <h1 className="text-4xl text-white font-bold
@@ -45,14 +45,21 @@ export default function Support() {
                             " key={index}>
                             <div>
                                 <FcCustomerSupport
-                                    className="size-20"
+                                    className="size-20
+                                    max-lg:size-14
+                                    max-sm:size-10
+                                    "
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
-                                <div className="text-lg font-bold">
+                                <div className="text-lg font-bold
+                                max-lg:text-base
+                                ">
                                     {item.title}
                                 </div>
-                                <div className="text-gray-500 font-semibold text-sm">
+                                <div className="text-gray-500 font-semibold text-sm
+                                max-lg:text-xs
+                                ">
                                     {item.desc}
                                 </div>
                             </div>
@@ -63,12 +70,16 @@ export default function Support() {
             </div>
 
 
-            <div className="my-32">
+            <div className="my-20">
                 <div className="flex flex-col items-center">
-                    <div className="text-white text-4xl font-bold">
+                    <div className="text-white text-4xl font-bold
+                    max-sm:text-3xl
+                    ">
                         {SUPPORT_STRING.office_heading}
                     </div>
-                    <div className="text-white text-4xl">
+                    <div className="text-white text-4xl
+                    max-sm:text-3xl
+                    ">
                         <CgLoadbar />
                     </div>
                 </div>
@@ -79,11 +90,18 @@ export default function Support() {
                     <div className="text-white text-2xl">
                         <CgLoadbar />
                     </div>
-                    <div className="flex flex-col text-white w-3/12 gap-4">
-                        <h2 className="text-2xl font-bold mt-5">{SUPPORT_STRING.head_office.city}</h2>
-                        <p className="font-semibold">{SUPPORT_STRING.head_office.add}</p>
+                    <div className="flex flex-col text-white w-3/12 gap-4
+                    max-sm:w-9/12
+                    ">
+                        <h2 className="text-2xl font-bold mt-5
+                        max-sm:text-xl
+                        ">{SUPPORT_STRING.head_office.city}</h2>
+                        <p className="font-semibold
+                        max-sm:text-sm
+                        ">{SUPPORT_STRING.head_office.add}</p>
                         <Link href={SUPPORT_STRING.head_office.url}
                             className="w-fit
+                                max-sm:text-sm
                                 font-semibold
                                 text-gray-400
                                 hover:italic
@@ -107,7 +125,9 @@ export default function Support() {
 
 
                 <div className="flex justify-center">
-                <div className="grid grid-cols-2 w-10/12">
+                <div className="grid grid-cols-2 w-10/12
+                max-sm:grid-cols-1
+                ">
                     {SUPPORT_STRING.SECTION_TWO.map((item, index) => (
                         <div key={index} className="flex justify-center">
                             <div className="text-white
@@ -115,18 +135,30 @@ export default function Support() {
                                 gap-5
                                 p-4
                                 w-7/12
+                                max-lg:w-9/12
+                                max-sm:gap-3
+                                max-sm:w-full
                                 "
                                 key={index}>
                                 <h2
-                                    className="text-2xl font-bold"
+                                    className="text-2xl font-bold
+                                    max-lg:text-2xl
+                                    max-sm:text-xl
+                                    "
                                 >{item.city}</h2>
                                 <p
-                                    className="font-semibold"
+                                    className="font-semibold
+                                    max-lg:text-base
+                                    max-sm:text-sm
+                                    "
                                 >{item.add}</p>
                                 <Link href={item.url}
                                     className="text-gray-400 
                                     font-semibold
-                                    hover:italic"
+                                    hover:italic
+                                    max-lg:text-sm
+                                    max-sm:text-xs
+                                    "
                                 >{item.url_text}</Link>
                             </div>
                         </div>
