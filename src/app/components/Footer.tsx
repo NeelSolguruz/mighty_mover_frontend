@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube,FaTwitter } from "react-icons/fa";
-import { google_play,app_store } from "../assets/images/imageassets";
+import { google_play,app_store } from "../assets/Images/imageassets";
 
 export default function Footer(){
     return(

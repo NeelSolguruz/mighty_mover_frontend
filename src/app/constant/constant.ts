@@ -709,13 +709,13 @@ export const SUPPORT_STRING = {
       desc: "Are you a tempo truck owner? Increase your earnings by partnering with us. Click here or reach us out on 022 4410 4410(add your city code)",
     },
   ],
-  office_heading: "Our Offices",
-  head_office_heading: "HEAD OFFICE",
-  head_office: {
-    city: "Ahmedabad",
-    add: "Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
-    url_text: "GET DIRECTIONS >",
-    url: "https://maps.app.goo.gl/E5myQhxEfBsJPCPEA````",
+  office_heading:"Our Offices",
+  head_office_heading:"HEAD OFFICE",
+  head_office:{
+    city:"Ahmedabad",
+    add:"Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
+    url_text:"GET DIRECTIONS >",
+    url:"https://maps.app.goo.gl/E5myQhxEfBsJPCPEA````"
   },
   regional_office_heading: "REGIONAL OFFICES",
   SECTION_TWO: [
