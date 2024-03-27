@@ -1,5 +1,5 @@
 "use client"
-import backgroud_image from "../assets/images/back_image.jpg"
+import backgroud_image from "../assets/Images/back_image.jpg"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -10,7 +10,7 @@ import {
   FAQ,
   SLIDER
  } from "../constant/constant"
-import india_map from "../assets/images/india_map.jpg"
+import india_map from "../assets/Images/india_map.jpg"
 
 export default function Home() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -41,6 +41,7 @@ export default function Home() {
             {IMAGES_CAPTION.map((item, index) => (
               <Link href={item.url} key={index}>
                 <div key={index} className="text-center transition-all hover:scale-105 font-semibold">
+                
                   <Image
                     src={item.image}
                     alt="image"

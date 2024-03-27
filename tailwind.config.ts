@@ -25,8 +25,7 @@ const config: Config = {
       },
       width: {
         'random': '50%',
-      }
-      
+      },
     },
   },
   plugins: [],
