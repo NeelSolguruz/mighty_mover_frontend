@@ -1,5 +1,4 @@
-// import regularTrip from "../assets/Images/regularTrip.png"
-import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/Images/imageassets";
+
 import {
   enterprise,
   rajasthan,
