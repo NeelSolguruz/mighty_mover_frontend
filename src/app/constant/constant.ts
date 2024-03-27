@@ -1,12 +1,12 @@
 // import regularTrip from "../assets/Images/regularTrip.png"
-import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/images/imageassets";
+import { enterprise,rajasthan,delhi,ahmedabad,kerela,hyderabad,} from "../assets/Images/imageassets";
 import {
   regularTrip,
   BetterEearning,
   onTImePayment,
   profilePic,
   ownVehicles
-} from "../assets/images/imageassets";
+} from "../assets/Images/imageassets";
 
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
@@ -601,7 +601,7 @@ export const SUPPORT_STRING = {
     city:"Ahmedabad",
     add:"Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
     url_text:"GET DIRECTIONS >",
-    url:"https://maps.app.goo.gl/E5myQhxEfBsJPCPEA````"
+    url:"https://maps.app.goo.gl/E5myQhxEfBsJPCPEA"
   },
   regional_office_heading:"REGIONAL OFFICES",
   SECTION_TWO:[

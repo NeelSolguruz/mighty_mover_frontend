@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { ENTERPRISE_STRING } from "../constant/constant";
 // import enterprise from "../assets/Images/enterprise.jpg";
-import { enterprise } from "../assets/images/imageassets";
+import { enterprise } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
 import truck from "../assets/Images/Truck.svg";
