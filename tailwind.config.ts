@@ -25,6 +25,7 @@ const config: Config = {
       },
       width: {
         'random': '50%',
+        "one-third":"30%",
       },
     },
   },

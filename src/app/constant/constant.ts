@@ -1029,7 +1029,36 @@ export const POPULAR_OUTSTATIONS_FROM_AHMEDABAD_ALL_DATA = [
   },
   {
     name: "Kachchh",
-    km:376,
+    km: 376,
     fare: 9100,
   },
 ];
+export const AREAS_WE_SERVE_IN = "Areas We Serve";
+export const AREAS_WE_SERVE_IN_DATA = [
+  "Aslali",
+
+  "Bapunagar",
+
+  "Bopal",
+
+  "CTM",
+
+  "Maninaga",
+
+  "Naroda",
+
+  "Naroda GIDC",
+
+  "Odhav",
+
+  "Sarkhej",
+
+  "Thaltej",
+
+  "Usman Pura",
+
+  "Vasna Or Vatva",
+];
+export const THINK_lOGISTICS_THINK_PORTER="Think Logistics, Think Like Mighty Mover!"
+export const GET_ORDERS="Get the Mighty Movers mobile app to start booking your orders!"
+export const SCAN_TO_DOWNLOAD="Scan to download our app!"
