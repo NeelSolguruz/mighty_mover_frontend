@@ -42,6 +42,7 @@ export default function Support() {
                         <div className="flex p-10
                             border-2
                             rounded-xl
+                            gap-4
                             " key={index}>
                             <div>
                                 <FcCustomerSupport
@@ -125,12 +126,12 @@ export default function Support() {
 
 
                 <div className="flex justify-center">
-                <div className="grid grid-cols-2 w-10/12
+                    <div className="grid grid-cols-2 w-10/12
                 max-sm:grid-cols-1
                 ">
-                    {SUPPORT_STRING.SECTION_TWO.map((item, index) => (
-                        <div key={index} className="flex justify-center">
-                            <div className="text-white
+                        {SUPPORT_STRING.SECTION_TWO.map((item, index) => (
+                            <div key={index} className="flex justify-center">
+                                <div className="text-white
                                 flex flex-col
                                 gap-5
                                 p-4
@@ -139,31 +140,31 @@ export default function Support() {
                                 max-sm:gap-3
                                 max-sm:w-full
                                 "
-                                key={index}>
-                                <h2
-                                    className="text-2xl font-bold
+                                    key={index}>
+                                    <h2
+                                        className="text-2xl font-bold
                                     max-lg:text-2xl
                                     max-sm:text-xl
                                     "
-                                >{item.city}</h2>
-                                <p
-                                    className="font-semibold
+                                    >{item.city}</h2>
+                                    <p
+                                        className="font-semibold
                                     max-lg:text-base
                                     max-sm:text-sm
                                     "
-                                >{item.add}</p>
-                                <Link href={item.url}
-                                    className="text-gray-400 
+                                    >{item.add}</p>
+                                    <Link href={item.url}
+                                        className="text-gray-400 
                                     font-semibold
                                     hover:italic
                                     max-lg:text-sm
                                     max-sm:text-xs
                                     "
-                                >{item.url_text}</Link>
+                                    >{item.url_text}</Link>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
