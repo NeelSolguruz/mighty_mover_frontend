@@ -6,5 +6,42 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* --primary: #e5e7eb; */
+  --primary: #e5e7eb;
+  /* --secondary: #FC992A; */
+  --secondary: #FC992A;
+  --tertiary: #f1840a;
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+  border: 1px solid #cacaca;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 8px;
+  /* border: 3px solid var(--primary); */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--tertiary);
 }
 
