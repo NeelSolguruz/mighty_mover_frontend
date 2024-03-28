@@ -52,8 +52,11 @@ import BrandLogo from "./icons/BrandLogo";
 import grp1 from "./grp1.jpg";
 import grp2 from "./grp2.jpg";
 import companyBanners from "./about-company-banner.jpg";
+import ahmedabad_truck from "./cities/ahmedabad.svg"
+import mumbai_enterprise from "./mumbai_enterprise.svg"
 
 export {
+  mumbai_enterprise,
   Delivery,
   regularTrip,
   BetterEearning,
@@ -100,12 +103,5 @@ export {
   vadodara,
   pune,
   kolkata,
-  QR,
-
-  BrandLogo,
-
-  grp1,
-  grp2,
-  companyBanners,
-
+  QR
 };
