@@ -18,7 +18,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <div className="sticky  flex shadow-2xl  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900
+      <div className="sticky  flex shadow-2xl  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
         z-10
         ">
         <div className="p-2">

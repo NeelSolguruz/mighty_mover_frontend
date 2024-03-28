@@ -103,5 +103,10 @@ export {
   vadodara,
   pune,
   kolkata,
-  QR
+  QR,
+  BrandLogo,
+  ahmedabad_truck,
+  grp1,
+  grp2,
+  companyBanners,
 };
