@@ -13,14 +13,13 @@ import onTImePayment from "./onTImePayment.png";
 import driverExperience from "./driver_experience.gif";
 import profilePic from "./profile_pic.png";
 import ownVehicles from "./own_vehicles.png";
-import bike_image from "./two_wheeler.jpg"
+import bike_image from "./two_wheeler.jpg";
 import truck_image from "./trucks.jpg";
 import packers_image from "./packers.jpg";
 import all_india from "./all_india_parcel.jpg";
 import profile from "./two_profile.jpg";
 import google_play from "./googleplay.png";
 import app_store from "./appstore.png";
-import nav_logo from "./Union.svg";
 import truck_page_indi from "./image 1.jpg";
 import small_truck1 from "./trucks/3_wheeler_0c81952b0c.svg";
 import small_truck2 from "./trucks/tata_ace_2deb9441fd.svg";
@@ -46,7 +45,8 @@ import surat from "./cities/surat.svg";
 import vadodara from "./cities/vadodara.svg";
 import pune from "./cities/pune.svg";
 import kolkata from "./cities/kolkata (2).svg";
-import QR from "./qrcode.69482213.png"
+import QR from "./qrcode.69482213.png";
+import BrandLogo from "./icons/BrandLogo";
 
 export {
   Delivery,
@@ -70,7 +70,6 @@ export {
   profile,
   google_play,
   app_store,
-  nav_logo,
   truck_page_indi,
   small_truck1,
   small_truck2,
@@ -96,5 +95,6 @@ export {
   vadodara,
   pune,
   kolkata,
-  QR
+  QR,
+  BrandLogo,
 };

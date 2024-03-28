@@ -1,13 +1,14 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import brand_logo from "../assets/images/Union.svg"
+
 import { FaUserCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
 
 import { useState } from "react";
+import { BrandLogo } from "../assets/Images/imageassets";
 
 export default function Navbar() {
 
@@ -17,11 +18,11 @@ export default function Navbar() {
   }
   return (
     <>
-      <div className="sticky  flex shadow-2xl  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
+      <div className="sticky   flex shadow-2xl  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
         z-10
         ">
         <div className="p-2">
-          <Link href='/'><Image src={brand_logo} width={70} alt="logo" /></Link>
+          <Link href='/'><BrandLogo /></Link>
         </div>
         <div className="text-xl flex gap-10
           max-md:hidden
@@ -29,7 +30,7 @@ export default function Navbar() {
           <Link href="/enterprise" className=" hover:text-yellow-500 
             hover:duration-300
             text-md text-black font-bold">For Enterprise</Link>
-          <Link href="/deliveryPartner" className=" hover:text-yellow-500 duration-300 text-md text-black
+          <Link href="/delivery-partner" className=" hover:text-yellow-500 duration-300 text-md text-black
             font-bold">Delivery Partners</Link>
           <Link href="/support" className="text-md font-bold
              hover:text-yellow-500 duration-500
@@ -37,7 +38,7 @@ export default function Navbar() {
         </div>
         <div className="
           max-md:hidden
-          " 
+          "
           title="Sign Up?">
           <Link href='/login-or-sign-up'>
             <FaUserCircle
@@ -74,12 +75,12 @@ export default function Navbar() {
           font-bold
           `
       }>
-        <Link href="/enterprise" className="hover:text-yellow-400 duration-300">For Enterprise</Link>
-        <Link href="/deliveryPartner" className="hover:text-yellow-400 duration-300">Delivery Partner</Link>
-        <Link href="/support" className="hover:text-yellow-400 duration-300">Support</Link>
-        <Link href="/login-or-sign-up" className=" bg-yellow-400 w-fit p-2 rounded-xl
-            hover:text-white hover:bg-black hover:scale-105  duration-300
-            " >Sign Up</Link>
+        <Link href="/enterprise" className="p-2 hover:text-yellow-500 duration-300 ">For Enterprise</Link>
+        <Link href="/deliveryPartner" className="p-2 hover:text-yellow-500 duration-300">Delivery Partner</Link>
+        <Link href="/support" className="p-2 hover:text-yellow-500 duration-300">Support</Link>
+        <Link href="/login-or-sign-up" className=" bg-yellow-400 w-fit p-4 rounded-xl
+         hover:text-white hover:bg-black hover:scale-105  duration-300
+          ">Sign Up</Link>
       </div>
     </>
   )

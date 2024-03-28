@@ -3,13 +3,13 @@ import backgroud_image from "../assets/Images/back_image.jpg"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { 
-  IMAGES_CAPTION,STATS,
+import {
+  IMAGES_CAPTION, STATS,
   REVIEWS,
   HOME_PAGE_STRING,
   FAQ,
   SLIDER
- } from "../constant/constant"
+} from "../constant/constant"
 import india_map from "../assets/Images/india_map.jpg"
 
 export default function Home() {
@@ -40,13 +40,13 @@ export default function Home() {
           <div className="flex flex-wrap justify-center w-full items-center gap-20 p-10">
             {IMAGES_CAPTION.map((item, index) => (
               <Link href={item.url} key={index}>
-                <div key={index} className="text-center transition-all hover:scale-105 font-semibold">
-                
+                <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3">
+
                   <Image
                     src={item.image}
                     alt="image"
                     width={120}
-                    className="bg-indigo-100 shadow-2xl rounded-3xl"
+                    className="bg-indigo-100 rounded-2xl"
                   />
                   <figcaption>{item.caption}</figcaption>
                 </div>
@@ -57,35 +57,30 @@ export default function Home() {
 
 
 
-            
-        {/* Slider */}
 
+        {/* Slider */}
         <div className="bg-white pt-10">
-            <div className="w-full flex justify-center">
-                <h1 className="text-gray-600 text-2xl 
+          <div className="w-full flex justify-center">
+            <h1 className="text-gray-600 text-2xl 
                 max-lg:text-xl,
                 max:md:text-lg,
                 max-sm:text-base
                 ">-----OUR SERVICES-----</h1>
-            </div>
+          </div>
           <div className="container overflow-auto flex [scroll-snap-type:x_mandatory] w-[90%] mx-[auto] my-[0] px-[15px] py-[0]">
-              {SLIDER.map((item,index)=>(
-                <div key={index} className="card bg-gradient-to-r [box-shadow:0_8px_32px_0_rgba(31,_38,_135,_0.37)] backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60" 
-                style={{backgroundColor:item.color}}>
+            {SLIDER.map((item, index) => (
+              <div key={index} className="card bg-gradient-to-r [box-shadow:0_8px_32px_0_rgba(31,_38,_135,_0.37)] backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
+                style={{ backgroundColor: item.color }}>
                 <div>
-                <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">
-                  {item.title}
-                </h3>
-                <p className="text-white text-xl mt-5">{item.description}</p>
+                  <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="text-white text-xl mt-5">{item.description}</p>
                 </div>
               </div>
-              ))}
+            ))}
           </div>
         </div>
-
-
-         
-
 
 
         {/* Thanking message */}
@@ -114,12 +109,12 @@ export default function Home() {
             {STATS.map((item, index) => (
               <div key={index}>
                 <div>
-                <h1 className="text-3xl font-semibold text-center
+                  <h1 className="text-3xl font-semibold text-center
                 
                 ">{item.num}</h1>
                 </div>
                 <div>
-                <p className="text-xl text-center">{item.val}</p>
+                  <p className="text-xl text-center">{item.val}</p>
                 </div>
               </div>
             ))}
@@ -185,11 +180,11 @@ export default function Home() {
           <div className="text-2xl">{FAQ.title_desc}</div>
         </div>
 
-        <div className="flex flex-col gap-2 justify-center items-center bg-white mb-5">
+        <div className="flex flex-col gap-4 justify-center items-center bg-white mb-10">
           {FAQ.questions.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col gap-2 p-4 w-3/4 rounded-lg shadow-md shadow-gray-400 transition duration-300 hover:scale-105"
+              className="flex flex-col gap-2 p-4 w-3/4 rounded-lg shadow-sm shadow-gray-400 transition duration-300 hover:scale-105"
             >
               <button
                 onClick={() => toggleAccordion(index)}
@@ -199,9 +194,8 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
+                    }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,11 +217,10 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
-                  openIndex === index
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+                  }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>
