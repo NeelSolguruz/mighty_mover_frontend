@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { ENTERPRISE_STRING } from "../constant/constant";
+import { ENTERPRISE_STRING,REVIEWS } from "../constant/constant";
 // import enterprise from "../assets/Images/enterprise.jpg";
-import { enterprise } from "../assets/images/imageassets";
+import { enterprise } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
 import truck from "../assets/Images/Truck.svg";
@@ -163,27 +163,39 @@ export default function page() {
           </div>
         </div>
 
-        <div className="flex flex-col bg-black text-white justify-center items-center p-16 gap-24 ">
+        <div className="flex flex-col bg-black text-white justify-center items-center p-4 gap-24 ">
           <div className="text-4xl font-semibold ss:text-center ss:text-3xl">
             {ENTERPRISE_STRING.SOME_WORDS_FROM_OUR_HAPPY_CUSTOMERS}
           </div>
-          <div className="flex gap-4 items-center ss:flex-col md:flex-row">
-            {ENTERPRISE_STRING.CUSTOMERS_DETAILS.map((item) => (
-              <>
-                <div className="flex flex-col items-left  gap-4 p-2 w-1/3 bg-white text-black text-left h-80 rounded-lg shadow-white shadow-md  transition-all hover:scale-105 ss:w-full ss:p-2 ss:h-auto md:h-80 ">
-                  <div className="text-3xl font-semibold ss:text-xl ss:p-2">
-                    {item.DESIGNATION}
-                  </div>
-                  <div className="text-base font-semibold text-zinc-600">
-                    {item.FIRM}
-                  </div>
-                  <div className="text-base font-medium lg:text-sm md:text-xs">
-                    {item.REVIEW}
+          
+            <div className="grid grid-cols-4 w-full gap-2 mt-2 overflow-clip
+            max-lg:grid-cols-2 p-4  
+            max-sm:grid-cols-1">
+              {REVIEWS.map((item, index) => (
+                <div key={index}>
+                  <div className="p-4 min-h-72 rounded-xl hover:bg-gradient-to-br from-slate-900 to-gray-800
+                  hover:scale-105 transition-all">
+                    <div className="flex">
+                      <Image
+                        src={item.img}
+                        alt="profile pic"
+                        width={80}
+                        className="rounded-full"
+                      />
+                      <div className="ml-1 mt-1">
+                        <p className="text-lg font-semibold max-md:text-base">{item.name}</p>
+                        <p className="text-sm">{item.type},{item.rating}<span className="text-yellow-500">&#9733;</span></p>
+                        <p className="text-sm">{item.loc}</p>
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <p>{item.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </>
-            ))}
-          </div>
+              ))}
+            </div>
+          
         </div>
 
         <div className="flex flex-col justify-center items-center p-10 gap-10">

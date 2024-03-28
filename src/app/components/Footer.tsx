@@ -1,136 +1,131 @@
 import Link from "next/link";
 import Image from "next/image";
-import { QUICK_LINKS,COMPANY,SUPPORT,LOCATIONS } from "../constant/constant";
-import brand_logo from "../assets/images/Designer.png"
+import { QUICK_LINKS, COMPANY, SUPPORT, LOCATIONS } from "../constant/constant";
+import brand_logo from "../assets/images/Union.svg";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
-import { FaYoutube,FaTwitter } from "react-icons/fa";
-import { google_play,app_store } from "../assets/images/imageassets";
+import { FaYoutube, FaTwitter } from "react-icons/fa";
+import { google_play, app_store } from "../assets/Images/imageassets";
 
-export default function Footer(){
-    return(
-        <>
-        <div className="bg-black text-white p-5">
-            <div className="text-sm grid grid-cols-5 mb-3 ml-4 
-            max-lg:grid-cols-3
-            gap-5">
-                <div className="w-max text-2xl font-semibold flex flex-col
-                max-lg:hidden
-                ">
-                    <Image
-                        src={brand_logo}
-                        width={50}
-                        alt="Brand Logo"
-                    />
-                    <p>Send anything,</p>
-                    <p>anywhere,</p>
-                    <p>anytime</p>
-                </div>
-                <div className="w-max  max-sm:mt-2 mb-2">
-                    <h1 className="text-xl font-semibold">Company</h1>
-                    <ul>
-                        {COMPANY.map((item,index)=>(
-                            <li key={index} className="hover:text-gray-400"><Link href={item.url}>{item.name}</Link></li>    
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <h1 className="text-xl font-semibold">Quick Links</h1>
-                    <ul>
-                        {QUICK_LINKS.map((item,index)=>(
-                           <li key={index} className="hover:text-gray-400"><Link href={item.url}>{item.name}</Link></li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2 
-                max-lg:hidden
-                ">
-                    <h1 className="text-xl font-semibold">Support</h1>
-                    <ul>    
-                        {SUPPORT.map((item,index)=>(
-                           <li key={index} className="hover:text-gray-400"><Link href={item.url}>{item.name}</Link></li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="flex flex-col gap-3
-                max-lg:hidden
-                ">
-                    <Image
-                    src={google_play}
-                    alt="google play logo"
-                    width={190}
-                    />
-                    <Image
-                    src={app_store}
-                    alt="app store logo"
-                    width={190}
-                    />
-                </div>
+export default function Footer() {
+  return (
+    <>
+      <div className="bg-black text-white p-4 font-Titillium w-full">
+        <div
+          className="text-sm grid grid-cols-5 mb-3 ml-4 
+            max-lg:grid-cols-4 max-middle:grid-cols-3
+            gap-5 max-xs:text-[12px]"
+        >
+          <div
+            className="w-full items-start text-2xl font-semibold flex flex-col
+                "
+          >
+            <Image
+              src={brand_logo}
+              width={100}
+              alt="Brand Logo"
+              className="mb-4"
+            />
+            <div className="max-md:text-lg max-sm:text-md max-xs:text-sm max-xs:text-[12px]">
+              <p>Send anything,</p>
+              <p>anywhere,</p>
+              <p>anytime</p>
             </div>
-            <div className=" mt-10 text-xl font-semibold ml-4">
-                We Are Here
-            </div>
-            <div className="text-sm grid grid-cols-5 ml-4 gap-5
-            max-lg:grid-cols-2 gap-0
-            ">
+          </div>
+          <div className="w-max  max-sm:mt-2 mb-2">
+            <h1 className="text-xl font-semibold">Company</h1>
+            <ul className="flex flex-col gap-2 mt-4">
+              {COMPANY.map((item, index) => (
+                <li key={index} className="hover:text-gray-400">
+                  <Link href={item.url}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold">Quick Links</h1>
+            <ul className="flex flex-col gap-2 mt-4">
+              {QUICK_LINKS.map((item, index) => (
+                <li key={index} className="hover:text-gray-400">
+                  <Link href={item.url}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2 
+                
+                "
+          >
+            <h1 className="text-xl font-semibold">Support</h1>
+            <ul className="flex flex-col gap-2 mt-4">
+              {SUPPORT.map((item, index) => (
+                <li key={index} className="hover:text-gray-400">
+                  <Link href={item.url}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            className="flex flex-col gap-3 max-middle:justify-center max-middle:items-center max-middle:flex-col max-middle:w-[200px] max-middle:pl-10 max-xs:w-[170px] max-xs:pl-6 
+            max-lg:flex-row max-lg:w-[400px] max-md:w-[300px]
+                
+                "
+          >
             <div>
-                <ul >
-                   <li>{LOCATIONS[0]}</li>
-                   <li>{LOCATIONS[1]}</li>
-                   <li>{LOCATIONS[2]}</li>
-                   <li>{LOCATIONS[3]}</li>
-                   {/* {LOCATIONS.map((item,index)=>(
-                        while(index>4){
-                        <li key={index}>{item}</li>
-                        }
-                   ))} */}
-                </ul>
+              <Image
+                src={google_play}
+                alt="google play logo"
+                className="max-lg:w-[400px]"
+              />
             </div>
-                <div>
-                <ul>
-                   <li>{LOCATIONS[4]}</li>
-                   <li>{LOCATIONS[5]}</li>
-                   <li>{LOCATIONS[6]}</li>
-                   <li>{LOCATIONS[7]}</li>
-                </ul>
-                </div>
-                <div>
-                <ul>
-                   <li>{LOCATIONS[8]}</li>
-                   <li>{LOCATIONS[9]}</li>
-                   <li>{LOCATIONS[10]}</li>
-                   <li>{LOCATIONS[11]}</li>
-                </ul>
-                </div>
-                <div>
-                <ul>
-                   <li>{LOCATIONS[12]}</li>
-                   <li>{LOCATIONS[13]}</li>
-                   <li>{LOCATIONS[14]}</li>
-                   <li>{LOCATIONS[15]}</li>
-                </ul>
-                </div>
-                <ul>
-                   <li>{LOCATIONS[16]}</li>
-                   <li>{LOCATIONS[17]}</li>
-                   <li>{LOCATIONS[18]}</li>
-                   <li>{LOCATIONS[19]}</li>
-                </ul>
+            <div>
+              <Image
+                src={app_store}
+                alt="app store logo"
+                className="max-lg:w-[400px]"
+              />
             </div>
-            <div className=" flex justify-between mt-5 mb-2 items-center max-md:flex-col">
-                <div className="flex gap-5 ml-4">
-                <FaInstagram size={30}/>
-                <FaFacebook size={30}/>
-                <FaLinkedin size={30}/>
-                <FaYoutube size={30}/>
-                <FaTwitter size={30}/>
-                </div>
-                <div className=" text-gray-500 mr-5 mt-2">
-                   &copy;@2024 SolGuruz LLP Pvt. Ltd. | CIN:U69T69K69A69R69S69H
-                </div>
-            </div>
+          </div>
         </div>
-        </>
-    )
+        <div className=" mt-10 text-2xl font-semibold ml-4 w-full flex justify-center items-center">We Are Here</div>
+        <div className="flex justify-center items-center w-full">
+          <div
+            className="text-sm grid grid-cols-5 gap-5 w-full justify-items-center
+            max-lg:grid-cols-4 mt-10 max-xs:text-[12px]
+            "
+          >
+            {LOCATIONS.map((item, index) => (
+              <>
+                {index % 4 === 0 ? (
+                  <>
+                    <ul>
+                      <li key={index}>{item}</li>
+                    </ul>
+                  </>
+                ) : (
+                  <ul>
+                    <li key={index}>{item}</li>
+                  </ul>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+        <div className=" flex justify-between mt-8 mb-2 items-center max-md:flex-col">
+          <div className="flex gap-5 ml-4">
+            <FaInstagram size={30} />
+            <FaFacebook size={30} />
+            <FaLinkedin size={30} />
+            <FaYoutube size={30} />
+            <FaTwitter size={30} />
+          </div>
+          <div className=" text-gray-500 mt-2 w-full text-center">
+            &copy;@2024 SolGuruz LLP Pvt. Ltd. | CIN:U69T69K69A69R69S69H
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

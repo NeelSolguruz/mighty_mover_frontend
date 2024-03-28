@@ -37,6 +37,8 @@ import {
   vadodara,
   pune,
   kolkata,
+  ahmedabad_truck,
+  mumbai_enterprise
 } from "../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
@@ -262,12 +264,12 @@ export const ENTERPRISE_STRING = {
 
   POPULAR_CITIES: [
     {
-      CITY: "Mumbai",
-      images: enterprise,
-    },
-    {
       CITY: "Hyderabad",
       images: hyderabad,
+    },
+    {
+      CITY: "Mumbai",
+      images: mumbai_enterprise,
     },
     {
       CITY: "Delhi-NCR",
@@ -897,6 +899,10 @@ export const HEAVY_VEHICLE_DATA = [
 
 export const CITIES_TRUCK = [
   {
+    img:ahmedabad_truck,
+    name:"Ahmedabad"
+  },
+  {
     img: banglore,
     name: "Banglore",
   },
@@ -1059,6 +1065,26 @@ export const AREAS_WE_SERVE_IN_DATA = [
 
   "Vasna Or Vatva",
 ];
-export const THINK_lOGISTICS_THINK_PORTER="Think Logistics, Think Like Mighty Mover!"
-export const GET_ORDERS="Get the Mighty Movers mobile app to start booking your orders!"
-export const SCAN_TO_DOWNLOAD="Scan to download our app!"
+export const THINK_lOGISTICS_THINK_PORTER =
+  "Think Logistics, Think Like Mighty Mover!";
+export const GET_ORDERS =
+  "Get the Mighty Movers mobile app to start booking your orders!";
+export const SCAN_TO_DOWNLOAD = "Scan to download our app!";
+export const CHOOSE_FROM_OUR_SERVICES = "Choose from our services";
+export const POPULAR_CATEGORIES = "Popular Categories";
+export const POPULAR_CATEGORIES_DATA = [
+  "Rent 3 Wheeler In Ahmedabad",
+
+  "Rent Pickup 8FT In Ahmedabad",
+
+  "Rent Tata Ace In Ahmedabad",
+
+  "Rent Canter 14FT In Ahmedabad",
+
+  "Truck Rental",
+
+  "Rent 1.7 Ton Pick Up In Ahmedabad",
+];
+export const EXPLORE_TRUCK_RENTAL="Explore Truck Rental Services in India"
+export const RENT_MINI_TRUCK="Rent Mini Trucks In"
+export const IN_CASE_YOU_HAVE_MORE_QUESTION="In case you have more questions, feel free to reach out to us."

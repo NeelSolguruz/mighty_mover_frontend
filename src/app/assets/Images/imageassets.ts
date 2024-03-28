@@ -47,8 +47,11 @@ import vadodara from "./cities/vadodara.svg";
 import pune from "./cities/pune.svg";
 import kolkata from "./cities/kolkata (2).svg";
 import QR from "./qrcode.69482213.png"
+import ahmedabad_truck from "./cities/ahmedabad.svg"
+import mumbai_enterprise from "./mumbai_enterprise.svg"
 
 export {
+  mumbai_enterprise,
   Delivery,
   regularTrip,
   BetterEearning,
@@ -96,5 +99,6 @@ export {
   vadodara,
   pune,
   kolkata,
-  QR
+  QR,
+  ahmedabad_truck
 };

@@ -15,10 +15,12 @@ const config: Config = {
       },
       screens: {
         "ss":"320px",
+        "xs":"350px",
         "ms":"375px",
         "s":"425px",
         "middle":"545px",
-        'tablet': '640px',
+        "smalltab":"644px",
+        'tablet': '768px',
         "random":"1220px",
         'laptop': '1024px',
         'desktop': '1440px',
@@ -27,6 +29,9 @@ const config: Config = {
         'random': '50%',
         "one-third":"30%",
       },
+      fontFamily: {  
+        'Titillium': ['Titillium Web', 'sans-serif'], 
+    } 
     },
   },
   plugins: [],
