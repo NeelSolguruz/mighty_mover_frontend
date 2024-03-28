@@ -38,6 +38,16 @@ import {
   pune,
   kolkata,
 } from "../assets/Images/imageassets";
+
+import {
+  bike_image,
+  truck_image,
+  packers_image,
+  all_india,
+  profile,
+  nav_logo,
+} from "../assets/Images/imageassets";
+import { grp1, grp2 } from "../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
   PARTNER_BANNER_LINE2: `Earn money by delivering goods, courier and packages. Get a part time or full time delivery job`,
@@ -124,46 +134,41 @@ export const DELIVERY_PARTNER_STRING = {
         "Get healthcare benefits for you and your family with mini truck attachment.",
     },
     {
-      title: "Insurance",
-      description:
-        "Save money with reduced annual maintenance and insurance costs on your vehicle.",
-      images: BetterEearning,
+        title: "Insurance",
+        description:"Save money with reduced annual maintenance and insurance costs on your vehicle.",
+        images: BetterEearning,
     },
     {
-      title: "Fuel card for Savings",
-      description:
-        "Save big on fuel costs with our smart fuel card and increase your profit margins!",
-      images: onTImePayment,
+        title: "Fuel card for Savings",
+        description:"Save big on fuel costs with our smart fuel card and increase your profit margins!",
+        images: onTImePayment,
     },
     {
-      images: regularTrip,
+        images: regularTrip,
       title: "Discount on Vehicle Purchase",
-      description:
-        "Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!",
+      description:"Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!"
     },
   ],
 
-  PEOPLE_LIFE: "CHANGING LIFE OF PEOPLE",
+  PEOPLE_LIFE:"CHANGING LIFE OF PEOPLE",
 
   PEOPLE_LIFE_DATA: [
     {
-      img: profilePic,
-      name: "Utkarsh",
-      loc: "Hyderabad",
-      desc: `Getting business at vehicle stand has become very tough today due to intense competition. But with Porter's partner driver app, transparent fare structure and standard pricing, my life has become easier. Now I don't worry about finding customers and getting payments.`,
-    },
-    {
-      img: profilePic,
-      name: "Prit",
-      loc: "Mumbai",
-      desc: `Earlier there were many restrictions on earnings because I got limited trips in market which were only from my known customers and to nearby places. I gave my truck on rent with Porter there are no such restrictions, there are a lot of orders throughout city. I enjoy being a part of Porter family.`,
-    },
-    {
-      img: profilePic,
-      name: "Neel",
-      loc: "Ahmedabad",
-      desc: `I was new to Chennai and went ahead to attach my tata ace with Porter. Porter app's inbuilt map and navigational capability never made me feel new to city. Payment is done on time and their vendor helpdesk provides immediate solutions to all my issues.`,
-    },
+        img:profilePic,
+        name:"Utkarsh",
+        loc:"Hyderabad",
+        desc:`Getting business at vehicle stand has become very tough today due to intense competition. But with Porter's partner driver app, transparent fare structure and standard pricing, my life has become easier. Now I don't worry about finding customers and getting payments.`
+    },{
+        img:profilePic,
+        name:"Prit",
+        loc:"Mumbai",
+        desc:`Earlier there were many restrictions on earnings because I got limited trips in market which were only from my known customers and to nearby places. I gave my truck on rent with Porter there are no such restrictions, there are a lot of orders throughout city. I enjoy being a part of Porter family.`
+    },{
+        img:profilePic,
+        name:"Neel",
+        loc:"Ahmedabad",
+        desc: `I was new to Chennai and went ahead to attach my tata ace with Porter. Porter app's inbuilt map and navigational capability never made me feel new to city. Payment is done on time and their vendor helpdesk provides immediate solutions to all my issues.`
+    }
   ],
   OWN_MULTI_VEHICLES_TITLE: `OWN MULTIPLE VEHICLES?`,
   OWN_MULTI_VEHICLES_IMAGES: ownVehicles,
@@ -427,16 +432,6 @@ export const ENTERPRISE_STRING = {
     "Still have questions about our Enterprise Services?",
   READ_FAQ: "READ OUR FAQs",
 };
-
-// utkarsh
-import {
-  bike_image,
-  truck_image,
-  packers_image,
-  all_india,
-  profile,
-  nav_logo,
-} from "../assets/Images/imageassets";
 
 export const IMAGES_CAPTION = [
   {
@@ -1062,3 +1057,32 @@ export const AREAS_WE_SERVE_IN_DATA = [
 export const THINK_lOGISTICS_THINK_PORTER="Think Logistics, Think Like Mighty Mover!"
 export const GET_ORDERS="Get the Mighty Movers mobile app to start booking your orders!"
 export const SCAN_TO_DOWNLOAD="Scan to download our app!"
+
+
+export const ABOUT_US = {
+  TITLE: "About Us",
+  DESC1: `Mighty_Mover started off as a platform to address inefficiencies in the last mile logistics sector and transform the way goods are transported around cities, enabling lakhs of businesses move anything on-demand. We’ve grown manyfold since then, positively impacting the productivity of businesses, creating tremendous value for our partner-drivers and delivering happiness to a growing list of 19 cities.`,
+  DESC1_2: `But our journey has just begun, our goal is to to deliver the world’s best end-to-end logistics platform and revolutionise the transport logistics sector.`,
+  IMAGES1: grp1,
+  DESC2: `mighty_movers is strongly committed towards improving the quality of life of our partner drivers. Our partners enjoy flexible working hours, increased earnings and an effective work life balance alongwith additional benefits like discounted insurance and fuel costs.`,
+  DESC2_1: `We’ve also taken up a lot of community development initiatives like higher education grants and scholarships for the children of our partners, dedicated health care assistance and vehicle leasing assistance.`,
+  IMAGES2: grp2,
+  TAGLINE: `India's Largest Marketplace for Intracity Logistics | Revolutionizing one delivery at a time`,
+  YEARFOUND: {
+    title: `YEAR FOUNDED`,
+    count: "2014",
+  },
+  CUSTOMER: {
+    title: "CUSTOMERS",
+    count: "8Million +",
+  },
+  STRONG_TEAM: {
+    title: "STRONG TEAM",
+    count: `1200+`,
+  },
+  JOIN_US: `JOIN MIGHTY MOVERS`,
+  JOIN_US_DESC: `Help us build the smartest transport logistics platform in the world.`,
+  JOIN_US_BUTTON: `JOIN US`,
+  JOIN_US_BUTTON_DESC: `JOIN US`,
+  JOIN_US_BUTTON_LINK: `https://mightymovers.com/register`,
+};
