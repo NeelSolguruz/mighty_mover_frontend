@@ -1,4 +1,3 @@
-
 import {
   enterprise,
   rajasthan,
@@ -45,7 +44,6 @@ import {
   packers_image,
   all_india,
   profile,
-  nav_logo,
 } from "../assets/Images/imageassets";
 import { grp1, grp2 } from "../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
@@ -134,41 +132,46 @@ export const DELIVERY_PARTNER_STRING = {
         "Get healthcare benefits for you and your family with mini truck attachment.",
     },
     {
-        title: "Insurance",
-        description:"Save money with reduced annual maintenance and insurance costs on your vehicle.",
-        images: BetterEearning,
+      title: "Insurance",
+      description:
+        "Save money with reduced annual maintenance and insurance costs on your vehicle.",
+      images: BetterEearning,
     },
     {
-        title: "Fuel card for Savings",
-        description:"Save big on fuel costs with our smart fuel card and increase your profit margins!",
-        images: onTImePayment,
+      title: "Fuel card for Savings",
+      description:
+        "Save big on fuel costs with our smart fuel card and increase your profit margins!",
+      images: onTImePayment,
     },
     {
-        images: regularTrip,
+      images: regularTrip,
       title: "Discount on Vehicle Purchase",
-      description:"Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!"
+      description:
+        "Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!",
     },
   ],
 
-  PEOPLE_LIFE:"CHANGING LIFE OF PEOPLE",
+  PEOPLE_LIFE: "CHANGING LIFE OF PEOPLE",
 
   PEOPLE_LIFE_DATA: [
     {
-        img:profilePic,
-        name:"Utkarsh",
-        loc:"Hyderabad",
-        desc:`Getting business at vehicle stand has become very tough today due to intense competition. But with Porter's partner driver app, transparent fare structure and standard pricing, my life has become easier. Now I don't worry about finding customers and getting payments.`
-    },{
-        img:profilePic,
-        name:"Prit",
-        loc:"Mumbai",
-        desc:`Earlier there were many restrictions on earnings because I got limited trips in market which were only from my known customers and to nearby places. I gave my truck on rent with Porter there are no such restrictions, there are a lot of orders throughout city. I enjoy being a part of Porter family.`
-    },{
-        img:profilePic,
-        name:"Neel",
-        loc:"Ahmedabad",
-        desc: `I was new to Chennai and went ahead to attach my tata ace with Porter. Porter app's inbuilt map and navigational capability never made me feel new to city. Payment is done on time and their vendor helpdesk provides immediate solutions to all my issues.`
-    }
+      img: profilePic,
+      name: "Utkarsh",
+      loc: "Hyderabad",
+      desc: `Getting business at vehicle stand has become very tough today due to intense competition. But with Porter's partner driver app, transparent fare structure and standard pricing, my life has become easier. Now I don't worry about finding customers and getting payments.`,
+    },
+    {
+      img: profilePic,
+      name: "Prit",
+      loc: "Mumbai",
+      desc: `Earlier there were many restrictions on earnings because I got limited trips in market which were only from my known customers and to nearby places. I gave my truck on rent with Porter there are no such restrictions, there are a lot of orders throughout city. I enjoy being a part of Porter family.`,
+    },
+    {
+      img: profilePic,
+      name: "Neel",
+      loc: "Ahmedabad",
+      desc: `I was new to Chennai and went ahead to attach my tata ace with Porter. Porter app's inbuilt map and navigational capability never made me feel new to city. Payment is done on time and their vendor helpdesk provides immediate solutions to all my issues.`,
+    },
   ],
   OWN_MULTI_VEHICLES_TITLE: `OWN MULTIPLE VEHICLES?`,
   OWN_MULTI_VEHICLES_IMAGES: ownVehicles,
@@ -704,13 +707,13 @@ export const SUPPORT_STRING = {
       desc: "Are you a tempo truck owner? Increase your earnings by partnering with us. Click here or reach us out on 022 4410 4410(add your city code)",
     },
   ],
-  office_heading:"Our Offices",
-  head_office_heading:"HEAD OFFICE",
-  head_office:{
-    city:"Ahmedabad",
-    add:"Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
-    url_text:"GET DIRECTIONS >",
-    url:"https://maps.app.goo.gl/E5myQhxEfBsJPCPEA"
+  office_heading: "Our Offices",
+  head_office_heading: "HEAD OFFICE",
+  head_office: {
+    city: "Ahmedabad",
+    add: "Mighty Movers Head Office, 10, Sundarvan Society, Besides Hyatt Regency, Ashram Rd, Usmanpura, Ahmedabad, Gujarat 380014",
+    url_text: "GET DIRECTIONS >",
+    url: "https://maps.app.goo.gl/E5myQhxEfBsJPCPEA",
   },
   regional_office_heading: "REGIONAL OFFICES",
   SECTION_TWO: [
@@ -1054,10 +1057,11 @@ export const AREAS_WE_SERVE_IN_DATA = [
 
   "Vasna Or Vatva",
 ];
-export const THINK_lOGISTICS_THINK_PORTER="Think Logistics, Think Like Mighty Mover!"
-export const GET_ORDERS="Get the Mighty Movers mobile app to start booking your orders!"
-export const SCAN_TO_DOWNLOAD="Scan to download our app!"
-
+export const THINK_lOGISTICS_THINK_PORTER =
+  "Think Logistics, Think Like Mighty Mover!";
+export const GET_ORDERS =
+  "Get the Mighty Movers mobile app to start booking your orders!";
+export const SCAN_TO_DOWNLOAD = "Scan to download our app!";
 
 export const ABOUT_US = {
   TITLE: "About Us",
