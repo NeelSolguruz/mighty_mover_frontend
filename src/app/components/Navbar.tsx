@@ -29,7 +29,7 @@ export default function Navbar() {
           <Link href="/enterprise" className=" hover:text-yellow-500 
             hover:duration-300
             text-md text-black font-bold">For Enterprise</Link>
-          <Link href="/deliveryPartner" className=" hover:text-yellow-500 duration-300 text-md text-black
+          <Link href="/delivery-partner" className=" hover:text-yellow-500 duration-300 text-md text-black
             font-bold">Delivery Partners</Link>
           <Link href="/support" className="text-md font-bold
              hover:text-yellow-500 duration-500
