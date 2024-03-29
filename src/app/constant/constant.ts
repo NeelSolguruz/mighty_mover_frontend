@@ -37,7 +37,7 @@ import {
   pune,
   kolkata,
   ahmedabad_truck,
-  mumbai_enterprise
+  mumbai_enterprise,
 } from "../assets/Images/imageassets";
 
 import {
@@ -895,10 +895,10 @@ export const HEAVY_VEHICLE_DATA = [
   },
 ];
 
-export const CITIES_TRUCK = [
+export const CITIES = [
   {
-    img:ahmedabad_truck,
-    name:"Ahmedabad"
+    img: ahmedabad_truck,
+    name: "Ahmedabad",
   },
   {
     img: banglore,
@@ -1083,9 +1083,10 @@ export const POPULAR_CATEGORIES_DATA = [
 
   "Rent 1.7 Ton Pick Up In Ahmedabad",
 ];
-export const EXPLORE_TRUCK_RENTAL="Explore Truck Rental Services in India"
-export const RENT_MINI_TRUCK="Rent Mini Trucks In"
-export const IN_CASE_YOU_HAVE_MORE_QUESTION="In case you have more questions, feel free to reach out to us."
+export const EXPLORE_TRUCK_RENTAL = "Explore Truck Rental Services in India";
+export const RENT_MINI_TRUCK = "Rent Mini Trucks In";
+export const IN_CASE_YOU_HAVE_MORE_QUESTION =
+  "In case you have more questions, feel free to reach out to us.";
 export const ABOUT_US = {
   TITLE: "About Us",
   DESC1: `Mighty_Mover started off as a platform to address inefficiencies in the last mile logistics sector and transform the way goods are transported around cities, enabling lakhs of businesses move anything on-demand. We’ve grown manyfold since then, positively impacting the productivity of businesses, creating tremendous value for our partner-drivers and delivering happiness to a growing list of 19 cities.`,

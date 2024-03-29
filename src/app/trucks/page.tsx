@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { Button, Modal } from "antd";
+// import { Button, Modal } from "antd";
 import Image from "next/image";
 import { truck_page_indi, QR } from "@/app/assets/Images/imageassets";
 import {
@@ -9,7 +9,7 @@ import {
   LIGHT_VEHICLE_DATA,
   HEAVY_VEHICLE_DATA,
   RENT_MINI_TRUCKS_IN_AHMEDABAD,
-  CITIES_TRUCK,
+  CITIES,
   POPULAR_OUTSTATIONS_FROM_AHMEDABAD_ALL_DATA,
   POPULAR_OUTSTATIONS_FROM_AHMEDABAD,
   AREAS_WE_SERVE_IN,
@@ -29,7 +29,7 @@ import {
 } from "../constant/constant";
 import { KNOW_MORE } from "../constant/constant";
 import { FaCity } from "react-icons/fa";
-import { Segmented } from "antd";
+// import { Segmented } from "antd";
 import { FaWeightHanging } from "react-icons/fa";
 import { Poppins } from "next/font/google";
 export default function page() {
@@ -41,7 +41,9 @@ export default function page() {
   const showModal = () => {
     setIsModalOpen(true);
   };
-
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const scrollToSmallTruck = () => {
     if (smallTruckRef.current) {
       smallTruckRef.current.scrollIntoView({ behavior: "smooth" });
@@ -54,14 +56,11 @@ export default function page() {
 
   return (
     <>
-      <div className="flex flex-col gap-10 w-full h-auto bg-gray-100 font-titillium">
+      <div className="flex flex-col gap-10 w-full h-auto bg-gray-100 ">
+        {/* there is city select model */}
         <div className="w-full relative">
-          <Image
-            src={truck_page_indi}
-            alt="truck main page"
-            className="h-96"
-          ></Image>
-          <div className="flex flex-col gap-4 w-full justify-center text-center  absolute top-8 max-tablet:top-2 max-middle:top-14 max-s:top-10">
+          <Image src={truck_page_indi} alt="truck main page" className="h-96" />
+          <div className="flex flex-col gap-4 w-full justify-center text-center absolute top-8 max-tablet:top-2 max-middle:top-14 max-s:top-10">
             <div className="text-white font-semibold text-4xl max-tablet:text-3xl max-s:text-2xl">
               {TRUCK_MAIN_PAGE_DATA[0].title}
             </div>
@@ -81,8 +80,10 @@ export default function page() {
                 onClick={showModal}
               >
                 <FaCity className="text-4xl text-orange-500" />
-                <Modal
-                  title={
+              </div>
+              {isModalOpen && (
+                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                  <div className="bg-white p-4 rounded-lg">
                     <div
                       style={{
                         textAlign: "center",
@@ -93,29 +94,37 @@ export default function page() {
                     >
                       Choose Your City
                     </div>
-                  }
-                  open={isModalOpen}
-                  footer={null}
-                  width={1000}
-                >
-                  <div className="flex flex-wrap gap-4 justify-center items-center">
-                    {CITIES_TRUCK.map((item) => (
-                      <Link href={`/trucks/${item.name}`} key={item.name}>
-                        <div className="flex flex-col gap-2" key={item.name}>
-                          <div className="w-20 h-20 ">
-                            <Image
-                              src={item.img}
-                              alt={item.name}
-                              className="w-full h-full object-cover rounded-lg"
-                            ></Image>
+                    <div className="flex flex-wrap gap-4 justify-center items-center">
+                      {CITIES.map((item) => (
+                        <Link href={`/trucks/${item.name}`} key={item.name}>
+                          <div className="flex flex-col gap-2" key={item.name}>
+                            <div className="w-20 h-20 relative">
+                              <Image
+                                src={item.img}
+                                alt={item.name}
+                                layout="fill"
+                                objectFit="cover"
+                                className="rounded-lg"
+                              />
+                            </div>
+                            <div className="w-full text-center">
+                              {item.name}
+                            </div>
                           </div>
-                          <div className="w-full text-center">{item.name}</div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="mt-4 text-center">
+                      <button
+                        onClick={closeModal}
+                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg"
+                      >
+                        Close
+                      </button>
+                    </div>
                   </div>
-                </Modal>
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -130,13 +139,24 @@ export default function page() {
         </div>
         <div className="w-full flex justify-center items-center">
           <div className="w-auto">
-            <Segmented<string>
-              options={["Light (below 750kg)", "Heavy (above 750kg)"]}
-              className="text-black "
-              onChange={(value) => {
-                setTruckval(!truckval);
-              }}
-            />
+            <div className="flex justify-between w-full max-w-xs mx-auto">
+              <button
+                className={`px-2 py-2 rounded-tl-lg w-1/2 h-12 text-sm ${
+                  truckval ? "bg-gray-300 " : "bg-blue-500 text-white"
+                }`}
+                onClick={() => setTruckval(false)}
+              >
+                Light (below 750kg)
+              </button>
+              <button
+                className={`px-2 py-2 rounded-tr-lg w-1/2 h-12  text-sm ${
+                  truckval ? "bg-blue-500 text-white" : "bg-gray-300"
+                }`}
+                onClick={() => setTruckval(true)}
+              >
+                Heavy (above 750kg)
+              </button>
+            </div>
           </div>
         </div>
         <div className="w-full flex justify-center items-center">
@@ -208,7 +228,7 @@ export default function page() {
             )}
           </div>
         </div>
-        <div className="w-full flex justify-center items-center m-3">
+        <div className="w-full flex justify-center items-center">
           <div className="w-10/12 font-semibold text-2xl text-center">
             {POPULAR_OUTSTATIONS_FROM_AHMEDABAD}
           </div>
@@ -271,25 +291,25 @@ export default function page() {
           <div className="flex flex-wrap justify-center w-full items-center gap-20 p-10">
             {IMAGES_CAPTION.map((item, index) => (
               <>
-              {item.caption === "Trucks" ? (
-                <></>
+                {item.caption === "Trucks" ? (
+                  <></>
                 ) : (
                   <Link href={item.url} key={index}>
-                  <div
-                    key={index}
-                    className="text-center transition-all hover:scale-105 font-semibold"
-                  >
-                    <Image
-                      src={item.image}
-                      alt="image"
-                      width={120}
-                      className="bg-indigo-100 shadow-2xl rounded-3xl"
-                    />
-                    <figcaption className="mt-2">{item.caption}</figcaption>
-                  </div>
+                    <div
+                      key={index}
+                      className="text-center transition-all hover:scale-105 font-semibold"
+                    >
+                      <Image
+                        src={item.image}
+                        alt="image"
+                        width={120}
+                        className="bg-indigo-100 shadow-2xl rounded-3xl"
+                      />
+                      <figcaption className="mt-2">{item.caption}</figcaption>
+                    </div>
                   </Link>
                 )}
-                </>
+              </>
             ))}
           </div>
         </div>
@@ -310,7 +330,7 @@ export default function page() {
             </div>
             <div className="font-semibold text-lg">{EXPLORE_TRUCK_RENTAL}</div>
             <div className="flex flex-wrap text-sm font-light gap-4">
-              {CITIES_TRUCK.map((item, index) => (
+              {CITIES.map((item, index) => (
                 <>
                   <li key={index}>
                     {RENT_MINI_TRUCK} {item.name}
