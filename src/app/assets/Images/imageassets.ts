@@ -54,8 +54,9 @@ import ahmedabad_truck from "./cities/ahmedabad.svg";
 import mumbai_enterprise from "./mumbai_enterprise.svg";
 // import Bike from "./icons/Bike";
 import Bike from "./bikes.svg"
-
+import enterpriselogo from "./enterprise_banner_58451866fd.webp"
 export {
+  enterpriselogo,
   mumbai_enterprise,
   Delivery,
   regularTrip,

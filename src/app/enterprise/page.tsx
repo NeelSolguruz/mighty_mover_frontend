@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { ENTERPRISE_STRING,REVIEWS } from "../constant/constant";
 // import enterprise from "../assets/Images/enterprise.jpg";
-import { enterprise } from "../assets/Images/imageassets";
+import { enterpriselogo } from "../assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
 import industry_1 from "../assets/Images/industries_1.webp";
 import truck from "../assets/Images/Truck.svg";
@@ -21,7 +21,7 @@ export default function page() {
       <div className="w-full flex flex-col gap-10">
         <div>
           <Image
-            src={enterprise}
+            src={enterpriselogo}
             className="w-full"
             alt="Picture of the enterprise"
           />
@@ -55,7 +55,7 @@ export default function page() {
               </>
             ))}
           </div>
-          <div className="w-4/12 p-10  rounded-3xl shadow-gray-400 shadow-md ss:w-auto ss:m-2 random:w-5/12">
+          <div className="w-[342px] p-10  rounded-3xl shadow-gray-400 shadow-md ss:w-auto ss:m-2 random:w-5/12 absoulute">
             <form>
               <div className="flex flex-col gap-6">
                 <div className="flex justify-center text-4xl font-semibold text-blue-950 ss:text-center">
