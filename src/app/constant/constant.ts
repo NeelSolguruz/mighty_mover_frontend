@@ -1114,3 +1114,18 @@ export const ABOUT_US = {
   JOIN_US_BUTTON_DESC: `JOIN US`,
   JOIN_US_BUTTON_LINK: `https://mightymovers.com/register`,
 };
+
+export const LOGIN = {
+  sign_in: "Sign In",
+  tagline: "Delivery hai? #HoJayega",
+};
+
+export const FORGOT_PASSWORD = {
+  title: "Forgot Password",
+};
+
+
+export const SIGNUP = {
+  title:"Sign Up",
+  tagline:"Delivering everything, anytime, anywhere."
+}
