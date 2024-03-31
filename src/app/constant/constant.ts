@@ -36,8 +36,6 @@ import {
   vadodara,
   pune,
   kolkata,
-  ahmedabad_truck,
-  mumbai_enterprise,
 } from "../assets/Images/imageassets";
 
 import {
@@ -272,12 +270,12 @@ export const ENTERPRISE_STRING = {
 
   POPULAR_CITIES: [
     {
-      CITY: "Hyderabad",
-      images: hyderabad,
+      CITY: "Mumbai",
+      images: enterprise,
     },
     {
-      CITY: "Mumbai",
-      images: mumbai_enterprise,
+      CITY: "Hyderabad",
+      images: hyderabad,
     },
     {
       CITY: "Delhi-NCR",
@@ -895,11 +893,7 @@ export const HEAVY_VEHICLE_DATA = [
   },
 ];
 
-export const CITIES = [
-  {
-    img: ahmedabad_truck,
-    name: "Ahmedabad",
-  },
+export const CITIES_TRUCK = [
   {
     img: banglore,
     name: "Banglore",
@@ -1068,25 +1062,7 @@ export const THINK_lOGISTICS_THINK_PORTER =
 export const GET_ORDERS =
   "Get the Mighty Movers mobile app to start booking your orders!";
 export const SCAN_TO_DOWNLOAD = "Scan to download our app!";
-export const CHOOSE_FROM_OUR_SERVICES = "Choose from our services";
-export const POPULAR_CATEGORIES = "Popular Categories";
-export const POPULAR_CATEGORIES_DATA = [
-  "Rent 3 Wheeler In Ahmedabad",
 
-  "Rent Pickup 8FT In Ahmedabad",
-
-  "Rent Tata Ace In Ahmedabad",
-
-  "Rent Canter 14FT In Ahmedabad",
-
-  "Truck Rental",
-
-  "Rent 1.7 Ton Pick Up In Ahmedabad",
-];
-export const EXPLORE_TRUCK_RENTAL = "Explore Truck Rental Services in India";
-export const RENT_MINI_TRUCK = "Rent Mini Trucks In";
-export const IN_CASE_YOU_HAVE_MORE_QUESTION =
-  "In case you have more questions, feel free to reach out to us.";
 export const ABOUT_US = {
   TITLE: "About Us",
   DESC1: `Mighty_Mover started off as a platform to address inefficiencies in the last mile logistics sector and transform the way goods are transported around cities, enabling lakhs of businesses move anything on-demand. We’ve grown manyfold since then, positively impacting the productivity of businesses, creating tremendous value for our partner-drivers and delivering happiness to a growing list of 19 cities.`,

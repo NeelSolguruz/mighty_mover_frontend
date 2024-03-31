@@ -28,6 +28,7 @@ import {
   BIKE_KNOW_MORE,
   LIGHT_VEHICLE_DATA,
   BIKE_DATA,
+  RENT_BIKE_IN_AHMEDABAD,
 } from "../constant/twoWheeler";
 import { FaCity, FaWeightHanging } from "react-icons/fa";
 import Link from "next/link";
@@ -108,7 +109,7 @@ function twoWheeler() {
                       Choose Your City
                     </div>
                     <div className="flex flex-wrap gap-4 justify-center items-center">
-                      {CITIES.map((item) => (
+                      {CITIES.map((item: any) => (
                         <Link href={`/trucks/${item.name}`} key={item.name}>
                           <div className="flex flex-col gap-2" key={item.name}>
                             <div className="w-20 h-20 relative">
@@ -141,18 +142,18 @@ function twoWheeler() {
             </div>
           </div>
         </div>
-
-        <div className="w-full">
+        {/* two wheeler information */}
+        <div className="w-full mb-4 mt-2">
           <div
             className="w-full flex justify-center items-center"
             ref={smallTruckRef}
             id="small-truck"
           >
-            <div className="w-auto font-semibold text-2xl m-1 text-center">
-              {RENT_MINI_TRUCKS_IN_AHMEDABAD}
+            <div className="w-auto font-semibold text-2xl m-1 text-center py-8">
+              {RENT_BIKE_IN_AHMEDABAD}
             </div>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-4">
+          {/* <div className="justify-center items-center gap-4">
             {BIKE_DATA.map((item) => (
               <>
                 <div className="bg-white h-auto w-auto p-8 flex flex-col gap-2  justify-center items-center border-[1px] border-gray-400">
@@ -179,11 +180,52 @@ function twoWheeler() {
                   <div className="font-semibold text-black text-xl">
                     {item.desc}
                   </div>
-                  {/* <div></div> */}
+                  <div></div>
                 </div>
               </>
             ))}
+          </div> */}
+          <div className="w-full flex justify-center ">
+            <div className="w-1/2 bg-white flex justify-between items-center border-2 ">
+              {BIKE_DATA.map((item) => (
+                <>
+                  <div className="bg-white w-full flex flex-row gap-5 justify-center items-center border-[1px] border-gray-400">
+                    <div className="w-1/2 px-8">
+                      <Image
+                        src={item.img}
+                        alt="mini_truck"
+                        className="w-9/12 "
+                      ></Image>
+                    </div>
+                    <div className="w-1/2 flex flex-col py-8">
+                      <div className="font-semibold text-black text-xl">
+                        {item.name}
+                      </div>
+                      <div className="bg-[#EEF2FF] text-black flex p-1 rounded-lg w-24">
+                        <FaWeightHanging className="text-sm mt-1 mr-1.5" />{" "}
+                        {item.weight}
+                      </div>
+                      <div className="font-semibold text-md ">
+                        {item.prefix}{" "}
+                        <span className="text-black text-md font-bold">
+                          {item.price}
+                        </span>
+                      </div>
+                      <div className="font-normal text-black text-md">
+                        {item.desc}
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                </>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* bike services */}
+        <div className="w-full mb-4 mt-2">
+          
         </div>
       </div>
     </>
