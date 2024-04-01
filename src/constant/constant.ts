@@ -1124,8 +1124,7 @@ export const FORGOT_PASSWORD = {
   title: "Forgot Password",
 };
 
-
 export const SIGNUP = {
-  title:"Sign Up",
-  tagline:"Delivering everything, anytime, anywhere."
-}
+  title: "Sign Up",
+  tagline: "Delivering everything, anytime, anywhere.",
+};
