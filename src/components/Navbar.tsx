@@ -18,7 +18,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <div className="sticky  flex shadow-2xl  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
+      <div className="sticky   flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
         z-10
         ">
         <div className="p-2">
@@ -40,7 +40,7 @@ export default function Navbar() {
           max-md:hidden
           "
           title="Sign Up?">
-          <Link href='/login-or-sign-up'>
+          <Link href='/login'>
             <FaUserCircle
               className="w-16 h-8 
             hover:text-yellow-500
@@ -76,9 +76,9 @@ export default function Navbar() {
           `
       }>
         <Link href="/enterprise" className="p-2 hover:text-yellow-500 duration-300 ">For Enterprise</Link>
-        <Link href="/deliveryPartner" className="p-2 hover:text-yellow-500 duration-300">Delivery Partner</Link>
+        <Link href="/delivery-partner" className="p-2 hover:text-yellow-500 duration-300">Delivery Partner</Link>
         <Link href="/support" className="p-2 hover:text-yellow-500 duration-300">Support</Link>
-        <Link href="/login-or-sign-up" className=" bg-yellow-400 w-fit p-4 rounded-xl
+        <Link href="/login" className=" bg-yellow-400 w-fit p-4 rounded-xl
          hover:text-white hover:bg-black hover:scale-105  duration-300
           ">Sign Up</Link>
       </div>

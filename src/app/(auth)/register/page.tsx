@@ -1,9 +1,9 @@
-import Truck from '@/components/Truck'
+import Register from '@/components/Register'
 import React from 'react'
 
 function page() {
   return (
-    <div><Truck /></div>
+    <div><Register /></div>
   )
 }
 
