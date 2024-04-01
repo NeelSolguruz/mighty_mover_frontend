@@ -512,6 +512,10 @@ export const LOCATIONS = [
   "Kanpur",
 ];
 
+export const BACKGROUND_TEXT = { question: "Delivery hai?", tagline: "#HoJayega!" };
+
+export const SLIDER_TITLE = { title: "-----OUR SERVICES-----" };
+
 export const SLIDER = [
   {
     title: "API Integrations",
@@ -563,6 +567,10 @@ export const STATS = [
     val: "Trips",
   },
 ];
+
+export const REVIEWS_TITLE = {
+  title: "-----SOME WORDS FROM OUR HAPPY CUSTOMERS-----",
+};
 
 export const REVIEWS = [
   {
