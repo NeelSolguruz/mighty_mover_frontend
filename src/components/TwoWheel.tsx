@@ -104,10 +104,10 @@ function TwoWheel() {
             </div>
             <div className="w-full flex justify-center items-center">
               <div
-                className="w-48 bg-orange-100 border-2 border-orange-500 flex justify-center items-center p-2 rounded-lg transition-all hover:scale-90"
+                className="w-48 bg-[#2967FF] border-2 border-[#2967FF] flex justify-center items-center p-2 rounded-lg transition-all hover:scale-90"
                 onClick={showModal}
               >
-                <button className="text-l font-bold text-orange-500">
+                <button className="text-l font-bold text-white">
                   Please Select Your city
                 </button>
               </div>
@@ -239,7 +239,7 @@ function TwoWheel() {
               {AREAS_WE_SERVE_IN_DATA.map((item, index) => (
                 <>
                   <div className="text-sm font-light ">
-                    <li key={index} className="text-orange-300">
+                    <li key={index} className="text-[#2967FF]">
                       <span className="text-black">{item}</span>
                     </li>
                   </div>
@@ -303,7 +303,7 @@ function TwoWheel() {
                 {POPULAR_CATEGORIES_DATA.map((item, index) => (
                   <>
                     <div className="text-sm font-light ">
-                      <li className="text-orange-300" key={index}>
+                      <li className="text-[#2967FF]" key={index}>
                         <span className="text-black">{item}</span>
                       </li>
                     </div>
@@ -315,7 +315,7 @@ function TwoWheel() {
             <div className="flex flex-wrap text-sm font-light gap-4">
               {CITIES.map((item, index) => (
                 <>
-                  <li key={index} className="text-orange-300">
+                  <li key={index} className="text-[#2967FF]">
                     <span className="text-black">
                       {RENT_MINI_TRUCK} {item.name}
                     </span>
@@ -363,6 +363,7 @@ function TwoWheel() {
                     width="16"
                     height="2"
                     rx="1"
+                    fill="#2967FF"
                     className="transform origin-center transition duration-200 ease-out"
                   />
                   <rect
@@ -370,6 +371,7 @@ function TwoWheel() {
                     width="16"
                     height="2"
                     rx="1"
+                    fill="#2967FF"
                     className="transform origin-center rotate-90 transition duration-200 ease-out"
                   />
                 </svg>

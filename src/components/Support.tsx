@@ -37,7 +37,7 @@ export default function Support() {
         </div>
 
         {/* section1 */}
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <div
             className="w-11/12 grid grid-cols-2
                         max-md:grid-cols-1
@@ -83,7 +83,7 @@ export default function Support() {
           </div>
         </div>
 
-        <div className="my-20">
+        <div className="my-20 ">
           <div className="flex flex-col items-center">
             <div
               className="text-white text-4xl font-bold

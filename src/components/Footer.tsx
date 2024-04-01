@@ -22,7 +22,7 @@ export default function Footer() {
                 "
           >
             <Image
-              src={porter_white}
+              src={brand_logo}
               height={100}
               alt="Brand Logo"
               className="m-4 w-24"

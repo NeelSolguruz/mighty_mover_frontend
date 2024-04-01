@@ -178,7 +178,7 @@ export default function DeliveryPage(): JSX.Element {
                 </select>
                 <button
                   type="submit"
-                  className="w-full bg-amber-500 p-2 rounded text-blue-950 text-lg font-semibold hover:scale-105 transition-all transition-300"
+                  className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
                 >
                   Register
                 </button>
@@ -302,7 +302,7 @@ export default function DeliveryPage(): JSX.Element {
               <br />
               <button
                 type="button"
-                className="w-full bg-amber-500 p-2 rounded text-blue-950 text-lg font-semibold hover:scale-105 transition-all transition-300"
+                className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
               >
                 {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_BUTTON}
               </button>
@@ -313,7 +313,7 @@ export default function DeliveryPage(): JSX.Element {
 
       {/* DELIVERY_PARTNER_FAQ __ section__ start from here */}
 
-      <div className="w-full h-auto mb-8">
+      <div className="w-full h-auto mb-8 ">
         <div className="text-4xl font-semibold text-center p-10">
           {DELIVERY_PARTNER_STRING.DELIVERY_PARTNER_FAQ_TITLE}
         </div>
@@ -345,6 +345,7 @@ export default function DeliveryPage(): JSX.Element {
                       width="16"
                       height="2"
                       rx="1"
+                      fill="#2967FF"
                       className="transform origin-center transition duration-200 ease-out"
                     />
                     <rect
@@ -352,6 +353,7 @@ export default function DeliveryPage(): JSX.Element {
                       width="16"
                       height="2"
                       rx="1"
+                      fill="#2967FF"
                       className="transform origin-center rotate-90 transition duration-200 ease-out"
                     />
                   </svg>
