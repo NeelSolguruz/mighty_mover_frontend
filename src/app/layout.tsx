@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/Footer"; 
 import Navbar from "@/components/Navbar";
-import { Montserrat } from "next/font/google";
+import { Titillium_Web } from "next/font/google";
 
-const TitilliumWeb = Montserrat({
+const TitilliumWeb = Titillium_Web({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
