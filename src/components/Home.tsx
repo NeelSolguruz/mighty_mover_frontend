@@ -10,6 +10,9 @@ import {
   HOME_PAGE_STRING,
   FAQ,
   SLIDER,
+  SLIDER_TITLE,
+  REVIEWS_TITLE,
+  BACKGROUND_TEXT
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
 
@@ -23,21 +26,21 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-black">
+      <div>
         {/* STARTING IMAGE*/}
         <div className="relative">
-          <div>
+          <div className="bg-black">
             <Image src={backgroud_image} alt="background image"
-              className="opacity-55 w-full h-96 max-lg:h-auto"
+              className="opacity-75 w-full h-96 max-lg:h-auto"
             />
           </div>
           <div className="w-full flex justify-center">
-            <div className="text-white absolute bottom-40 bg-transparent w-9/12 flex flex-col gap-4 max-lg:bottom-40 max-md:bottom-16 max-md:gap-0">
+            <div className="text-white absolute bottom-40 bg-transparent w-9/12 flex flex-col gap-4 max-lg:bottom-40 max-sm:bottom-14 max-sm:gap-0">
               <div>
-                <h1 className="text-5xl max-md:text-2xl">Delivery hai?</h1>
+                <h1 className="text-5xl max-md:text-2xl">{BACKGROUND_TEXT.question}</h1>
               </div>
               <div>
-                <h3 className="text-6xl max-md:text-3xl font-black">#HoJayega!</h3>
+                <h1 className="text-6xl max-md:text-3xl font-black">{BACKGROUND_TEXT.tagline}</h1>
               </div>
             </div>
           </div>
@@ -45,26 +48,28 @@ export default function Home() {
 
 
         {/* Button Panel  */}
-        <div className="h-48 flex  max-md:h-auto bg-white text-black">
-          <div className="flex flex-wrap justify-center w-full items-center gap-20 p-10">
-            {IMAGES_CAPTION.map((item, index) => (
-              <Link href={item.url} key={index}>
-                <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3">
-                  <Image
-                    src={item.image}
-                    alt="image"
-                    width={120}
-                    className="bg-indigo-100 rounded-2xl"
-                  />
-                  <figcaption>{item.caption}</figcaption>
-                </div>
-              </Link>
-            ))}
+        <div className="flex justify-center">
+          <div className="absolute h-56 flex bg-white top-[350px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
+            <div className="flex flex-wrap justify-center w-full items-center gap-20 ">
+              {IMAGES_CAPTION.map((item, index) => (
+                <Link href={item.url} key={index}>
+                  <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center">
+                    <Image
+                      src={item.image}
+                      alt="image"
+                      width={100}
+                      className="bg-indigo-100 rounded-lg"
+                    />
+                    <figcaption>{item.caption}</figcaption>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Slider */}
-        <div className="bg-white pt-10">
+        <div className="relative bg-white pt-10 mt-32 mb-12 max-lg:static max-lg:mt-0">
           <div className="w-full flex justify-center">
             <h1
               className="text-gray-600 text-xl 
@@ -72,7 +77,7 @@ export default function Home() {
                 max-md:text-base,
                 "
             >
-              -----OUR SERVICES-----
+              {SLIDER_TITLE.title}
             </h1>
           </div>
           <div className="container overflow-auto flex [scroll-snap-type:x_mandatory] w-[90%] mx-[auto] my-[0] px-[15px] py-[0] scrollbar">
@@ -107,7 +112,7 @@ export default function Home() {
           </div>
           <div className="w-full flex justify-center">
             <p
-              className="text-white text-center border-2 p-6 rounded-xl font-semibold text-xl
+              className="text-[#fabc1c] bg-[#241a0c] text-center border-2 border-[#ae851b] p-6 rounded-xl font-semibold text-xl
             max-lg:text-lg
             max-sm:text-sm w-10/12 max-sm:p-4
             "
@@ -120,7 +125,7 @@ export default function Home() {
         {/* statistics  */}
         <div className="bg-black">
           <div
-            className="w-full text-white flex justify-center gap-36 my-20
+            className="w-full text-white flex justify-center gap-36 py-20
           max-lg:gap-20
           max-sm:flex-col max-sm:gap-10
           "
@@ -167,7 +172,7 @@ export default function Home() {
             max-sm:text-[11px]
             "
             >
-              -----SOME WORDS FROM OUR HAPPY CUSTOMERS-----
+              {REVIEWS_TITLE.title}
             </h3>
           </div>
           <div>
