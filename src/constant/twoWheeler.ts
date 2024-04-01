@@ -36,7 +36,7 @@ export const BIKE_MAIN_PAGE_DATA = [
   },
 ];
 export const BIKE_KNOW_MORE = "Know More >";
-export const RENT_MINI_TRUCKS_IN_AHMEDABAD = "Two-Wheelers from Mighty Movers";
+export const RENT_BIKE_IN_AHMEDABAD = "Two-Wheelers from Mighty Movers";
 export const BIKE_DATA = [
   {
     img: Bike,
