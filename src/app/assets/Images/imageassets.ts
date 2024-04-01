@@ -46,7 +46,7 @@ import vadodara from "./cities/vadodara.svg";
 import pune from "./cities/pune.svg";
 import kolkata from "./cities/kolkata (2).svg";
 import QR from "./qrcode.69482213.png";
-import BrandLogo from "./icons/BrandLogo";
+import BrandLogo  from "@/assets/Images/icons/BrandLogo";
 import grp1 from "./grp1.jpg";
 import grp2 from "./grp2.jpg";
 import companyBanners from "./about-company-banner.jpg";
