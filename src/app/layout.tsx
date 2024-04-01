@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/Footer"; 
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Titillium_Web } from "next/font/google";
 
