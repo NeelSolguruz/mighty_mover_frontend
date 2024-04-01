@@ -52,7 +52,6 @@ import grp2 from "./grp2.jpg";
 import companyBanners from "./about-company-banner.jpg";
 import ahmedabad_truck from "./cities/ahmedabad.svg";
 import mumbai_enterprise from "./mumbai_enterprise.svg";
-// import Bike from "./icons/Bike";
 import Bike from "./bikes.svg"
 
 export {

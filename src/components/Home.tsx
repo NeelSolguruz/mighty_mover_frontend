@@ -1,5 +1,5 @@
 "use client";
-import backgroud_image from "../assets/Images/back_image.jpg";
+import backgroud_image from "../assets/Images/home_back_image.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import {
 import india_map from "../assets/Images/india_map.jpg";
 
 export default function Home() {
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -24,11 +25,24 @@ export default function Home() {
     <>
       <div className="bg-black">
         {/* STARTING IMAGE*/}
-        <div>
+        <div className="relative">
           <div>
-            <Image src={backgroud_image} alt="background image" />
+            <Image src={backgroud_image} alt="background image"
+              className="opacity-55 w-full h-96 max-lg:h-auto"
+            />
+          </div>
+          <div className="w-full flex justify-center">
+            <div className="text-white absolute bottom-40 bg-transparent w-9/12 flex flex-col gap-4 max-lg:bottom-40 max-md:bottom-16 max-md:gap-0">
+              <div>
+                <h1 className="text-5xl max-md:text-2xl">Delivery hai?</h1>
+              </div>
+              <div>
+                <h3 className="text-6xl max-md:text-3xl font-black">#HoJayega!</h3>
+              </div>
+            </div>
           </div>
         </div>
+
 
         {/* Button Panel  */}
         <div className="h-48 flex  max-md:h-auto bg-white text-black">
@@ -53,10 +67,9 @@ export default function Home() {
         <div className="bg-white pt-10">
           <div className="w-full flex justify-center">
             <h1
-              className="text-gray-600 text-2xl 
-                max-lg:text-xl,
-                max:md:text-lg,
-                max-sm:text-base
+              className="text-gray-600 text-xl 
+                max-lg:text-lg,
+                max-md:text-base,
                 "
             >
               -----OUR SERVICES-----
@@ -133,7 +146,7 @@ export default function Home() {
 
         {/* India Map */}
         <div className="bg-black">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center p-1">
             <Image src={india_map} alt="india map" height={450}></Image>
             <figcaption
               className="text-slate-400  text-center w-3/4 font-bold p-14
@@ -217,9 +230,8 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
+                    }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -241,11 +253,10 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
-                  openIndex === index
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+                  }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>
