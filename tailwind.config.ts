@@ -23,6 +23,7 @@ const config: Config = {
         'tablet': '768px',
         "random":"1220px",
         'laptop': '1024px',
+        "breakpoint":"1132px",
         'desktop': '1440px',
       },
       width: {

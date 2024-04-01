@@ -5,9 +5,6 @@ import {
   ahmedabad,
   kerela,
   hyderabad,
-  Pay_per_use,
-  accounting,
-  greater_logo,
   regularTrip,
   BetterEearning,
   onTImePayment,
@@ -44,8 +41,8 @@ import {
   packers_image,
   all_india,
   profile,
-  grp1, grp2
-} from "../assets/Images/imageassets";
+  grp1, grp2 
+} from "../../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
   PARTNER_BANNER_LINE2: `Earn money by delivering goods, courier and packages. Get a part time or full time delivery job`,
@@ -298,19 +295,14 @@ export const ENTERPRISE_STRING = {
   REQUEST_CALLBACK: "Request Callback",
   WHY_USE_PORTER_LOGO: [
     {
-      IMG:Pay_per_use,
       DATA: "Pay Per Usages",
       DESC: "No fixed monthly contracts. Pay only for the time & distance you use.",
     },
     {
-      IMG:greater_logo,
-
       DATA: "Greater Control",
       DESC: "Get visibility of all your hub level logistics movement",
     },
     {
-      IMG:accounting,
-
       DATA: "Hassle Free Account",
       DESC: "Get rid of order level payment & reimbursement. Pay centrally for Pan India usage.",
     },
@@ -1127,7 +1119,8 @@ export const FORGOT_PASSWORD = {
   title: "Forgot Password",
 };
 
+
 export const SIGNUP = {
-  title: "Sign Up",
-  tagline: "Delivering everything, anytime, anywhere.",
-};
+  title:"Sign Up",
+  tagline:"Delivering everything, anytime, anywhere."
+}

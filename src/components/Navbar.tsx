@@ -1,14 +1,13 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-
 import { FaUserCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
 
 import { useState } from "react";
-import { BrandLogo } from "../assets/Images/imageassets";
+import { BrandLogo,porter_logo } from "../assets/Images/imageassets";
 
 export default function Navbar() {
 
@@ -18,13 +17,13 @@ export default function Navbar() {
   }
   return (
     <>
-      <div className="sticky   flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
+      <div className="flex overflow-hidden shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 
         z-10
         ">
-        <div className="p-2">
-          <Link href='/'><BrandLogo /></Link>
+        <div className="py-4 pl-10">
+          <Link href='/'><Image src={porter_logo} alt="porter logo"className="h-10 w-24"></Image></Link>
         </div>
-        <div className="text-xl flex gap-10
+        <div className="text-base flex gap-10
           max-md:hidden
           ">
           <Link href="/enterprise" className=" hover:text-yellow-500 

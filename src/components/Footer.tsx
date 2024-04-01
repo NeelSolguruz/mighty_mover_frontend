@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube, FaTwitter } from "react-icons/fa";
-import { google_play, app_store } from "../assets/Images/imageassets";
+import { google_play, app_store,porter_white } from "../assets/Images/imageassets";
 
 export default function Footer() {
   return (
@@ -22,10 +22,10 @@ export default function Footer() {
                 "
           >
             <Image
-              src={brand_logo}
-              width={100}
+              src={porter_white}
+              height={100}
               alt="Brand Logo"
-              className="mb-4"
+              className="m-4 w-24"
             />
             <div className="max-md:text-lg max-sm:text-md max-xs:text-sm max-xs:text-[12px]">
               <p>Send anything,</p>

@@ -53,21 +53,9 @@ import companyBanners from "./about-company-banner.jpg";
 import ahmedabad_truck from "./cities/ahmedabad.svg";
 import mumbai_enterprise from "./mumbai_enterprise.svg";
 // import Bike from "./icons/Bike";
-import Pay_per_use from "./icons/pay_per_use_icon_044c8537d5.svg";
-import greater_logo from "./icons/greater_control_icon_8704b0d405.svg";
-import accounting from "./icons/accounting_icon_66708242c6_e2209e8aeb.svg";
-import trucks_porter from "./icons/enterprise_query_img_1db5ee8a27.svg"
-import porter_logo from "./icons/porter-logo-v3-blue.svg"
 import Bike from "./bikes.svg"
 import enterpriselogo from "./enterprise_banner_58451866fd.webp"
-import porter_white from "./icons/porter_logo_v3.svg"
 export {
-  porter_white,
-  porter_logo,
-  trucks_porter,
-  accounting,
-  greater_logo,
-  Pay_per_use,
   enterpriselogo,
   mumbai_enterprise,
   Delivery,
