@@ -1,3 +1,4 @@
+import { title } from "process";
 import {
   enterprise,
   rajasthan,
@@ -1201,6 +1202,93 @@ export const NAVBAR = {
       class:
         "bg-black text-white w-fit p-4 rounded-xl hover:bg-blue-600 hover:scale-105  duration-300",
       text: "Sign in",
+    },
+  ],
+};
+
+export const PRIVACY_POLICY = {
+  title: "PRIVACY POLICY",
+  multiple_para: [
+    {
+      paragraph:
+        "This privacy policy sets out how Porter uses and protects any information that you give Porter when you use this website/mobile application for Customers and Driver Partners. This Privacy Policy is an electronic record between you and Porter under the Information Technology Act, 2000 together with the Rules framed from time to time.",
+    },
+    {
+      paragraph:
+        "Your privacy matters to SmartShift Logistics Solutions Private Limited (the Company, we, Porter, or us).",
+    },
+    {
+      paragraph: `This Privacy Policy ("Policy") describes the policies and procedures on the collection, use, disclosure and protection of your information when you use our website located at https://porter.in/, or the PORTER mobile applications named Porter and Porter Delivery Driver App (collectively, "Porter Apps") and is applicable, without limitation, to those including customers/service recipients and drivers.`,
+    },
+    {
+      paragraph: `The terms "you" and "your" refer to the user of the Porter Apps. The term "Services" refers to any services offered by Porter/You whether on the Porter Apps or otherwise. This Policy is a part of and incorporated within, and is to be read along with, the applicable Terms of Service and the Driver Partner Terms and Conditions based on the user of Porter.`,
+    },
+    {
+      paragraph: `Porter is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement.`,
+    },
+    {
+      paragraph:
+        "By using the Porter Apps and the Services, you agree and consent to the collection, transfer, use, storage, disclosure and sharing of your information as described and collected by us in accordance with this Policy. If you do not agree with the Policy, please do not use or access the Porter Apps",
+    },
+    {
+      paragraph: `Porter may change this policy from time to time by updating this page. The current version of this policy is effective from 9th March, 2023. You should check this page from time to time to ensure that you are happy with any changes. The first version of this policy was effective from 23rd February 2014, which can be accessed here. The second version of this policy was effective from 11th November, 2022, which can be accessed here.`,
+    },
+  ],
+  what_we_collect: "WHAT WE COLLECT",
+  what_we_collect_desc: "We may collect the following information:",
+  what_we_collect_list: [
+    {
+      text: "Name and job title.",
+    },
+    {
+      text: "Contact information including email address.",
+    },
+    {
+      text: "Demographic information such as postcode, address, mobile number, login name, preferences and interests.",
+    },
+    {
+      text: "Use Our Services, we may collect and store information about you to process your requests and automatically complete forms for future transactions, including (but not limited to) your phone number, address, email, billing information, invoices, etc.",
+    },
+    {
+      text: "Other information relevant to customer surveys and/or offers.",
+    },
+    {
+      text: "App install, uninstall and other installed apps information.",
+    },
+    {
+      text: "If you sign up to use our Services as a Driver Partner, we may collect location details, profile picture, copies of government identification documents and other details (KYC), vehicle related documents such as insurance, pollution certificate, bank account details, utility bills, registration certificate, driving license, etc. and such other documents which evidence the health or fitness of the vehicle to provide Services on the Porter Apps, call and SMS details which may be shared with our customer while providing the Services.",
+    },
+    {
+      text: "We collect background check and identity verification information of the Driver Partner. This may include information such as driver history or criminal record (where permitted by law), and right to work. This information may be collected by an authorized vendor on the Company’s behalf.",
+    },
+    {
+      text: "In case you sign up as a Driver Partner, enable features that require Porter’s access to other applications on Your device aiming to prevent frauds towards the customers. In case if the Driver Partner wishes to participate in the referral program, the contact list stored in the phone will be accessed by us post the Driver Partner consents to share such selected mobile number. We do not intend to share such selected mobile numbers with any third party.",
+    },
+    {
+      text: "You may request when you would like to review the information you have provided and Porter shall ensure that any personal information or sensitive personal data or information found to be inaccurate or deficient shall be corrected or amended as feasible.",
+    },
+    {
+      text: "Porter shall not retain sensitive personal data or information for longer than is required for the purposes for which the information may lawfully be used.",
+    },
+  ],
+  information: "WHAT WE DO WITH THE INFORMATION WE GATHER",
+  information_list: [
+    {
+      internal_record_keeping: "Internal Record Keeping",
+      desc: "We may use the information to improve our Services. We may use this information to:",
+      list: [
+        {
+          text: "Allow you to use Services on the Porter Apps and to carry out our obligations arising from any contracts between you and us",
+        },
+        {
+          text: "Allow you to undertake or initiate any transactions on the Porter Apps",
+        },
+        {
+          text: "To inform your usage of the Porter Apps and to manage your account with Porter Apps",
+        },{
+          text:""
+        }
+      ],
     },
   ],
 };
