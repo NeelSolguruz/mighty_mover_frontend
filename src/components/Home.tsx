@@ -40,7 +40,7 @@ export default function Home() {
                 <h1 className="text-5xl max-md:text-2xl">{BACKGROUND_TEXT.question}</h1>
               </div>
               <div>
-                <h1 className="text-6xl max-md:text-3xl font-black">{BACKGROUND_TEXT.tagline}</h1>
+                <h1 className="text-6xl max-md:text-3xl font-bold">{BACKGROUND_TEXT.tagline}</h1>
               </div>
             </div>
           </div>
@@ -49,8 +49,8 @@ export default function Home() {
 
         {/* Button Panel  */}
         <div className="flex justify-center">
-          <div className="absolute h-56 flex bg-white top-[350px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
-            <div className="flex flex-wrap justify-center w-full items-center gap-20 ">
+          <div className="absolute h-56 flex justify-center bg-white top-[350px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
+            <div className="grid grid-cols-4 max-md:grid-cols-1 max-md:gap-5 w-9/12 items-center">
               {IMAGES_CAPTION.map((item, index) => (
                 <Link href={item.url} key={index}>
                   <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center">
@@ -60,7 +60,7 @@ export default function Home() {
                       width={100}
                       className="bg-indigo-100 rounded-lg"
                     />
-                    <figcaption>{item.caption}</figcaption>
+                    <figcaption className="max-lg:text-sm">{item.caption}</figcaption>
                   </div>
                 </Link>
               ))}
