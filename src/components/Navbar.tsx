@@ -25,22 +25,22 @@ export default function Navbar() {
             <BrandLogo />
           </Link>
         </div>
-        <div className="text-xl flex gap-10 max-md:hidden">
+        <div className="text-base flex gap-10 max-md:hidden">
           <Link
             href="/enterprise"
-            className="hover:text-blue-500 hover:duration-300 text-md text-black font-bold"
+            className="hover:text-blue-500 hover:duration-300  text-black font-bold"
           >
             For Enterprise
           </Link>
           <Link
             href="/delivery-partner"
-            className="hover:text-blue-500 duration-300 text-md text-black font-bold"
+            className="hover:text-blue-500 duration-300  text-black font-bold"
           >
             Delivery Partners
           </Link>
           <Link
             href="/support"
-            className="text-md font-bold hover:text-blue-500 duration-500"
+            className=" font-bold hover:text-blue-500 duration-500"
           >
             Support
           </Link>

@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import { Titillium_Web } from "next/font/google";
 
 const TitilliumWeb = Titillium_Web({
-  weight: "400",
+  weight: ["400","600","700","900","200","300"],
   subsets: ["latin"],
   display: "swap",
 });
