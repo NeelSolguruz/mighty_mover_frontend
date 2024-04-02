@@ -60,7 +60,18 @@ import porter_logo from "./icons/porter-logo-v3-blue.svg"
 import Bike from "./bikes.svg"
 import enterpriselogo from "./enterprise_banner_58451866fd.webp"
 import porter_white from "./icons/porter_logo_v3.svg"
+import ontime from "./icons/on_time_c45bbf9986.svg"
+import economic_price from "./icons/price_26c95eb80c.svg"
+import damage_proof from "./icons/price_26c95eb80c.svg"
+import install_apllication from "./icons/application_installation_5affd0f471.svg"
+import professional_electical from "./icons/electrician_7658c2a2e8.svg"
+
 export {
+  install_apllication,
+  professional_electical,
+  ontime,
+  economic_price,
+  damage_proof,
   porter_white,
   porter_logo,
   trucks_porter,

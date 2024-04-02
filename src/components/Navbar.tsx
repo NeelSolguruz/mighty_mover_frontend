@@ -26,12 +26,14 @@ export default function Navbar() {
             <BrandLogo />
           </Link>
         </div>
+
         <div className="text-xl flex gap-10 max-md:hidden">
           {NAVBAR.LAPTOP.map((item, index) => (
             <Link key={index} href={item.url} className={item.class}>
               {item.text}
             </Link>
           ))}
+
         </div>
         <div className="max-md:hidden" title="Log in/ Sign up">
           <Link href="/login">

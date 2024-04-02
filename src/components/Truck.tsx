@@ -70,8 +70,8 @@ export default function Truck() {
         {/* there is city select model */}
         <div className="w-full relative">
           <Image src={truck_page_indi} alt="truck main page" className="h-96" />
-          <div className="flex flex-col gap-4 w-full justify-center text-center absolute top-8 max-tablet:top-2 max-middle:top-14 max-s:top-10">
-            <div className="text-white font-semibold text-4xl max-tablet:text-3xl max-s:text-2xl">
+          <div className="flex flex-col gap-4 w-full justify-center items-center text-center absolute top-8 max-tablet:top-2 max-middle:top-14 max-s:top-10">
+            <div className="text-white font-semibold text-4xl max-tablet:text-3xl max-s:text-2xl w-3/4 ">
               {TRUCK_MAIN_PAGE_DATA[0].title}
             </div>
             <div className="w-full text-white font-medium text-xl flex justify-center max-tablet:text-lg max-middle:text-md">
@@ -91,10 +91,12 @@ export default function Truck() {
             </div>
             <div className="w-full flex justify-center items-center">
               <div
-                className="w-20 bg-orange-100 border-2 border-orange-500 flex justify-center items-center p-2 rounded-lg transition-all hover:scale-90"
+                className="w-48 bg-[#2967FF] border-2 border-[#2967FF] flex justify-center items-center p-2 rounded-lg transition-all hover:scale-90"
                 onClick={showModal}
               >
-                <FaCity className="text-4xl text-orange-500" />
+                <button className="text-l font-bold text-white">
+                  Please Select Your city
+                </button>
               </div>
               {isModalOpen && (
                 <div className="absolute top-10 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center max-s:top-[120px]">
@@ -112,7 +114,10 @@ export default function Truck() {
                     <div className="flex flex-wrap gap-4 justify-center items-center max-s:grid max-s:grid-rows-5 max-s:grid-cols-4">
                       {CITIES.map((item) => (
                         <Link href={`/trucks/${item.name}`} key={item.name}>
-                          <div className="flex flex-col gap-2 justify-center items-center" key={item.name}>
+                          <div
+                            className="flex flex-col gap-2 justify-center items-center"
+                            key={item.name}
+                          >
                             <div className="w-20 h-20 relative max-s:w-16 max-s:h-16">
                               <Image
                                 src={item.img}
@@ -196,9 +201,9 @@ export default function Truck() {
                         <div className="font-semibold text-black text-xl">
                           {item.name}
                         </div>
-                        <div>
+                        <div className="text-sm">
                           {item.prefix}{" "}
-                          <span className="text-black text-md font-bold">
+                          <span className="text-black text-sm font-bold">
                             {item.price}
                           </span>
                         </div>
