@@ -55,16 +55,19 @@ import mumbai_enterprise from "./mumbai_enterprise.svg";
 import Pay_per_use from "./icons/pay_per_use_icon_044c8537d5.svg";
 import greater_logo from "./icons/greater_control_icon_8704b0d405.svg";
 import accounting from "./icons/accounting_icon_66708242c6_e2209e8aeb.svg";
-import trucks_porter from "./icons/enterprise_query_img_1db5ee8a27.svg"
-import porter_logo from "./icons/porter-logo-v3-blue.svg"
-import Bike from "./bikes.svg"
-import enterpriselogo from "./enterprise_banner_58451866fd.webp"
-import porter_white from "./icons/porter_logo_v3.svg"
-import ontime from "./icons/on_time_c45bbf9986.svg"
-import economic_price from "./icons/price_26c95eb80c.svg"
-import damage_proof from "./icons/price_26c95eb80c.svg"
-import install_apllication from "./icons/application_installation_5affd0f471.svg"
-import professional_electical from "./icons/electrician_7658c2a2e8.svg"
+import trucks_porter from "./icons/enterprise_query_img_1db5ee8a27.svg";
+import porter_logo from "./icons/porter-logo-v3-blue.svg";
+import Bike from "./bikes.svg";
+import enterpriselogo from "./enterprise_banner_58451866fd.webp";
+import porter_white from "./icons/porter_logo_v3.svg";
+import ontime from "./icons/on_time_c45bbf9986.svg";
+import economic_price from "./icons/price_26c95eb80c.svg";
+import damage_proof from "./icons/price_26c95eb80c.svg";
+import install_apllication from "./icons/application_installation_5affd0f471.svg";
+import professional_electical from "./icons/electrician_7658c2a2e8.svg";
+import door_to_door from "./icons/Door_to_door_courier_a49b2de43e.svg";
+import on_time from "./icons/On_Time_Everytime_Courier_084628ed70.svg";
+import shipping_label_printing from "./icons/No_Printing_Courier_Label_6fc1ab25ab.svg";
 
 export {
   install_apllication,
@@ -133,4 +136,7 @@ export {
   grp2,
   companyBanners,
   Bike,
+  door_to_door,
+  on_time,
+  shipping_label_printing
 };

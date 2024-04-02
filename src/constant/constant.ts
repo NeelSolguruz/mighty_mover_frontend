@@ -461,7 +461,7 @@ export const IMAGES_CAPTION = [
   {
     image: all_india,
     caption: "All India Parcel",
-    url: "all-india-parcel",
+    url: "courier",
   },
 ];
 
