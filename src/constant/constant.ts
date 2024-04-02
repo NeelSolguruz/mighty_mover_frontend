@@ -1159,19 +1159,19 @@ export const NAVBAR = {
     {
       url: "/enterprise",
       class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
       text: "For Enterprise",
     },
     {
       url: "/delivery-partner",
       class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
       text: "Delivery Partner",
     },
     {
       url: "/support",
       class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
       text: "Support",
     },
   ],

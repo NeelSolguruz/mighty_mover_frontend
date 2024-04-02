@@ -27,7 +27,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="text-xl flex gap-10 max-md:hidden">
+        <div className="text-base flex gap-10 max-md:hidden">
           {NAVBAR.LAPTOP.map((item, index) => (
             <Link key={index} href={item.url} className={item.class}>
               {item.text}
