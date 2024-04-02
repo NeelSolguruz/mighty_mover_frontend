@@ -68,8 +68,19 @@ import professional_electical from "./icons/electrician_7658c2a2e8.svg";
 import door_to_door from "./icons/Door_to_door_courier_a49b2de43e.svg";
 import on_time from "./icons/On_Time_Everytime_Courier_084628ed70.svg";
 import shipping_label_printing from "./icons/No_Printing_Courier_Label_6fc1ab25ab.svg";
-
+import youtube from "./icons/youtube.svg"
+import twitter from "./icons/twitter.svg"
+import linkdin from "./icons/linkedin.svg"
+import facebook from "./icons/facebook.svg"
+import instagram from "./icons/instagram.svg"
+import search from "./icons/search.svg"
 export {
+  search,
+  youtube,
+  twitter,
+  linkdin,
+  facebook,
+  instagram,
   install_apllication,
   professional_electical,
   ontime,
