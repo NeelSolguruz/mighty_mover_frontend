@@ -83,7 +83,7 @@ export default function Login() {
           </div>
           <form onSubmit={handleSubmit} className="w-full flex flex-col gap-10">
             <div className="flex flex-col gap-1 w-full">
-              <label htmlFor="user" className="font-bold text-lg">Email Address</label>
+              <label htmlFor="user" className="font-bold text-lg">{LOGIN.email_label}</label>
               <input
                 type="text"
                 id="username"
@@ -97,8 +97,8 @@ export default function Login() {
             </div>
             <div className="flex flex-col gap-1 w-full">
               <div className="flex justify-between">
-                <label htmlFor="password" className="font-bold text-lg">Password</label>
-                <Link href='/forgot-password' className="font-semibold text-blue-500 hover:text-blue-400 transition-all">Forgot password?</Link>
+                <label htmlFor="password" className="font-bold text-lg">{LOGIN.password_label}</label>
+                <Link href={LOGIN.forgot_link} className="font-semibold text-blue-500 hover:text-blue-400 transition-all">{LOGIN.forgot_text}</Link>
               </div>
               <input
                 type="password"
@@ -112,7 +112,7 @@ export default function Login() {
               <p className={`text-red-500 transition-all ${passwordError ? 'opacity-100' : 'opacity-0'}`}>{passwordError}</p>
             </div>
             <div className="w-full">
-              <button className="bg-yellow-500 w-full p-3 rounded-md font-bold hover:bg-yellow-400 transition-all text-lg">Submit</button>
+              <button className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-xl">Submit</button>
             </div>
             <div className="w-full flex justify-center">
               <div className="w-full flex text-center mt-[10px] mx-[0] mb-[20px]">
@@ -122,7 +122,7 @@ export default function Login() {
               </div>
             </div>
             <div className="w-full">
-              <Link href="/register"><button className="w-full border-2 border-yellow-500 p-3 rounded-md font-bold transition-all text-lg text-yellow-500 hover:bg-yellow-400 hover:text-black hover:border-2 hover:border-yellow-400">Create your account</button></Link>
+              <Link href="/register"><button className="w-full border-2 border-[#2967ff] p-3 rounded-md font-bold transition-all text-xl text-[#2967ff] hover:text-white hover:bg-[#2967ff]">Create your account</button></Link>
             </div>
           </form>
         </div>
