@@ -107,7 +107,7 @@ export default function Register() {
             />
           </div>
           <div className="w-full">
-            <button className="bg-yellow-500 w-full p-3 rounded-md font-bold hover:bg-yellow-400 transition-all text-lg">
+            <button className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-lg">
               Create my Account
             </button>
           </div>
