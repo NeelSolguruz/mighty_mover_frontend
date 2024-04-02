@@ -44,7 +44,8 @@ import {
   packers_image,
   all_india,
   profile,
-  grp1, grp2
+  grp1,
+  grp2,
 } from "../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
@@ -298,18 +299,18 @@ export const ENTERPRISE_STRING = {
   REQUEST_CALLBACK: "Request Callback",
   WHY_USE_PORTER_LOGO: [
     {
-      IMG:Pay_per_use,
+      IMG: Pay_per_use,
       DATA: "Pay Per Usages",
       DESC: "No fixed monthly contracts. Pay only for the time & distance you use.",
     },
     {
-      IMG:greater_logo,
+      IMG: greater_logo,
 
       DATA: "Greater Control",
       DESC: "Get visibility of all your hub level logistics movement",
     },
     {
-      IMG:accounting,
+      IMG: accounting,
 
       DATA: "Hassle Free Account",
       DESC: "Get rid of order level payment & reimbursement. Pay centrally for Pan India usage.",
@@ -465,13 +466,13 @@ export const IMAGES_CAPTION = [
 ];
 
 export const QUICK_LINKS = [
-  { name: "Services", url: "services" },
+  { name: "Services", url: "/" },
   { name: "API Integrations", url: "api-integrations" },
   { name: "Courier", url: "courier" },
-  { name: "Packers and Movers", url: "packers-and-movers" },
-  { name: "Two Wheelers", url: "two-wheelers" },
-  { name: "Trucks", url: "trucks" },
-  { name: "Porter For Enterprise", url: "porter-for-enterprise" },
+  { name: "Packers and Movers", url: "/packers-and-movers" },
+  { name: "Two Wheelers", url: "/two-wheelers" },
+  { name: "Trucks", url: "/trucks" },
+  { name: "Porter For Enterprise", url: "/enterprise" },
 ];
 
 export const COMPANY = [
@@ -512,7 +513,10 @@ export const LOCATIONS = [
   "Kanpur",
 ];
 
-export const BACKGROUND_TEXT = { question: "Delivery hai?", tagline: "#HoJayega!" };
+export const BACKGROUND_TEXT = {
+  question: "Delivery hai?",
+  tagline: "#HoJayega!",
+};
 
 export const SLIDER_TITLE = { title: "-----OUR SERVICES-----" };
 
@@ -1129,6 +1133,10 @@ export const ABOUT_US = {
 export const LOGIN = {
   sign_in: "Sign In",
   tagline: "Delivery hai? #HoJayega",
+  forgot_text: "Forgot password?",
+  forgot_link: "/forgot-password",
+  email_label: "Email Address",
+  password_label: "Password",
 };
 
 export const FORGOT_PASSWORD = {
@@ -1138,4 +1146,61 @@ export const FORGOT_PASSWORD = {
 export const SIGNUP = {
   title: "Sign Up",
   tagline: "Delivering everything, anytime, anywhere.",
+  fname_label: "First Name",
+  lname_label: "Last Name",
+  email_label: "Email Address",
+  contact_label: "Contact Number",
+  password_label: "Password",
+  confirmPassword_label: "confirm Password",
+};
+
+export const NAVBAR = {
+  LAPTOP: [
+    {
+      url: "/enterprise",
+      class:
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+      text: "For Enterprise",
+    },
+    {
+      url: "/delivery-partner",
+      class:
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+      text: "Delivery Partner",
+    },
+    {
+      url: "/support",
+      class:
+        "hover:text-blue-500 hover:duration-300 text-md text-black font-bold",
+      text: "Support",
+    },
+  ],
+  MOBILE: [
+    {
+      url: "/",
+      class: "p-2 hover:text-blue-500 duration-300",
+      text: "Home",
+    },
+    {
+      url: "/enterprise",
+      class: "p-2 hover:text-blue-500 duration-300",
+      text: "For Enterprise",
+    },
+    {
+      url: "/delivery-partner",
+      class: "p-2 hover:text-blue-500 duration-300",
+      text: "Delivery Partner",
+    },
+    {
+      url: "/support",
+      class: "p-2 hover:text-blue-500 duration-300",
+      text: "Support",
+    },
+    {
+      url: "/login",
+      class:
+        "bg-black text-white w-fit p-4 rounded-xl hover:bg-blue-600 hover:scale-105  duration-300",
+      text: "Sign in",
+    },
+  ],
 };
