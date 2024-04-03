@@ -50,7 +50,7 @@ export default function Home() {
         {/* Button Panel  */}
         <div className="flex justify-center">
           <div className="absolute h-56 flex justify-center bg-white top-[350px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
-            <div className="grid grid-cols-4 max-md:grid-cols-1 max-md:gap-5 w-9/12 items-center">
+            <div className="grid grid-cols-4 max-lg:w-full max-md:grid-cols-1 max-md:gap-5 w-9/12 items-center">
               {IMAGES_CAPTION.map((item, index) => (
                 <Link href={item.url} key={index}>
                   <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center">
@@ -112,7 +112,7 @@ export default function Home() {
           </div>
           <div className="w-full flex justify-center">
             <p
-              className="text-[#fabc1c] bg-[#241a0c] text-center border-2 border-[#ae851b] p-6 rounded-xl font-semibold text-xl
+              className="text-[#fabc1c] bg-[#241a0c] text-center border-2 border-[#ae851b] p-6 rounded-xl font-semibold text-2xl
             max-lg:text-lg
             max-sm:text-sm w-10/12 max-sm:p-4
             "
