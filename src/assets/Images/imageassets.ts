@@ -74,7 +74,26 @@ import linkdin from "./icons/linkedin.svg"
 import facebook from "./icons/facebook.svg"
 import instagram from "./icons/instagram.svg"
 import search from "./icons/search.svg"
+import caro1 from "./carousel/photo-1476631840528-13bdc7f18072.avif"
+import caro2 from "./carousel/photo-1566576721346-d4a3b4eaeb55.avif"
+import caro3 from "./carousel/photo-1601887031610-d72bf3987fb2.avif"
+import caro4 from "./carousel/premium_photo-1682090260563-191f8160ca48.avif"
+import arrow_left from "./icons/arrow-left.svg"
+import arrow_right from "./icons/arrow-right.svg"
+import trending_post from "./carousel/Medika_b_blog-1-no-heading.png"
+import eye from "./icons/eye.svg"
+import comment from "./icons/comment-alt-lines.svg"
+
 export {
+  eye,
+  comment,
+  trending_post,
+  arrow_left,
+  arrow_right,
+  caro1,
+  caro2,
+  caro3,
+  caro4,
   search,
   youtube,
   twitter,
