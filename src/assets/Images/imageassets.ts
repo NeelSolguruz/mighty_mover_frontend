@@ -83,8 +83,13 @@ import arrow_right from "./icons/arrow-right.svg"
 import trending_post from "./carousel/Medika_b_blog-1-no-heading.png"
 import eye from "./icons/eye.svg"
 import comment from "./icons/comment-alt-lines.svg"
-
+import cross from "./icons/multiply.svg"
+import Like from "./icons/heart.svg"
+import hamburger from "./icons/align-justify.svg"
 export {
+  hamburger,
+  Like,
+  cross,
   eye,
   comment,
   trending_post,
