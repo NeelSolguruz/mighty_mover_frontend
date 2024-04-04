@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
+import Head from "next/head";
 import "./globals.css";
 import { Titillium_Web } from "next/font/google";
 
@@ -8,7 +8,6 @@ const TitilliumWeb = Titillium_Web({
   subsets: ["latin"],
   display: "swap",
 });
-// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Mighty Movers",
@@ -22,9 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={TitilliumWeb.className}>
-        {children}
-      </body>
+      <head>
+        <link rel="icon" href="/Mighty_Movers.svg" sizes="any" />
+      </head>
+      <body className={TitilliumWeb.className}>{children}</body>
     </html>
   );
 }
