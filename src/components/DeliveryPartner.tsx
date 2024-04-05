@@ -22,6 +22,7 @@ export default function DeliveryPage(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     mobileNumber: "",
+    email: "",
     city: "",
     vehicle: "",
     sources: "",
@@ -45,6 +46,7 @@ export default function DeliveryPage(): JSX.Element {
     setFormData({
       name: "",
       mobileNumber: "",
+      email: "",
       city: "",
       vehicle: "",
       sources: "",
@@ -80,7 +82,8 @@ export default function DeliveryPage(): JSX.Element {
                   <Image
                     src={item.images}
                     alt={item.title}
-                    className="w-full h-full rounded-lg object-contain shadow-gray-400 shadow-md transition-all hover:scale-105"
+                    className="w-full h-full rounded-lg object-conta
+                    in shadow-gray-400 shadow-md transition-all hover:scale-105"
                   />
                 </div>
                 <div className="p-2">
@@ -111,7 +114,7 @@ export default function DeliveryPage(): JSX.Element {
                       name="name"
                       id="name"
                       value={formData.name}
-                      placeholder="Name"
+                      placeholder="Enter Your Name"
                       onChange={handleChange}
                       // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
                       className="w-full border-b rounded  p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
@@ -123,8 +126,21 @@ export default function DeliveryPage(): JSX.Element {
                       type="number"
                       id="mobilenumber"
                       name="mobileNumber"
-                      placeholder="Mobile Number"
+                      placeholder="Enter Your Mobile Number"
                       value={formData.mobileNumber}
+                      onChange={handleChange}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Enter Your Email"
+                      value={formData.email}
                       onChange={handleChange}
                       // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
                       className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
@@ -138,7 +154,7 @@ export default function DeliveryPage(): JSX.Element {
                     className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
                     required
                   >
-                    <option value="">Select City</option>
+                    <option value="">Select your City</option>
                     {DELIVERY_PARTNER_STRING.FORM_CITIES.map((city) => (
                       <option key={city} value={city}>
                         {city}
@@ -152,7 +168,7 @@ export default function DeliveryPage(): JSX.Element {
                     className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
                     required
                   >
-                    <option value="">Select Vehicle</option>
+                    <option value="">Select your Vehicle</option>
                     {DELIVERY_PARTNER_STRING.FORM_VEHICLE.map((vehicle) => (
                       <option key={vehicle} value={vehicle}>
                         {vehicle}

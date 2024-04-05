@@ -1,7 +1,9 @@
 type FormData = {
     name: string;
     mobileNumber: string;
+    email: string;
     city: string;
+
     vehicle: string;
     sources: string
 }
