@@ -114,7 +114,7 @@ export default function DeliveryPage(): JSX.Element {
                       placeholder="Name"
                       onChange={handleChange}
                       // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      className="w-full border-b rounded  p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
                       required
                     />
                   </div>
@@ -127,7 +127,7 @@ export default function DeliveryPage(): JSX.Element {
                       value={formData.mobileNumber}
                       onChange={handleChange}
                       // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
                       required
                     />
                   </div>
