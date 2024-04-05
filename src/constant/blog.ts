@@ -213,3 +213,37 @@ export const footer_data = [
 ];
 export const searchtitle = "SEARCH FOR:";
 export const Input_data = "Input your search keywords and press Enter.";
+export const some_few_blog="Checkout Some More Blogs";
+export const comment_comment="Comments"
+export const all_comments=[
+  {
+    id:1,
+    user:"Anne Ruiz",
+    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date:"2021-10-08"
+  },
+  {
+    id:2,
+    user:"prit Ruiz",
+    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date:"2021-10-08"
+  }
+  ,{
+    id:3,
+    user:"Utkarsh Ruiz",
+    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date:"2021-10-08"
+  }
+  ,{
+    id:4,
+    user:"Neel Ruiz",
+    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date:"2021-10-08"
+  },
+  {
+    id:5,
+    user:"Masd Ruiz",
+    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date:"2021-10-08"
+  }
+]
