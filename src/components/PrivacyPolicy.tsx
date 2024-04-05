@@ -1,5 +1,5 @@
 import React from 'react'
-import { PRIVACY_POLICY } from '@/constant/constant'
+import { PRIVACY_POLICY } from '@/constant/PrivacyPolicy' 
 
 export default function PrivacyPolicy() {
     return (
