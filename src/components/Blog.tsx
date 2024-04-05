@@ -19,7 +19,7 @@ import {
 import Carousel from "./Carousel";
 import Image from "next/image";
 import Link from "next/link";
-
+import { motion } from "framer-motion";
 export default function Blog() {
   const [modal, setmodal] = useState(false);
   const [search12, setsearch] = useState("");
@@ -48,10 +48,13 @@ export default function Blog() {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center ">
-       
-        <div className="w-11/12 h-auto flex my-8 ">
+        <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-11/12 h-auto flex my-8 ">
           <Carousel slides_data={slides_data} />
-        </div>
+        </motion.div>
         <div className="w-full flex justify-center items-center mt-3">
           <div className="text-base">{Trending_post}</div>
         </div>
@@ -59,7 +62,10 @@ export default function Blog() {
           <div className="flex gap-6 justify-center max-[800px]:grid-cols-2 max-[800px]:grid-rows-2 max-[800px]:grid max-[800px]:gap-2 max-[376px]:grid max-[376px]:grid-cols-1 ">
             {Trending_post_data.map((item, index) => (
               <>
-                <div
+                <motion.div
+                initial={{ translateY: 40,opacity:0}}
+                whileInView={{ translateY: -10,opacity:1 }}
+                transition={{ duration: 1 }}
                   className="flex flex-col justify-center items-center gap-2"
                   key={index}
                 >
@@ -71,7 +77,7 @@ export default function Blog() {
                     ></Image>
                   </div>
                   <div className="text-center p-2">{item.desc}</div>
-                </div>
+                </motion.div>
               </>
             ))}
           </div>
@@ -80,7 +86,13 @@ export default function Blog() {
           <div className="flex flex-col w-full gap-4 p-10 mt-4 max-[1195px]:p-3">
             {post_data.map((item, index) => (
               <>
-                <div className="w-full flex gap-4 bg-white shadow-lg shadow-gray-400 justify-center items-center p-4 max-[905px]:px-2 max-[905px]:py-0 max-[724px]:flex-col " key={index}>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
+                  className="w-full flex gap-4 bg-white shadow-lg shadow-gray-400 justify-center items-center p-4 max-[905px]:px-2 max-[905px]:py-0 max-[724px]:flex-col "
+                  key={index}
+                >
                   <div className="w-[560px] h-full relative overflow-hidden max-[724px]:pt-12 max-[622px]:pt-12 flex justify-center max-[622px]:w-[450px] max-[517px]:w-[350px] max-[419px]:w-[300px] max-[376px]:pt-4 max-[364px]:w-[250px]">
                     <Image
                       src={item.img}
@@ -91,7 +103,9 @@ export default function Blog() {
 
                   <div className="w-1/2 h-full py-4 max-[724px]:w-full max-[724px]:px-10 max-[376px]:px-0">
                     <div className="flex flex-col gap-4 px-4 pb-4 max-[1177px]:py-0 max-[889px]:my-4 w-full">
-                      <div className="text-2xl font-normal max-[1092px]:text-xl max-[885px]:text-lg">{item.title}</div>
+                      <div className="text-2xl font-normal max-[1092px]:text-xl max-[885px]:text-lg">
+                        {item.title}
+                      </div>
                       <div className="text-[10px] font-bold">{item.date}</div>
                       <div className="text-lg max-[1092px]:text-sm max-[885px]:text-xs">
                         {item.desc}
@@ -154,7 +168,7 @@ export default function Blog() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </>
             ))}
           </div>
