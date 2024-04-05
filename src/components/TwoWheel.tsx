@@ -40,6 +40,7 @@ import {
 } from "@/constant/twoWheeler";
 import { FaCity, FaWeightHanging } from "react-icons/fa";
 import Link from "next/link";
+import {motion} from "framer-motion"
 function TwoWheel() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   //  const[(truckval, setTruckval)] = useState(true);
@@ -112,16 +113,30 @@ function TwoWheel() {
                 </button>
               </div>
               {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-                  <div className="bg-white p-4 rounded-lg max-w-md">
-                    <div className="font-bold text-xl mb-4">
+                <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                 className="absolute top-10 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center max-s:top-[120px]">
+                  <div className="bg-white p-4 rounded-lg w-11/12 h-auto">
+                    <div
+                      style={{
+                        textAlign: "center",
+                        fontSize: "1.5rem",
+                        fontWeight: "bold",
+                        color: "#333",
+                      }}
+                    >
                       Choose Your City
                     </div>
-                    <div className="flex flex-wrap gap-4 justify-center items-center">
-                      {CITIES.map((item: any) => (
+                    <div className="flex flex-wrap gap-4 justify-center items-center max-s:grid max-s:grid-rows-5 max-s:grid-cols-4">
+                      {CITIES.map((item) => (
                         <Link href={`/trucks/${item.name}`} key={item.name}>
-                          <div className="flex flex-col gap-2" key={item.name}>
-                            <div className="w-20 h-20 relative">
+                          <div
+                            className="flex flex-col gap-2 justify-center items-center"
+                            key={item.name}
+                          >
+                            <div className="w-20 h-20 relative max-s:w-16 max-s:h-16">
                               <Image
                                 src={item.img}
                                 alt={item.name}
@@ -146,7 +161,7 @@ function TwoWheel() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>
