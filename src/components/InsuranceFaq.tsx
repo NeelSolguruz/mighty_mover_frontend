@@ -1,5 +1,5 @@
 "use client";
-import {  INSURANCE_FAQS_STRING } from "@/constant/InsuranceFaq";
+import { INSURANCE_FAQS_STRING } from "@/constant/InsuranceFaq";
 import { DELIVERY_PARTNER_STRING } from "@/constant/constant";
 import React, { useState } from "react";
 
@@ -73,7 +73,7 @@ function InsuranceFaq() {
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <span className="text-sm text-black">
+                          <span className="text-sm whitespace-pre-wrap text-black">
                             {item.ANSWER}
                           </span>
                         </div>
