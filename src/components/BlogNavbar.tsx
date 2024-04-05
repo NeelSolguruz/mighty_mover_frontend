@@ -66,6 +66,8 @@ export default function BlogNavbar() {
 
   const searchmodal = () => {
     setmodal(!modal);
+    setsearch("")
+    setfilter_data([]);
   };
   const handlesidebar = () => {
     if (sidebar) {
@@ -116,7 +118,7 @@ export default function BlogNavbar() {
               variants={containerVariants}
               initial="close"
               animate={containerControls}
-              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 "
+              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto"
             >
               <div className="flex flex-col w-full">
                 <div className="mt-6 ">
@@ -186,11 +188,7 @@ export default function BlogNavbar() {
           </>
         ) : (
           <>
-            <motion.div
-            //  variants={containerVariants}
-            //  initial="close"
-            //  animate={containerControls}
-             className="w-11/12 flex justify-between items-center  p-6 border-y-[1px] sticky top-0 z-10 bg-white opacity-95 max-[1081px]:w-full">
+            <div className="w-11/12 flex justify-between items-center  p-6 border-y-[1px] sticky top-0 z-10 bg-white opacity-95 max-[1081px]:w-full">
               <div
                 className="hidden max-tablet:block w-[196px] pl-4"
                 onClick={handlesidebar}
@@ -208,9 +206,11 @@ export default function BlogNavbar() {
                   </div>
                 ))}
               </div>
-              <div className="text-[32px] font-normal w-auto tracking-wider">
+              <Link href={`/blog`}>
+              <div className="text-[32px] font-normal w-full text-center tracking-wider">
                 {PORTER_BLOG}
               </div>
+              </Link>
               <div className="w-[196px] h-[32px] flex justify-center items-center max-tablet:invisible">
                 <div className="cursor-pointer">
                   <Image
@@ -220,7 +220,7 @@ export default function BlogNavbar() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </div>
             <div className="w-11/12 flex justify-center items-center py-0.5 border-t-[1px] border-b-[1px] gap-4 sticky top-20 z-10 bg-white opacity-95 hover:py-6 transition-all duration-300 max-[1081px]:w-full max-tablet:hidden">
               <Link href="/">
                 <div className="text-base font-bold ">{Porter_Home}</div>
@@ -267,6 +267,7 @@ export default function BlogNavbar() {
                       <></>
                     ) : (
                       <>
+                     
                         <motion.div
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
@@ -275,6 +276,7 @@ export default function BlogNavbar() {
                         >
                           {filter_data.map((item) => (
                             <>
+                             <Link href={`/blog/${item.id}`} onClick={searchmodal}>
                               <div className="flex gap-4 shadow-md shadow-gray-400 w-full">
                                 <div className="py-4 pl-4 ">
                                   <Image
@@ -327,6 +329,7 @@ export default function BlogNavbar() {
                                   </div>
                                 </div>
                               </div>
+                              </Link>
                             </>
                           ))}
                         </motion.div>

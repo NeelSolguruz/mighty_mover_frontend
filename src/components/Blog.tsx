@@ -1,7 +1,7 @@
 // Blog.tsx
 "use client";
 import React, { useState } from "react";
-import { comment, cross, eye, search } from "@/assets/Images/imageassets";
+import { Like, comment, cross, eye, search } from "@/assets/Images/imageassets";
 import {
   BOOK_PORTER,
   PORTER_BLOG,
@@ -87,9 +87,9 @@ export default function Blog() {
             {post_data.map((item, index) => (
               <>
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
+                 initial={{ translateY: 40,opacity:0}}
+                 whileInView={{ translateY: -10,opacity:1 }}
+                 transition={{ duration: 1 }}
                   className="w-full flex gap-4 bg-white shadow-lg shadow-gray-400 justify-center items-center p-4 max-[905px]:px-2 max-[905px]:py-0 max-[724px]:flex-col "
                   key={index}
                 >
@@ -131,6 +131,16 @@ export default function Blog() {
                                 <>{item.view}</>
                               )}
                             </div>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <div>
+                              <Image
+                                src={Like}
+                                alt="eye"
+                                className="text-white h-3 w-3"
+                              ></Image>
+                            </div>
+                            <div className="text-xs">{item.like}</div>
                           </div>
                           <div className="flex gap-1 items-center">
                             <div>
