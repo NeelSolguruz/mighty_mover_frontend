@@ -32,6 +32,7 @@ import { FaCity } from "react-icons/fa";
 // import { Segmented } from "antd";
 import { FaWeightHanging } from "react-icons/fa";
 import { Poppins } from "next/font/google";
+import {motion} from "framer-motion"
 export default function Truck() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [truckval, setTruckval] = useState(true);
@@ -99,7 +100,11 @@ export default function Truck() {
                 </button>
               </div>
               {isModalOpen && (
-                <div className="absolute top-10 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center max-s:top-[120px]">
+                <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                 className="absolute top-10 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center max-s:top-[120px]">
                   <div className="bg-white p-4 rounded-lg w-11/12 h-auto">
                     <div
                       style={{
@@ -143,7 +148,7 @@ export default function Truck() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>
