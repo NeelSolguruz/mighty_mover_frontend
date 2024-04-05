@@ -13,8 +13,8 @@ export default function Footer() {
     <>
       <div className="bg-black text-white w-full">
         <div className="w-full flex flex-col items-center pt-5">
-          <div className="grid grid-cols-5 w-11/12">
-            <div className="items-start text-2xl font-semibold flex flex-col gap-2">
+          <div className="grid grid-cols-5 max-lg:grid-cols-4 max-sm:grid-cols-2 max-sm:gap-5 w-11/12">
+            <div className="items-start text-2xl font-semibold flex flex-col gap-2 max-lg:hidden">
               <div className="w-[150px]">
                 <BrandLogo />
               </div>
@@ -56,20 +56,19 @@ export default function Footer() {
               </ul>
             </div>
             <div
-              className="flex flex-col gap-3 max-middle:justify-center max-middle:items-center max-middle:flex-col max-middle:w-[200px] max-middle:pl-10 max-xs:w-[170px] max-xs:pl-6 
-            max-lg:flex-row max-lg:w-[400px] max-md:w-[300px]">
+              className="flex flex-col gap-3 max-sm:justify-center">
               <div>
                 <Image
                   src={google_play}
                   alt="google play logo"
-                  className="w-[200px] max-lg:w-[400px]"
+                  className="w-[200px] max-sm:w-[150px]"
                 />
               </div>
               <div>
                 <Image
                   src={app_store}
                   alt="app store logo"
-                  className="w-[200px] max-lg:w-[400px]"
+                  className="w-[200px] max-sm:w-[150px]"
                 />
               </div>
             </div>
@@ -97,7 +96,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col items-center pb-10">
-          <div className="w-11/12 flex justify-between mt-8 mb-2 items-center max-md:flex-col">
+          <div className="w-11/12 flex justify-between mt-8 mb-2 items-center max-md:flex-col max-md:gap-5">
             <div className="flex gap-5 ">
               <FaInstagram size={30} />
               <FaFacebook size={30} />
@@ -106,7 +105,7 @@ export default function Footer() {
               <FaTwitter size={30} />
             </div>
             <div className="text-gray-300 text-center text-sm">
-              &copy;@2024 SolGuruz LLP Pvt. Ltd.  | CIN:U69T69K69A69R69S69H
+              &copy;@2024 SolGuruz LLP Pvt. Ltd.  | CIN:1234567890123456789
             </div>
           </div>
         </div>
