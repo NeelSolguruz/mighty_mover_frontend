@@ -193,16 +193,16 @@ export default function DeliveryPage(): JSX.Element {
         <div className="text-3xl font-semibold text-center p-8">
           {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY}
         </div>
-        <div className="mainSection bg-black w-full">
-          <div className="flex flex-col md:flex-row gap-14 items-center justify-evenly px-24 ss:px-8 ss:py-8 ss:gap-1">
+        <div className="mainSection bg-black w-full flex justify-center">
+          <div className="flex flex-col w-8/12 md:flex-row gap-14 items-center justify-evenly">
             <div className="w-full md:w-1/3">
               <Image
                 src={driverExperience}
-                className="w-full h-96 rounded-lg object-contain shadow-md transition-all hover:scale-105 p-2"
+                className="w-full h-full rounded-lg object-contain shadow-md transition-all hover:scale-105 p-2"
                 alt="Picture of the Delivery"
               />
             </div>
-            <div className="w-full md:w-2/3 font-semibold p-12 ss:p-0 ss:text-sm">
+            <div className="w-full md:w-2/3 font-semibold p-12">
               {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY_DATA}
             </div>
           </div>
