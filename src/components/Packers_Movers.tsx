@@ -12,8 +12,8 @@ import {
   REVIEWS,
   SCAN_TO_DOWNLOAD,
   THINK_lOGISTICS_THINK_PORTER,
-  TRUCK_MAIN_PAGE_DATA,
-} from "@/app/constant/constant";
+  // TRUCK_MAIN_PAGE_DATA,
+} from "@/constant/constant";
 import {
   Top_Packers_and_Movers_in_Ahmedabad,
   Packer_data,
@@ -38,12 +38,12 @@ import {
   FAQ_TITLE,
   FAQ_DATA,
 } from "@/constant/Packet-Movers";
-import { FaCity } from "react-icons/fa";
+// import { FaCity } from "react-icons/fa";
 
 import Link from "next/link";
 export default function Packers_Movers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [truckval, setTruckval] = useState(true);
+  // const [truckval, setTruckval] = useState(true);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   // const smallTruckRef = useRef(null);
 

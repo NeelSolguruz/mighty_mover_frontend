@@ -53,7 +53,7 @@ export default function DeliveryPage(): JSX.Element {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full ">
         <div>
           <Image
             src={Delivery}
@@ -68,9 +68,9 @@ export default function DeliveryPage(): JSX.Element {
         </div>
       </div>
       {/* registration form __ section __ strat from here */}
-      <div className="w-full">
+      <div className="w-full max-sm:p-8">
         <div className="flex flex-col md:flex-col w-full justify-between p-5 md:p-10">
-          <div className="w-full md:w-fit md:flex-row flex max-md:flex-wrap flex-nowrap justify-center gap-5 md:ml-0  middle:justify-center ">
+          <div className="w-full md:w-fit md:flex-row flex max-md:flex-wrap flex-nowrap justify-center gap-5 md:ml-0  md:justify-center ">
             {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE_DATA.map((item) => (
               <div
                 key={item.title}
@@ -95,114 +95,111 @@ export default function DeliveryPage(): JSX.Element {
             ))}
           </div>
 
-          <div className="w-full md:w-full p-5 md:flex-row md:p-10 rounded-3xl shadow-gray-400 shadow-md ">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="font-bold text-2xl text-center">
-                {DELIVERY_PARTNER_STRING.FORM_HEADERS}
-              </div>
-              <div className="flex flex-col gap-4 relative">
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                    required
-                  />
-                  <label
-                    htmlFor="name"
-                    className="absolute pl-2 left-0 top-1 cursor-text peer-focus:text-xs peer-focus:-top-4 transition-all font-semibold"
-                  >
-                    Name
-                  </label>
+          <div className="flex justify-center">
+            <div className="w-[80%] max-sm:w-full mt-8 md:flex-row md:p-10 rounded-3xl shadow-gray-400 shadow">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4 justify-center  max-sm:w-full max-sm:justify-center  max-sm:gap-4 max-sm:p-8 "
+              >
+                <div className="font-bold text-2xl text-center">
+                  {DELIVERY_PARTNER_STRING.FORM_HEADERS}
                 </div>
-                <div className="relative">
-                  <input
-                    type="number"
-                    id="mobilenumber"
-                    name="mobileNumber"
-                    value={formData.mobileNumber}
+                <div className="flex flex-col gap-4 relative">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      value={formData.name}
+                      placeholder="Name"
+                      onChange={handleChange}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded  p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      id="mobilenumber"
+                      name="mobileNumber"
+                      placeholder="Mobile Number"
+                      value={formData.mobileNumber}
+                      onChange={handleChange}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                  </div>
+                  <select
+                    name="city"
+                    value={formData.city}
                     onChange={handleChange}
-                    className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
                     required
-                  />
-                  <label
-                    htmlFor="mobilenumber"
-                    className="absolute pl-2 left-0 top-1 cursor-text peer-focus:text-xs peer-focus:-top-4 transition-all font-semibold"
                   >
-                    Mobile Number
-                  </label>
+                    <option value="">Select City</option>
+                    {DELIVERY_PARTNER_STRING.FORM_CITIES.map((city) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="vehicle"
+                    value={formData.vehicle}
+                    onChange={handleChange}
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                    required
+                  >
+                    <option value="">Select Vehicle</option>
+                    {DELIVERY_PARTNER_STRING.FORM_VEHICLE.map((vehicle) => (
+                      <option key={vehicle} value={vehicle}>
+                        {vehicle}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="sources"
+                    value={formData.sources}
+                    onChange={handleChange}
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                  >
+                    <option value="">Select Sources</option>
+                    {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
+                      <option key={source} value={source}>
+                        {source}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="submit"
+                    className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
+                  >
+                    Register
+                  </button>
                 </div>
-                <select
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  className="p-2 w-full border-b rounded border-gray-300 font-semibold"
-                  required
-                >
-                  <option value="">Select City</option>
-                  {DELIVERY_PARTNER_STRING.FORM_CITIES.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  name="vehicle"
-                  value={formData.vehicle}
-                  onChange={handleChange}
-                  className="p-2 w-full border-b rounded border-gray-300 font-semibold"
-                  required
-                >
-                  <option value="">Select Vehicle</option>
-                  {DELIVERY_PARTNER_STRING.FORM_VEHICLE.map((vehicle) => (
-                    <option key={vehicle} value={vehicle}>
-                      {vehicle}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  name="sources"
-                  value={formData.sources}
-                  onChange={handleChange}
-                  className="p-2 w-full border-b rounded border-gray-300 font-semibold"
-                >
-                  <option value="">Select Sources</option>
-                  {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
-                    <option key={source} value={source}>
-                      {source}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="submit"
-                  className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
-                >
-                  Register
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
 
       {/* making your life easy__ section___ start from here */}
-      <div className="w-full bg-black text-white">
+      <div className="w-full bg-black text-white mb-8">
         <div className="text-3xl font-semibold text-center p-8">
           {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY}
         </div>
         <div className="mainSection bg-black w-full flex justify-center">
-          <div className="flex flex-col w-8/12 md:flex-row gap-14 items-center justify-evenly">
-            <div className="w-full md:w-1/3">
+          <div className="flex max-lg:flex-col w-8/12 lg:flex-row gap-14 items-center justify-evenly md:gap-8 max-sm:w-[85%]">
+            <div className="w-full md:w-full">
               <Image
                 src={driverExperience}
                 className="w-full h-full rounded-lg object-contain shadow-md transition-all hover:scale-105 p-2"
                 alt="Picture of the Delivery"
               />
             </div>
-            <div className="w-full md:w-2/3 font-semibold p-12">
+            <div className="w-full md:w-full p-12 md:p-5 max-sm:p-0  sm:w-full max-sm:mb-8 text-base ">
               {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY_DATA}
             </div>
           </div>
@@ -210,8 +207,8 @@ export default function DeliveryPage(): JSX.Element {
       </div>
 
       {/* ADDITIONAL BENEFITS __ start from here */}
-      <div className="w-full">
-        <div className="text-3xl font-semibold text-center p-8">
+      <div className="w-full mb-8 ">
+        <div className="text-3xl font-semibold text-center p-8 max-sm:text-xl md:text-2xl">
           {DELIVERY_PARTNER_STRING.ADDITIONAL_BENEFITS_TITLE}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-10 text-mint fill-current">
@@ -242,8 +239,8 @@ export default function DeliveryPage(): JSX.Element {
       </div>
 
       {/* this is a CHANGING LIFE OF PEOPLE __section___ start from here */}
-      <div className="w-full bg-black text-white h-auto ">
-        <div className="text-3xl font-semibold text-center p-8">
+      <div className="w-full bg-black text-white h-auto mb-8 ">
+        <div className="text-3xl font-semibold text-center p-8 max-sm:text-xl md:text-2xl">
           {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY}
         </div>
         <div className="w-full flex justify-center">
@@ -279,8 +276,8 @@ export default function DeliveryPage(): JSX.Element {
 
       {/* OWN MULTIPLE VEHICLES? sections */}
 
-      <div className="w-full h-auto">
-        <div className="text-3xl font-semibold text-center p-8">
+      <div className="w-full h-auto mb-8 max-sm:p-8">
+        <div className="text-3xl font-semibold text-center p-8 ">
           {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_TITLE}
         </div>
         <div className="mainSection w-full">
@@ -313,7 +310,7 @@ export default function DeliveryPage(): JSX.Element {
 
       {/* DELIVERY_PARTNER_FAQ __ section__ start from here */}
 
-      <div className="w-full h-auto mb-8 ">
+      <div className="w-full h-auto mb-8 max-sm:p-8 ">
         <div className="text-4xl font-semibold text-center p-10">
           {DELIVERY_PARTNER_STRING.DELIVERY_PARTNER_FAQ_TITLE}
         </div>
