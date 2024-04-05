@@ -531,32 +531,38 @@ export const SLIDER = [
   {
     title: "API Integrations",
     description: "Automate your deliveries by Integrating our APIs",
-    color: "green",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #aa0047 0deg, #8a59f2 90deg, #aa0047 1turn), #8a59f2;",
   },
   {
     title: "2 Wheelers",
     description: "Instant delivery for up to 20 kgs.",
-    color: "blue",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #00aa3a 0deg, #0f2597 90deg, #00aa3a 1turn), #8a59f2;",
   },
   {
     title: "Trucks",
     description: "Hassle-free goods delivery up to 2500 kgs.",
-    color: "orange",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #0007aa 0deg, #b9063c 90deg, #0007aa 1turn), #8a59f2;",
   },
   {
     title: "Packers & Movers",
     description: "House shifting hai? Ho Jayega",
-    color: "red",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #0aa 0deg, #1410ca 90deg, #0aa 1turn), #8a59f2;",
   },
   {
     title: "Porter for Enterprise",
     description: "Streamlining to drive business growth",
-    color: "magenta",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #aa0047 0deg, #8a59f2 90deg, #aa0047 1turn), #8a59f2;",
   },
   {
     title: "Courier Service",
     description: "Guaranteed Doorstep Pickup & Delivery",
-    color: "BlueViolet",
+    color:
+      "conic-gradient(from 180deg at 50% 50%, #00aa3a 0deg, #0f2597 90deg, #00aa3a 1turn), #8a59f2;",
   },
 ];
 
@@ -1165,20 +1171,17 @@ export const NAVBAR = {
   LAPTOP: [
     {
       url: "/enterprise",
-      class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
+      class: "font-semibold hover:text-[#2967ff] duration-250 transition",
       text: "For Enterprise",
     },
     {
       url: "/delivery-partner",
-      class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
+      class: "font-semibold hover:text-[#2967ff] duration-250 transition",
       text: "Delivery Partner",
     },
     {
       url: "/support",
-      class:
-        "hover:text-blue-500 hover:duration-300 text-md text-black font-semibold",
+      class: "font-semibold hover:text-[#2967ff] duration-250 transition",
       text: "Support",
     },
   ],
