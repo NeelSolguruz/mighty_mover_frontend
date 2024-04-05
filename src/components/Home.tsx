@@ -84,8 +84,8 @@ export default function Home() {
             {SLIDER.map((item, index) => (
               <div
                 key={index}
-                className="card bg-gradient-to-r [box-shadow:0_8px_32px_0_rgba(31,_38,_135,_0.37)] backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
-                style={{ backgroundColor: item.color }}
+                className="card bg-gradient-to-r  backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
+                style={{background:item.color}}
               >
                 <div>
                   <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">

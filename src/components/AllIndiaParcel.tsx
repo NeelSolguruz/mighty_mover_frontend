@@ -13,7 +13,7 @@ import {
     SCAN_TO_DOWNLOAD,
     THINK_lOGISTICS_THINK_PORTER,
     TRUCK_MAIN_PAGE_DATA,
-} from "@/app/constant/constant";
+} from "@/constant/constant";
 import {
     hassle_free_online_services_in_ahmedabad,
     courier_data,

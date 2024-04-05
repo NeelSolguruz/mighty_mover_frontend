@@ -29,7 +29,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex gap-10 text-base max-lg:hidden">
+        <div className="flex mr-12 gap-10 text-base max-lg:hidden">
           {NAVBAR.LAPTOP.map((item, index) => (
             <Link key={index} href={item.url} className={item.class}>
               {item.text}
