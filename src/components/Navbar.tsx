@@ -29,7 +29,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex gap-10 text-base max-md:hidden">
+        <div className="flex gap-10 text-base max-lg:hidden">
           {NAVBAR.LAPTOP.map((item, index) => (
             <Link key={index} href={item.url} className={item.class}>
               {item.text}
@@ -39,7 +39,7 @@ export default function Navbar() {
 
 
 
-        <div className="flex justify-center max-md:hidden w-1/12">
+        <div className="flex justify-center max-lg:hidden w-1/12">
           <Link href="/login">
             <FaUserCircle
               className="size-10 hover:text-[#2967ff] hover:scale-125 transition-all"
@@ -52,13 +52,13 @@ export default function Navbar() {
 
         {/* side panel */}
 
-        <div className="max-md:block hidden w-16 text-center">
+        <div className="max-lg:block hidden w-16 text-center mr-3 max-sm:mr-0">
           <button onClick={handleClick}>
             <IoMenu className={`${clicked ? "hidden" : "block"} text-3xl`} />
           </button>
         </div>
 
-        <div className={`${clicked ? "hidden max-md:block mt-64" : "hidden"}`} >
+        <div className={`${clicked ? "hidden max-lg:block mt-64" : "hidden"}`} >
           <div className={`${clicked ? "block" : "hidden"} text-3xl w-full h-full max-sm:text-2xl`}>
             <div className="flex flex-col bg-white items-end p-2 shadow-md rounded-xl max-sm:text-lg">
               <button onClick={handleClose}>
