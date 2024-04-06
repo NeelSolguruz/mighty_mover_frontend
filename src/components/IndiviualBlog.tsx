@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Trending_post,
   Trending_post_data,
@@ -25,7 +25,7 @@ import {
 import { motion } from "framer-motion";
 export default function IndiviualBlog({ id }: any) {
   const [prevnextid, setprevnextid] = useState(-1);
-  const [sidecomment,setsidecomment]=useState(false)
+  const [sidecomment, setsidecomment] = useState(false);
   const index = post_data.findIndex(
     (item) => Number(item.id) === Number(id.indiblog)
   );
@@ -46,7 +46,7 @@ export default function IndiviualBlog({ id }: any) {
       },
     },
     open: {
-      x: "0px", 
+      x: "0px",
       transition: {
         type: "spring",
         damping: 20,
@@ -63,9 +63,9 @@ export default function IndiviualBlog({ id }: any) {
     }
   }, [sidecomment]);
 
-  const handlecomment=()=>{
-    setsidecomment(!sidecomment)
-  }
+  const handlecomment = () => {
+    setsidecomment(!sidecomment);
+  };
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
@@ -116,8 +116,8 @@ export default function IndiviualBlog({ id }: any) {
         </div>
       </motion.div>
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ translateY: 40, opacity: 0 }}
+        whileInView={{ translateY: 0, opacity: 1 }}
         transition={{ duration: 1 }}
         className="w-10/12 flex justify-start mt-2.5"
       >
@@ -127,7 +127,11 @@ export default function IndiviualBlog({ id }: any) {
           className="w-[1160px] h-[606px] max-[769px]:h-[350px] max-[426px]:h-[250px]"
         ></Image>
       </motion.div>
-      <div className="w-10/12 flex justify-center items-center mt-10 gap-4">
+      <motion.div
+      initial={{ translateY: 40, opacity: 0 }}
+      whileInView={{ translateY: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
+       className="w-10/12 flex justify-center items-center mt-10 gap-4">
         <div>
           <Image
             src={google_play}
@@ -142,7 +146,7 @@ export default function IndiviualBlog({ id }: any) {
             className="w-[200px] h-[65px]"
           ></Image>
         </div>
-      </div>
+      </motion.div>
       <motion.div
         initial={{ translateY: 40, opacity: 0 }}
         whileInView={{ translateY: -10, opacity: 1 }}
@@ -160,11 +164,11 @@ export default function IndiviualBlog({ id }: any) {
         {individualPageData[0].wholedata}
       </motion.div>
       <motion.div
-       variants={containerVariants}
-       initial="close"
-       animate={containerControls}
-
-       className="w-[400px] flex-col gap-4 justify-center bg-white fixed h-lvh top-0 right-0 z-[10000000] overflow-y-auto">
+        variants={containerVariants}
+        initial="close"
+        animate={containerControls}
+        className="w-[400px] flex-col gap-4 justify-center bg-white fixed h-lvh top-0 right-0 z-[10000000] overflow-y-auto"
+      >
         <div className="flex justify-between mx-4 mt-4 text-xl font-semibold">
           <div>
             Responses {"("}
@@ -217,13 +221,22 @@ export default function IndiviualBlog({ id }: any) {
           </div>
         </div>
       </motion.div>
-      <div className="w-full flex justify-center items-center mb-4">
+      <motion.div
+      initial={{ translateY: -40, opacity: 0 }}
+      whileInView={{ translateY: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
+       className="w-full flex justify-center items-center mb-4">
         <div className="text-base">{some_few_blog}</div>
-      </div>
+      </motion.div>
       <div className="w-10/12 flex">
         {index == 0 ? (
           <div className="flex gap-4">
-            <div className="flex flex-col justify-center items-center">
+            <motion.div
+              initial={{ translateX: -40, opacity: 0 }}
+              whileInView={{ translateX: 0, opacity: 1 }}
+              transition={{ duration: 1.5 }}
+              className="flex flex-col justify-center items-center"
+            >
               <Link href={`/blog/${index + 1}`}>
                 <div>
                   <Image src={prev_next[index + 1]?.img} alt="img"></Image>
@@ -236,8 +249,13 @@ export default function IndiviualBlog({ id }: any) {
                 {"~ "}
                 {prev_next[index + 1]?.name}
               </div>
-            </div>
-            <div className="flex flex-col justify-center items-center">
+            </motion.div>
+            <motion.div
+               initial={{ translateX: 40, opacity: 0 }}
+               whileInView={{ translateX: 0, opacity: 1 }}
+               transition={{ duration: 1.5 }}
+              className="flex flex-col justify-center items-center"
+            >
               <Link href={`/blog/${index + 2}`}>
                 <div>
                   <Image src={prev_next[index + 2]?.img} alt="img"></Image>
@@ -250,12 +268,17 @@ export default function IndiviualBlog({ id }: any) {
                 {"~ "}
                 {prev_next[index + 2]?.name}
               </div>
-            </div>
+            </motion.div>
           </div>
         ) : index + 1 == prev_next.length ? (
           <>
             <div className="flex gap-4">
-              <div className="flex flex-col justify-center items-center">
+              <motion.div
+                initial={{ translateX: -40, opacity: 0 }}
+                whileInView={{ translateX: 0, opacity: 1 }}
+                transition={{ duration: 1.5 }}
+                className="flex flex-col justify-center items-center"
+              >
                 <Link href={`/blog/${index - 1}`}>
                   <div>
                     <Image src={prev_next[index - 1]?.img} alt="img"></Image>
@@ -268,8 +291,13 @@ export default function IndiviualBlog({ id }: any) {
                   {"~ "}
                   {prev_next[index - 1]?.name}
                 </div>
-              </div>
-              <div className="flex flex-col justify-center items-center">
+              </motion.div>
+              <motion.div
+                 initial={{ translateX: 40, opacity: 0 }}
+                 whileInView={{ translateX: 0, opacity: 1 }}
+                 transition={{ duration: 1.5 }}
+                className="flex flex-col justify-center items-center"
+              >
                 <Link href={`/blog/${index - 2}`}>
                   <div>
                     <Image src={prev_next[index - 2]?.img} alt="img"></Image>
@@ -282,13 +310,18 @@ export default function IndiviualBlog({ id }: any) {
                   {"~ "}
                   {prev_next[index - 2]?.name}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </>
         ) : (
           <>
             <div className="flex gap-4 p-4">
-              <div className="flex flex-col justify-center items-center">
+              <motion.div
+                initial={{ translateX: -40, opacity: 0 }}
+                whileInView={{ translateX: 0, opacity: 1 }}
+                transition={{ duration: 1.5 }}
+                className="flex flex-col justify-center items-center"
+              >
                 <Link href={`/blog/${index + 1}`}>
                   <div>
                     <Image src={prev_next[index + 1]?.img} alt="img"></Image>
@@ -301,8 +334,13 @@ export default function IndiviualBlog({ id }: any) {
                   {"~ "}
                   {prev_next[index - 1]?.name}
                 </div>
-              </div>
-              <div className="flex flex-col justify-center items-center">
+              </motion.div>
+              <motion.div
+                 initial={{ translateX: 40, opacity: 0 }}
+                 whileInView={{ translateX: 0, opacity: 1 }}
+                 transition={{ duration: 1.5 }}
+                className="flex flex-col justify-center items-center"
+              >
                 <Link href={`/blog/${index + 1}`}>
                   <div>
                     <Image src={prev_next[index + 1]?.img} alt="img"></Image>
@@ -316,14 +354,18 @@ export default function IndiviualBlog({ id }: any) {
 
                   {prev_next[index + 1]?.name}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </>
         )}
       </div>
-      <div className="w-full flex justify-center items-center">
+      <motion.div
+      initial={{ translateY: -40, opacity: 0 }}
+      whileInView={{ translateY: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
+       className="w-full flex justify-center items-center">
         <div>{Trending_post}</div>
-      </div>
+      </motion.div>
       <div className="w-10/12 flex gap-4 justify-center items-center max-[769px]:grid max-[769px]:grid-cols-2 max-[769px]:grid-rows-2 max-[426px]:grid-cols-1 mt-10">
         {Trending_post_data.map((item, index) => (
           <>
