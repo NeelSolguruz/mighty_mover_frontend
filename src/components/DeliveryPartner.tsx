@@ -14,6 +14,9 @@ import {
 
 export default function DeliveryPage(): JSX.Element {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Blob | undefined>(
+    undefined
+  );
 
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -26,6 +29,9 @@ export default function DeliveryPage(): JSX.Element {
     city: "",
     vehicle: "",
     sources: "",
+    image1: undefined,
+    image2: undefined,
+    image3: undefined,
   });
 
   const handleChange = (
@@ -42,6 +48,11 @@ export default function DeliveryPage(): JSX.Element {
     e.preventDefault();
 
     console.log("Form submitted:", formData);
+    const formdata = new FormData();
+    //  Object.entries(formData).forEach(([key, value]) => {
+    //    formdata.append(key, value);
+    //  });
+    if (selectedImage) formdata.append("file", selectedImage);
 
     setFormData({
       name: "",
@@ -50,9 +61,21 @@ export default function DeliveryPage(): JSX.Element {
       city: "",
       vehicle: "",
       sources: "",
+      image1: undefined,
+      image2: undefined,
+      image3: undefined,
     });
   };
+  const imageChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const inputElement = e.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      setSelectedImage(inputElement.files[0]);
+    }
+  };
 
+  // const removeSelectedImage = () => {
+  //   setSelectedImage(undefined);
+  // };
   return (
     <>
       <div className="w-full ">
@@ -82,8 +105,7 @@ export default function DeliveryPage(): JSX.Element {
                   <Image
                     src={item.images}
                     alt={item.title}
-                    className="w-full h-full rounded-lg object-conta
-                    in shadow-gray-400 shadow-md transition-all hover:scale-105"
+                    className="w-full h-full rounded-lg object-contain shadow-gray-400 shadow-md transition-all hover:scale-105"
                   />
                 </div>
                 <div className="p-2">
@@ -188,6 +210,56 @@ export default function DeliveryPage(): JSX.Element {
                       </option>
                     ))}
                   </select>
+                  <div className="relative flex flex-row">
+                    <input
+                      accept="image/*"
+                      type="file"
+                      onChange={imageChange}
+                      placeholder="Enter Your Aadhar Card "
+                      value={formData.image1?.toString()}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                    <input
+                      accept="image/*"
+                      type="file"
+                      onChange={imageChange}
+                      placeholder="Enter Your driving License "
+                      value={formData.image2?.toString()}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                    <input
+                      accept="image/*"
+                      type="file"
+                      onChange={imageChange}
+                      placeholder="Enter Your pancard Image"
+                      value={formData.image3?.toString()}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                    {/* {selectedImage && (
+                      <div>
+                        <Image
+                          src={URL.createObjectURL(selectedImage)}
+                          width={100}
+                          height={100}
+                          // style={styles.image}
+                          alt="Thumb"
+                        />
+                        <button
+                          onClick={removeSelectedImage}
+                          // style={styles.delete}
+                        >
+                          Remove This Image
+                        </button>
+                      </div>
+                    )} */}
+                  </div>
+
                   <button
                     type="submit"
                     className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
