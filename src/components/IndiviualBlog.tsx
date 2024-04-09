@@ -64,6 +64,7 @@ export default function IndiviualBlog({ id }: any) {
   }, [sidecomment]);
 
   const handlecomment = () => {
+     
     setsidecomment(!sidecomment);
   };
 

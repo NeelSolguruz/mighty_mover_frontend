@@ -1,7 +1,46 @@
+"use client";
 import LoginLogo from "@/assets/Images/icons/LoginLogo";
 import { SIGNUP } from "@/constant/constant";
+import http from "@/http/http";
+import { authregister } from "@/http/staticTokenService";
 import Link from "next/link";
+import { useState } from "react";
 export default function Register() {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactno, setContactno] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setComfirmpassword] = useState("");
+  const resetform=()=>{
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setContactno("");
+    setPassword("");
+    setComfirmpassword("");
+  }
+
+  const handlesubmit = () => {
+    let result = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      contact: contactno,
+      password: password,
+    };
+    console.log(result);
+    authregister( result )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error: any) => {
+        console.error("error:", error);
+      });
+    resetform()
+  };
+ 
+
   return (
     <>
       <div className="w-full flex justify-center">
@@ -31,10 +70,13 @@ export default function Register() {
             <input
               type="text"
               id="firstname"
+              name="firstname"
+              value={firstname}
               placeholder="Enter your first name"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
+              onChange={(e) => setFirstname(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
@@ -44,10 +86,14 @@ export default function Register() {
             <input
               type="text"
               id="lastname"
+              name="lastname"
+              value={lastname}
               placeholder="Enter your last name"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
+                    
                     "
+              onChange={(e) => setLastname(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
@@ -57,10 +103,13 @@ export default function Register() {
             <input
               type="email"
               id="email"
+              name="email"
+              value={email}
               placeholder="Enter your email address"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
@@ -70,10 +119,13 @@ export default function Register() {
             <input
               type="text"
               id="number"
+              name="contact"
+              value={contactno}
               placeholder="Enter your contact number"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
+              onChange={(e) => setContactno(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
@@ -85,10 +137,13 @@ export default function Register() {
             <input
               type="password"
               id="password"
+              name="password"
+              value={password}
               placeholder="Enter your password"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
@@ -100,14 +155,20 @@ export default function Register() {
             <input
               type="password"
               id="cpassword"
+              name="cpassword"
+              value={confirmpassword}
               placeholder="Re-Enter your password"
               className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
+              onChange={(e) => setComfirmpassword(e.target.value)}
             />
           </div>
           <div className="w-full">
-            <button className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-lg">
+            <button
+              className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-lg"
+              onClick={handlesubmit}
+            >
               Create my Account
             </button>
           </div>
