@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
-
 const config = {
   baseURL: "http://192.168.68.53:3000",
   headers: {
@@ -20,3 +19,8 @@ export const authregister = async (payload: any)
 : Promise<AxiosResponse<any, any>> => {
   return axios.post("/api/v1/user/register", payload, config);
 };
+export const verifyotp_api = async (payload: any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.post("/api/v1/user/verify", payload, config);
+};
+

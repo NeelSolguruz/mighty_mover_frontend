@@ -2,7 +2,7 @@
 import backgroud_image from "../assets/Images/home_back_image.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IMAGES_CAPTION,
   STATS,
@@ -15,6 +15,7 @@ import {
   BACKGROUND_TEXT
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
+import { MdLocalCafe } from "react-icons/md";
 
 export default function Home() {
 
@@ -23,6 +24,8 @@ export default function Home() {
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
+
+ 
 
   return (
     <>
