@@ -11,6 +11,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useradd, userlogout } from "@/redux/userSlice";
 import { useAppSelector } from "@/redux/hooks";
+import http from "@/http/http";
 
 export default function Navbar() {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -24,6 +25,7 @@ export default function Navbar() {
   };
 
   useLayoutEffect(() => {
+    
     const localToken =
       typeof window !== "undefined" ? localStorage.getItem("data") : null;
     const token = localToken && JSON.parse(localToken);
@@ -38,14 +40,20 @@ export default function Navbar() {
     }
   }, [dispatch]);
   const clearstorage = () => {
-    dispatch(userlogout());
-    openmodal()
+    http
+      .get("/api/v1/user/logout")
+      .then(() => {
+        dispatch(userlogout());
+        openmodal();
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
   const handleClose = () => {
     setClicked(false);
   };
   const openmodal = () => {
-    
     setmodal(!modal);
   };
 

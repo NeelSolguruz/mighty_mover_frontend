@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loader from "react-js-loader";
+import { toast } from "sonner";
 
 export default function Register() {
   const [firstname, setFirstname] = useState("");
@@ -29,7 +30,7 @@ export default function Register() {
     setComfirmpassword("");
   };
 
-  const handlesubmit = () => {
+  const handlesubmit = async () => {
     setLoading(true);
     let result = {
       firstname: firstname,
@@ -40,15 +41,19 @@ export default function Register() {
     };
     console.log(result);
     try {
-      const response = authregister(result);
+      const user_details_register = await authregister(result);
+      toast.success(user_details_register.data.message);
       setLoading(false);
       router.push("/login", { scroll: false });
-
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
         if (axiosError.response) {
           console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
         } else if (axiosError.request) {
           console.log("Request Error", axiosError.request);
         } else {
@@ -59,7 +64,6 @@ export default function Register() {
       setLoading(false);
       resetform();
     }
-
   };
 
   return (
