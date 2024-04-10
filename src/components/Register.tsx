@@ -1,10 +1,15 @@
 "use client";
 import LoginLogo from "@/assets/Images/icons/LoginLogo";
+import NavLogo from "@/assets/Images/icons/NavLogo";
 import { SIGNUP } from "@/constant/constant";
 import http from "@/http/http";
 import { authregister } from "@/http/staticTokenService";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Loader from "react-js-loader";
+
 export default function Register() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -12,16 +17,20 @@ export default function Register() {
   const [contactno, setContactno] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setComfirmpassword] = useState("");
-  const resetform=()=>{
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const resetform = () => {
     setFirstname("");
     setLastname("");
     setEmail("");
     setContactno("");
     setPassword("");
     setComfirmpassword("");
-  }
+  };
 
   const handlesubmit = () => {
+    setLoading(true);
     let result = {
       firstname: firstname,
       lastname: lastname,
@@ -30,158 +39,183 @@ export default function Register() {
       password: password,
     };
     console.log(result);
-    authregister( result )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error: any) => {
-        console.error("error:", error);
-      });
-    resetform()
+    try {
+      const response = authregister(result);
+      setLoading(false);
+      router.push("/login", { scroll: false });
+
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    } finally {
+      setLoading(false);
+      resetform();
+    }
+
   };
- 
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div
-          className="flex flex-col items-center gap-10 py-10 w-5/12
+      {loading ? (
+        <div className="flex w-full h-lvh justify-center items-center">
+          <Loader
+            type="spinner-default"
+            bgColor={"#2967ff"}
+            color={"#2967ff"}
+            size={100}
+          />
+        </div>
+      ) : (
+        <>
+          <div className="w-full flex justify-center">
+            <div
+              className="flex flex-col items-center gap-10 py-10 w-5/12
                 max-lg:w-8/12
                 max-sm:w-11/12
                 "
-        >
-          <div className="w-[180px]">
-            <LoginLogo />
-          </div>
-          <div className="w-full">
-            <div>
-              <h1 className="text-4xl font-bold">{SIGNUP.title}</h1>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold max-sm:text-lg">
-                {SIGNUP.tagline}
-              </h3>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="firstname" className="font-bold text-lg">
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstname"
-              name="firstname"
-              value={firstname}
-              placeholder="Enter your first name"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+            >
+              <div className="w-[180px]">
+                <NavLogo />
+              </div>
+              <div className="w-full">
+                <div>
+                  <h1 className="text-4xl font-bold">{SIGNUP.title}</h1>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold max-sm:text-lg">
+                    {SIGNUP.tagline}
+                  </h3>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="firstname" className="font-bold text-lg">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstname"
+                  name="firstname"
+                  value={firstname}
+                  placeholder="Enter your first name"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
-              onChange={(e) => setFirstname(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="lastname" className="font-bold text-lg">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              value={lastname}
-              placeholder="Enter your last name"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="lastname" className="font-bold text-lg">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  value={lastname}
+                  placeholder="Enter your last name"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     
                     "
-              onChange={(e) => setLastname(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="email" className="font-bold text-lg">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              placeholder="Enter your email address"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+                  onChange={(e) => setLastname(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="email" className="font-bold text-lg">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  placeholder="Enter your email address"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="number" className="font-bold text-lg">
-              Contact Number
-            </label>
-            <input
-              type="text"
-              id="number"
-              name="contact"
-              value={contactno}
-              placeholder="Enter your contact number"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="number" className="font-bold text-lg">
+                  Contact Number
+                </label>
+                <input
+                  type="text"
+                  id="number"
+                  name="contact"
+                  value={contactno}
+                  placeholder="Enter your contact number"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
                     active:border active:border-blue-600
                     "
-              onChange={(e) => setContactno(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col gap-1 w-full">
-            <div className="flex justify-between">
-              <label htmlFor="password" className="font-bold text-lg">
-                Password
-              </label>
+                  onChange={(e) => setContactno(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex justify-between">
+                  <label htmlFor="password" className="font-bold text-lg">
+                    Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  placeholder="Enter your password"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+                    active:border active:border-blue-600
+                    "
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex justify-between">
+                  <label htmlFor="cpassword" className="font-bold text-lg">
+                    Confirm Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  id="cpassword"
+                  name="cpassword"
+                  value={confirmpassword}
+                  placeholder="Re-Enter your password"
+                  className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
+                    active:border active:border-blue-600
+                    "
+                  onChange={(e) => setComfirmpassword(e.target.value)}
+                />
+              </div>
+              <div className="w-full">
+                <button
+                  className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-lg"
+                  onClick={handlesubmit}
+                >
+                  Create my Account
+                </button>
+              </div>
+              <div>
+                <p className="font-semibold">
+                  Already have an account?{" "}
+                  <Link href="/login" className="text-blue-600">
+                    Sign In
+                  </Link>
+                </p>
+              </div>
             </div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Enter your password"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
-                    active:border active:border-blue-600
-                    "
-              onChange={(e) => setPassword(e.target.value)}
-            />
           </div>
-          <div className="flex flex-col gap-1 w-full">
-            <div className="flex justify-between">
-              <label htmlFor="cpassword" className="font-bold text-lg">
-                Confirm Password
-              </label>
-            </div>
-            <input
-              type="password"
-              id="cpassword"
-              name="cpassword"
-              value={confirmpassword}
-              placeholder="Re-Enter your password"
-              className="p-3 w-full border border-gray-400 hover:border-black text-lg rounded-md
-                    active:border active:border-blue-600
-                    "
-              onChange={(e) => setComfirmpassword(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <button
-              className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-lg"
-              onClick={handlesubmit}
-            >
-              Create my Account
-            </button>
-          </div>
-          <div>
-            <p className="font-semibold">
-              Already have an account?{" "}
-              <Link href="/login" className="text-blue-600">
-                Sign In
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

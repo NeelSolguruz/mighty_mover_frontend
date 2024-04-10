@@ -3,7 +3,7 @@ import Head from "next/head";
 import "./globals.css";
 import { Titillium_Web } from "next/font/google";
 import { Provider } from "react-redux";
-import store from "@/redux/store";
+import StoreProvider from "./StoreProvider";
 const TitilliumWeb = Titillium_Web({
   weight: ["400", "600", "700", "900", "200", "300"],
   subsets: ["latin"],
@@ -26,7 +26,7 @@ export default function RootLayout({
         <link rel="icon" href="/Mighty_Movers.svg" sizes="any" />
       </head>
       <body className={TitilliumWeb.className}>
-       {children}
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
