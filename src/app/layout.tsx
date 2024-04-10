@@ -4,6 +4,7 @@ import "./globals.css";
 import { Titillium_Web } from "next/font/google";
 import { Provider } from "react-redux";
 import StoreProvider from "./StoreProvider";
+import { Toaster } from "sonner";
 const TitilliumWeb = Titillium_Web({
   weight: ["400", "600", "700", "900", "200", "300"],
   subsets: ["latin"],
@@ -26,7 +27,20 @@ export default function RootLayout({
         <link rel="icon" href="/Mighty_Movers.svg" sizes="any" />
       </head>
       <body className={TitilliumWeb.className}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <Toaster
+          richColors
+            position="top-right"
+            toastOptions={{
+              style: {
+                // background: "red",
+                // zIndex: 100,
+                // width:"250px",
+              },
+            }}
+          />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

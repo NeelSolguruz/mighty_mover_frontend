@@ -12,9 +12,10 @@ import NavLogo from "@/assets/Images/icons/NavLogo";
 import { otp_page } from "@/assets/Images/imageassets";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { OTP_SENT_TO_EMAIL, OTP_VERIFICATION } from "@/constant/login";
+import { DID_NOT_GET, OTP_SENT_TO_EMAIL, OTP_VERIFICATION } from "@/constant/login";
 import { useDispatch, useSelector } from "react-redux";
 import { useradd } from "@/redux/userSlice";
+import { Toaster, toast } from "sonner";
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ export default function Login() {
     setLoading(true);
     try {
       const user_details = await verifyotp_api({ email, otp });
+      toast.success(user_details.data.message);
       dispatch(useradd(user_details.data.data));
       router.push("/", { scroll: false });
       setLoading(false);
@@ -46,9 +48,13 @@ export default function Login() {
       console.log("otp successful");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
         if (axiosError.response) {
           console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
         } else if (axiosError.request) {
           console.log("Request Error", axiosError.request);
         } else {
@@ -57,7 +63,8 @@ export default function Login() {
       }
     } finally {
       setLoading(false);
-      resetForm();
+
+      setOtp("");
     }
   };
 
@@ -94,18 +101,24 @@ export default function Login() {
 
     try {
       const response = await authLogin({ email, password });
+      console.log(response.data.message);
+      toast.success(response.data.message);
       setotppage(true);
-      console.log("Login successful");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
         if (axiosError.response) {
           console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
         } else if (axiosError.request) {
           console.log("Request Error", axiosError.request);
         } else {
           console.log("Error", axiosError.message);
         }
+        resetForm();
       }
     } finally {
       // router.push('/', { scroll: false })
@@ -168,16 +181,16 @@ export default function Login() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center"
+                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[10] flex justify-center items-center"
                   >
-                    <div className="w-3/4 flex justify-center items-center gap-2 p-10 bg-white rounded-lg">
+                    <div className="w-[35%] flex justify-center items-center gap-2 p-10 bg-white rounded-lg">
                       <div className="w-full flex flex-col justify-center p-4 gap-6">
                         <div className="w-full flex justify-center">
                           <div className="w-[180px]">
                             <NavLogo />
                           </div>
                         </div>
-                        <h1 className="text-6xl font-bold tracking-wide text-center">
+                        <h1 className="text-4xl font-bold tracking-wide text-center">
                           {OTP_VERIFICATION}
                         </h1>
 
@@ -200,11 +213,14 @@ export default function Login() {
                               }
                               type="text"
                               id={`otp${index + 1}`}
-                              className="border border-black w-16 h-16 rounded-lg text-center text-3xl font-bold"
+                              className="border border-black w-10 h-10 rounded-lg text-center text-3xl font-bold"
                               maxLength={1}
                               onInput={(e) => handleInput(e, index)}
                             />
                           ))}
+                        </div>
+                        <div className="flex w-full justify-end items-center text-gray-400 text-xs" onClick={handleSubmit}>
+                            {DID_NOT_GET}
                         </div>
                         <div className="flex w-full justify-center items-center ">
                           <button
