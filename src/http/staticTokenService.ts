@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.53:3000",
+  baseURL: "http://192.168.68.91:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -22,5 +22,9 @@ export const authregister = async (payload: any)
 export const verifyotp_api = async (payload: any)
 : Promise<AxiosResponse<any, any>> => {
   return axios.post("/api/v1/user/verify", payload, config);
+};
+export const forgotpassword_api = async (payload: any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.post("/api/v1/user/forgotPassword", payload, config);
 };
 

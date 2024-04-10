@@ -12,20 +12,19 @@ import {
   SLIDER,
   SLIDER_TITLE,
   REVIEWS_TITLE,
-  BACKGROUND_TEXT
+  BACKGROUND_TEXT,
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
 import { MdLocalCafe } from "react-icons/md";
 
-export default function Home() {
 
+export default function Home() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-
- 
+  
 
   return (
     <>
@@ -33,22 +32,27 @@ export default function Home() {
         {/* STARTING IMAGE*/}
         <div className="relative">
           <div className="bg-black">
-            <Image src={backgroud_image} alt="background image"
+            <Image
+              src={backgroud_image}
+              alt="background image"
               className="opacity-75 w-full h-96 max-lg:h-auto"
             />
           </div>
           <div className="w-full flex justify-center">
             <div className="text-white absolute bottom-40 bg-transparent w-9/12 flex flex-col gap-4 max-lg:bottom-40 max-sm:bottom-14 max-sm:gap-0">
               <div>
-                <h1 className="text-5xl max-md:text-2xl">{BACKGROUND_TEXT.question}</h1>
+                <h1 className="text-5xl max-md:text-2xl">
+                  {BACKGROUND_TEXT.question}
+                </h1>
               </div>
               <div>
-                <h1 className="text-6xl max-md:text-3xl font-bold">{BACKGROUND_TEXT.tagline}</h1>
+                <h1 className="text-6xl max-md:text-3xl font-bold">
+                  {BACKGROUND_TEXT.tagline}
+                </h1>
               </div>
             </div>
           </div>
         </div>
-
 
         {/* Button Panel  */}
         <div className="flex justify-center">
@@ -63,7 +67,9 @@ export default function Home() {
                       width={100}
                       className="bg-indigo-100 rounded-lg"
                     />
-                    <figcaption className="max-lg:text-sm">{item.caption}</figcaption>
+                    <figcaption className="max-lg:text-sm">
+                      {item.caption}
+                    </figcaption>
                   </div>
                 </Link>
               ))}
@@ -88,7 +94,7 @@ export default function Home() {
               <div
                 key={index}
                 className="card bg-gradient-to-r  backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
-                style={{background:item.color}}
+                style={{ background: item.color }}
               >
                 <div>
                   <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">
@@ -238,8 +244,9 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
-                    }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -261,10 +268,11 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
-                  ? "grid-rows-[1fr] opacity-100"
-                  : "grid-rows-[0fr] opacity-0"
-                  }`}
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                  openIndex === index
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
+                }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>

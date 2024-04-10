@@ -13,6 +13,8 @@ import { otp_page } from "@/assets/Images/imageassets";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { OTP_SENT_TO_EMAIL, OTP_VERIFICATION } from "@/constant/login";
+import { useDispatch, useSelector } from "react-redux";
+import { useradd } from "@/redux/userSlice";
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -22,6 +24,9 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [otppage, setotppage] = useState(false);
   const [otp, setOtp] = useState("");
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state);
+  console.log(data);
 
   const resetForm = () => {
     setEmail("");
@@ -29,13 +34,13 @@ export default function Login() {
     setEmailError("");
     setPasswordError("");
   };
-  const verifyotp=async ()=>{
-    
+  const verifyotp = async () => {
+    setLoading(true);
     try {
-      const user_details= await verifyotp_api({email,otp});
-      localStorage.setItem("userdata",JSON.stringify(user_details.data.data))
-      router.push('/', { scroll: false })
-
+      const user_details = await verifyotp_api({ email, otp });
+      dispatch(useradd(user_details.data.data));
+      router.push("/", { scroll: false });
+      setLoading(false);
       resetForm();
 
       console.log("otp successful");
@@ -51,10 +56,10 @@ export default function Login() {
         }
       }
     } finally {
-      // setLoading(false);
+      setLoading(false);
       resetForm();
     }
-  }
+  };
 
   const validateEmail = (value: string | any) => {
     if (!value.trim()) {
@@ -91,7 +96,6 @@ export default function Login() {
       const response = await authLogin({ email, password });
       setotppage(true);
       console.log("Login successful");
-    
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
@@ -128,8 +132,8 @@ export default function Login() {
         const newOtp = prevOtp + value;
         if (newOtp.length === inputs.current.length) {
           console.log("Final OTP:", newOtp);
-          setOtp(newOtp)
-          console.log("otp state",otp)
+          setOtp(newOtp);
+          console.log("otp state", otp);
         }
         return newOtp;
       });
@@ -203,7 +207,10 @@ export default function Login() {
                           ))}
                         </div>
                         <div className="flex w-full justify-center items-center ">
-                          <button className="border-none bg-[#2967ff] text-white font-bold px-10 py-4 rounded-lg text-xl" onClick={verifyotp}>
+                          <button
+                            className="border-none bg-[#2967ff] text-white font-bold px-10 py-4 rounded-lg text-xl"
+                            onClick={verifyotp}
+                          >
                             Verify OTP
                           </button>
                         </div>
