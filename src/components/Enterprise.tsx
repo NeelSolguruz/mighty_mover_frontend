@@ -10,9 +10,55 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { useState } from "react";
 import faq from "../assets/Images/faq.svg";
 import { FAQItem, FAQAccordionProps } from "../constant/type/data.type";
+import { enterprise_register } from "@/http/staticTokenService";
+import { toast } from "sonner";
+import axios, { AxiosError } from "axios";
+
 export default function Enterprise() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [loading,setLoading]=useState(false)
+  const [formData, setFormData] = useState({
+  });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    console.log(name)
+    console.log(value)
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async() => {
+    setLoading(true)
+    try{
+      const response=await enterprise_register(formData)
+      toast.success(response.data.data.message)
+      setLoading(false)
+    }
+    catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    }
+    finally{
+      setLoading(false)
+    }
+   
+  };
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -59,7 +105,7 @@ export default function Enterprise() {
             </div>
             <div className="w-[342px]  h-auto flex justify-center items-center absolute right-10 top-40 max-breakpoint:top-24 max-[935px]:static max-[935px]:w-full">
               <div className="w-full px-3 py-3 rounded-2xl shadow-gray-400 shadow-md bg-white">
-                <form className="w-full">
+               
                   <div className="flex flex-col gap-6">
                     <div className="flex justify-center text-2xl font-semibold text-black text-center">
                       {ENTERPRISE_STRING.FOR_ENTERPRISE}
@@ -70,7 +116,7 @@ export default function Enterprise() {
                         {index === 0 || index === 4 ? (
                           <div>
                             {index === 0 ? (
-                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]">
+                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]"  name={item} onChange={handleChange}>
                                 {ENTERPRISE_STRING.FORM_CITIES.map(
                                   (item, index) => (
                                     <>
@@ -82,7 +128,7 @@ export default function Enterprise() {
                                 )}
                               </select>
                             ) : (
-                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]">
+                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]"  name={item}  onChange={handleChange}>
                                 {ENTERPRISE_STRING.FORM_MONTHLY_TRIPS.map(
                                   (item, index) => (
                                     <>
@@ -100,26 +146,24 @@ export default function Enterprise() {
                             <input
                               id={item}
                               name={item}
+                              onChange={handleChange}
+                              placeholder={`${item}`}
                               type="text"
-                              className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer"
+                              className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:p-2 placeholder:w-full  placeholder:font-light placeholder:text-black placeholder:text-[10px]"
                             />
-                            <label
-                              htmlFor={item}
-                              className="absolute pl-2 left-0 top-1 cursor-text peer-focus:text-xs peer-focus:-top-4 transition-all font-light text-black text-[10px] p-1"
-                            >
-                              {item}
-                            </label>
+                           
+                        
                           </div>
                         )}
                       </>
                     ))}
                     <div>
-                      <button className="w-full bg-[#2967FF] p-2 rounded text-white text-sm font-bold">
+                      <button className="w-full bg-[#2967FF] p-2 rounded text-white text-sm font-bold" type="submit" onClick={handleSubmit}>
                         {ENTERPRISE_STRING.REQUEST_CALLBACK}
                       </button>
                     </div>
                   </div>
-                </form>
+               
               </div>
             </div>
           </div>

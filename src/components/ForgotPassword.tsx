@@ -1,7 +1,38 @@
+"use client"
 import LoginLogo from "@/assets/Images/icons/LoginLogo";
+import NavLogo from "@/assets/Images/icons/NavLogo";
 import { FORGOT_PASSWORD } from "@/constant/constant";
+import { forgotpassword_api } from "@/http/staticTokenService";
+import axios, { AxiosError } from "axios";
+import { useState } from "react";
 
 export default function ForgotPassword() {
+  const [email, setemail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const ForgotPassword = async () => {
+    setLoading(true);
+
+    try {
+      const response = await forgotpassword_api({ email });
+
+      console.log("Login successful");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    } finally {
+      // router.push('/', { scroll: false })
+      setLoading(false);
+      // resetForm();
+    }
+  };
   return (
     <>
       <div className="w-full flex justify-center py-16">
@@ -16,7 +47,7 @@ export default function ForgotPassword() {
                     max-sm:w-[150px]
                     "
           >
-            <LoginLogo />
+            <NavLogo />
           </div>
           <div className="w-full flex justify-center">
             <h1
@@ -32,14 +63,16 @@ export default function ForgotPassword() {
               Email Address
             </label>
             <input
-              type="text"
+              type="email"
+              value={email}
               id="username"
               placeholder="Enter your email address"
               className="p-3 w-full border border-gray-400 text-lg rounded-md
                     "
+              onChange={(e) => setemail(e.target.value)}
             />
           </div>
-          <div className="w-full">
+          <div className="w-full" onClick={ForgotPassword}>
             <button className="bg-[#2967ff] text-white w-full p-3 rounded-md font-bold hover:bg-blue-500 transition-all text-xl">
               Submit
             </button>
