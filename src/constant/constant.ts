@@ -243,9 +243,9 @@ export const ENTERPRISE_STRING = {
   FORM_DATA: [
     "city",
     "name",
-    "company_name",
-    "mobile_number",
-    "Monthly_trip",
+    "companyname",
+    "mobilenumber",
+    "monthlytrip",
     "email",
     "designation",
   ],
