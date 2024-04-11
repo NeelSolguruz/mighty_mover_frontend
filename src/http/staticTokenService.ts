@@ -31,4 +31,9 @@ export const enterprise_register = async (payload: any)
 : Promise<AxiosResponse<any, any>> => {
   return axios.post("/api/v1/enterprises", payload, config);
 };
+export const new_password_api = async (payload: any,token:any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.post(`/api/v1/user/newPassword/${token}`, payload, config);
+};
+
 

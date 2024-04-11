@@ -156,7 +156,7 @@ export default function Navbar() {
                   className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center"
                   onClick={openmodal}
                 >
-                  {user.user}
+                  {user?.user?.split("")[0]}
                 </div>
                 <div
                   className="border border-red-600 rounded-lg p-3 w-auto h-full flex justify-center items-center bg-red-100text-white mr-2"
