@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { useSelector } from "react-redux";
 
 export default function HomePage() {
+  
   return (
     <>
       <Navbar />

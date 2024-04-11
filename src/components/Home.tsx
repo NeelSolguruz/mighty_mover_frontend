@@ -17,14 +17,12 @@ import {
 import india_map from "../assets/Images/india_map.jpg";
 import { MdLocalCafe } from "react-icons/md";
 
-
 export default function Home() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-  
 
   return (
     <>
@@ -93,7 +91,7 @@ export default function Home() {
             {SLIDER.map((item, index) => (
               <div
                 key={index}
-                className="card bg-gradient-to-r  backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
+                className=" rounded-[10px] p-8 m-4 w-full h-60"
                 style={{ background: item.color }}
               >
                 <div>

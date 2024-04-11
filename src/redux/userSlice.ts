@@ -45,18 +45,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     useradd: (state, action) => {
-      console.log("triggered");
       state.token = action.payload.token;
-      state.user = action.payload.firstname;
+      state.user = action.payload.user;
       state.email = action.payload.email;
-      localStorage.setItem(
-        "data",
-        JSON.stringify({
-          token: state.token,
-          user: state.user,
-          email: state.email,
-        })
-      );
     },
     userlogout: (state) => {
       (state.user = null), (state.email = null), (state.token = null);
