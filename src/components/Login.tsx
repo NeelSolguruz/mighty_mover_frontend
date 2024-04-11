@@ -12,7 +12,11 @@ import NavLogo from "@/assets/Images/icons/NavLogo";
 import { otp_page } from "@/assets/Images/imageassets";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { DID_NOT_GET, OTP_SENT_TO_EMAIL, OTP_VERIFICATION } from "@/constant/login";
+import {
+  DID_NOT_GET,
+  OTP_SENT_TO_EMAIL,
+  OTP_VERIFICATION,
+} from "@/constant/login";
 import { useDispatch, useSelector } from "react-redux";
 import { useradd } from "@/redux/userSlice";
 import { Toaster, toast } from "sonner";
@@ -27,7 +31,6 @@ export default function Login() {
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
-  console.log(data);
 
   const resetForm = () => {
     setEmail("");
@@ -40,12 +43,20 @@ export default function Login() {
     try {
       const user_details = await verifyotp_api({ email, otp });
       toast.success(user_details.data.message);
+      console.log(user_details.data.data);
       dispatch(useradd(user_details.data.data));
+      localStorage.setItem(
+        "data",
+        JSON.stringify({
+          user: user_details.data.data.firstname,
+          token: user_details.data.data.token,
+          email: user_details.data.data.email,
+        })
+      );
+      
       router.push("/", { scroll: false });
       setLoading(false);
       resetForm();
-
-      console.log("otp successful");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
@@ -219,8 +230,11 @@ export default function Login() {
                             />
                           ))}
                         </div>
-                        <div className="flex w-full justify-end items-center text-gray-400 text-xs" onClick={handleSubmit}>
-                            {DID_NOT_GET}
+                        <div
+                          className="flex w-full justify-end items-center text-gray-400 text-xs"
+                          onClick={handleSubmit}
+                        >
+                          {DID_NOT_GET}
                         </div>
                         <div className="flex w-full justify-center items-center ">
                           <button

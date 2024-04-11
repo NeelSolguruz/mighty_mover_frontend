@@ -27,4 +27,8 @@ export const forgotpassword_api = async (payload: any)
 : Promise<AxiosResponse<any, any>> => {
   return axios.post("/api/v1/user/forgotPassword", payload, config);
 };
+export const enterprise_register = async (payload: any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.post("/api/v1/enterprises", payload, config);
+};
 
