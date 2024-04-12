@@ -95,10 +95,10 @@ export default function Home() {
                 style={{ background: item.color }}
               >
                 <div>
-                  <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">
+                  <h3 className="title whitespace-nowrap mx-[auto] text-white w-60 text-md font-light">
                     {item.title}
                   </h3>
-                  <p className="text-white text-xl mt-5">{item.description}</p>
+                  <p className="text-white text-2xl font-bold mt-5">{item.description}</p>
                 </div>
               </div>
             ))}

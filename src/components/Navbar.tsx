@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
@@ -15,13 +15,16 @@ import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import Loader from "react-js-loader";
-
+import { angle_down, user_circle } from "@/assets/Images/imageassets";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 export default function Navbar() {
+  const router = useRouter();
+
   const [clicked, setClicked] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
-  const [modal, setmodal] = useState(false);
   const localData = localStorage.getItem("data") || null;
-
+  const [profile, setprofile] = useState(false);
   const localUser = localData && JSON.parse(localData);
 
   const [loading, setLoading] = useState(false);
@@ -37,6 +40,9 @@ export default function Navbar() {
 
   const handleClick = () => {
     setClicked(!clicked);
+  };
+  const handleProfile = () => {
+    setprofile(!profile);
   };
 
   // useLayoutEffect(() => {
@@ -79,22 +85,12 @@ export default function Navbar() {
   //     fetchdata();
   //   }
   // }, [dispatch]);
-  const clearstorage = async() => {
-    try{
-
-      const logout_data=await http.get("/api/v1/user/logout")
-      toast.success(logout_data.data.message)
-          dispatch(userlogout());
-
-        // .then(() => {
-        //   dispatch(userlogout());
-        //   openmodal();
-        // })
-        // .catch((error) => {
-        //   console.error("Logout error:", error);
-        // });
-    }
-    catch(error){
+  const clearstorage = async () => {
+    try {
+      const logout_data = await http.get("/api/v1/user/logout");
+      toast.success(logout_data.data.message);
+      dispatch(userlogout());
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
           status: number;
@@ -114,8 +110,9 @@ export default function Navbar() {
   const handleClose = () => {
     setClicked(false);
   };
-  const openmodal = () => {
-    setmodal(!modal);
+  const openprofile = () => {
+    router.push("/profile", { scroll: false });
+
   };
 
   return (
@@ -149,21 +146,50 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex justify-center max-lg:hidden w-1/12">
+          <div className="flex justify-center max-lg:hidden w-1/12 mr-2">
             {user.email ? (
               <div className="flex gap-2 justify-end items-center w-full">
-                <div
-                  className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center"
-                  onClick={openmodal}
-                >
-                  {user?.user?.split("")[0]}
+                <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
+                  {user?.user?.split("")[0].toUpperCase()}
                 </div>
-                <div
-                  className="border border-red-600 rounded-lg p-3 w-auto h-full flex justify-center items-center bg-red-100text-white mr-2"
-                  onClick={clearstorage}
-                >
-                  <BiLogOut className="text-red-600 font-bold" />
+                <div onClick={handleProfile}>
+                  <Image src={angle_down} alt="down arrow"></Image>
                 </div>
+                {profile ? (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="fixed top-[60px] w-[100px] bg-white z-[1000000] rounded-lg "
+                    >
+                      <div
+                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 cursor-pointer"
+                        onClick={openprofile}
+                      >
+                        <div>
+                          <Image
+                            src={user_circle}
+                            alt="user"
+                            className="h-[24px] w-[24px] text-bold"
+                          ></Image>
+                        </div>
+                        <div>Profile</div>
+                      </div>
+                      <div
+                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
+                        onClick={clearstorage}
+                      >
+                        <div>
+                          <BiLogOut className="h-[20px] w-[20px] text-bold" />
+                        </div>
+                        <div>logout</div>
+                      </div>
+                    </motion.div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             ) : (
               <Link href="/login">
