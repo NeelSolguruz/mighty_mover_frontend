@@ -1,12 +1,16 @@
-"use client"
+"use client";
 import LoginLogo from "@/assets/Images/icons/LoginLogo";
 import NavLogo from "@/assets/Images/icons/NavLogo";
 import { FORGOT_PASSWORD } from "@/constant/constant";
 import { forgotpassword_api } from "@/http/staticTokenService";
 import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ForgotPassword() {
+  const router = useRouter();
+
   const [email, setemail] = useState("");
   const [loading, setLoading] = useState(false);
   const ForgotPassword = async () => {
@@ -14,13 +18,17 @@ export default function ForgotPassword() {
 
     try {
       const response = await forgotpassword_api({ email });
+      toast.success(response.data.message);
+      setemail("");
 
+      router.push("/login", { scroll: false });
       console.log("Login successful");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response) {
           console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
         } else if (axiosError.request) {
           console.log("Request Error", axiosError.request);
         } else {

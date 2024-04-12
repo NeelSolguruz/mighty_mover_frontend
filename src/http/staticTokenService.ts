@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.91:3000",
+  baseURL: "http://192.168.68.103:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -33,7 +33,10 @@ export const enterprise_register = async (payload: any)
 };
 export const new_password_api = async (payload: any,token:any)
 : Promise<AxiosResponse<any, any>> => {
-  return axios.post(`/api/v1/user/newPassword/${token}`, payload, config);
+  console.log(payload)
+  console.log(token)
+
+  return axios.post(`/api/v1/user/resetPassword/${token}`, payload, config);
 };
 
 

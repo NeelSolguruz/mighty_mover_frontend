@@ -49,11 +49,19 @@ const userSlice = createSlice({
       state.user = action.payload.user;
       state.email = action.payload.email;
     },
+    update_name: (state, action) => {
+      state.user=action.payload
+      console.log("update", action.payload);
+      const data = localStorage.getItem("data") || null;
+      const token = data && JSON.parse(data || "");
+      console.log(token)
+      localStorage.setItem("data", JSON.stringify({ ...token, user: action.payload }));
+    },
     userlogout: (state) => {
       (state.user = null), (state.email = null), (state.token = null);
       localStorage.clear();
     },
   },
 });
-export const { useradd, userlogout } = userSlice.actions;
+export const { useradd, userlogout, update_name } = userSlice.actions;
 export default userSlice.reducer;
