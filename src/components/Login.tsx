@@ -54,7 +54,7 @@ export default function Login() {
         })
       );
 
-      router.push("/", { scroll: false });
+      router.push("/Booking", { scroll: false });
       setLoading(false);
       resetForm();
     } catch (error) {
@@ -74,7 +74,6 @@ export default function Login() {
       }
     } finally {
       setLoading(false);
-
       setOtp("");
     }
   };

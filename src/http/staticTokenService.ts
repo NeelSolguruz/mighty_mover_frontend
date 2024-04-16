@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.103:3000",
+  baseURL: "http://192.168.68.63:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -33,10 +33,18 @@ export const enterprise_register = async (payload: any)
 };
 export const new_password_api = async (payload: any,token:any)
 : Promise<AxiosResponse<any, any>> => {
-  console.log(payload)
-  console.log(token)
-
   return axios.post(`/api/v1/user/resetPassword/${token}`, payload, config);
 };
-
+export const get_coupon_all = async ()
+: Promise<AxiosResponse<any, any>> => {
+  return axios.get("/api/v1/coupons", config);
+};
+export const get_coupon_indi = async (payload:any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/coupons/${payload}`, config);
+};
+export const contact_us_api = async (payload:any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.post(`/api/v1/contactUs`, payload, config);
+};
 
