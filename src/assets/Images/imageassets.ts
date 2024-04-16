@@ -87,11 +87,18 @@ import otp_page from "./icons/privacy-policy-concept-illustration_114360-7853.sv
 import cross from "./icons/multiply.svg"
 import Like from "./icons/heart.svg"
 import hamburger from "./icons/align-justify.svg"
-
+import angle_down from "./icons/angle-down.svg"
 import FavIcon from "@/app/favicon.ico"
-
-
+import user_circle from "./icons/user-circle.svg"
+import copied from "./icons/file_download_done_FILL0_wght400_GRAD0_opsz24.svg"
+import contact_use_bg from "./topographic-map-background_23-2148596456.jpg"
+import contact_us from "./icons/julian-hochgesang-psGV5KhidlY-unsplash 1.svg"
 export {
+  contact_us,
+  contact_use_bg,
+  copied,
+  user_circle,
+  angle_down,
   otp_page,
   hamburger,
   Like,

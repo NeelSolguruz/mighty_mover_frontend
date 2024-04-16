@@ -28,10 +28,9 @@ export default function RootLayout({
       </head>
       <body className={TitilliumWeb.className}>
         <StoreProvider>
-          <Toaster
-          
-          duration={2000}
-          richColors
+          {/* <Toaster
+            duration={2000}
+            richColors
             position="top-right"
             toastOptions={{
               style: {
@@ -40,7 +39,7 @@ export default function RootLayout({
                 // width:"250px",
               },
             }}
-          />
+          /> */}
           {children}
         </StoreProvider>
       </body>

@@ -1,13 +1,56 @@
+"use client";
 import Link from "next/link";
 
 import { SUPPORT_STRING } from "@/constant/constant";
 import { FcCustomerSupport } from "react-icons/fc";
 import { CgLoadbar } from "react-icons/cg";
-
+import { contact_us, contact_use_bg, cross } from "@/assets/Images/imageassets";
+import Image from "next/image";
+import { useState } from "react";
+import { contact_us_api } from "@/http/staticTokenService";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
+import {motion} from "framer-motion"
 export default function Support() {
+  const [email, setEmail] = useState("");
+  const [subject, setsubject] = useState("");
+  const [msg, setmsg] = useState("");
+  const [modal, setmodal] = useState(false);
+
+  const openmodal = () => {
+    setmodal(!modal);
+  };
+  const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await contact_us_api({
+        subject: subject,
+        email: email,
+        description: msg,
+      });
+      openmodal();
+      toast.success(response.data.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    }
+  };
+
   return (
     <>
-      <div className="bg-black py-10">
+      <div className="bg-black py-10 h-auto">
         {/* title */}
         <div
           className="
@@ -203,6 +246,95 @@ export default function Support() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+          {modal && (
+            <div
+           
+             className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center ">
+              <motion.div 
+               initial={{ translateY: 40, opacity: 0 }}
+               whileInView={{ translateY: -10, opacity: 1 }}
+               transition={{ duration: 0.5 }}
+              className="absolute w-full flex justify-center items-center ">
+                <div className="w-[40%] p-4 bg-white flex flex-col gap-2 rounded-lg">
+                  <div className="flex w-full justify-between items-center p-4">
+                    <div>
+                      <h1 className="text-center text-black text-3xl font-bold col-span-6">
+                        Contact Us
+                      </h1>
+                    </div>
+                    <div onClick={openmodal} className="cursor-pointer">
+                      <Image src={cross} alt="cross"></Image>
+                    </div>
+                  </div>
+
+                  <form
+                    className="w-full p-4 bg-white flex flex-col gap-2 rounded-lg"
+                    onSubmit={handlesubmit}
+                  >
+                    <div>
+                      <input
+                        type="email"
+                        className="bg-slate-100 text-slate-600 w-full placeholder:text-slate-600 placeholder:opacity-50 border border-slate-200 col-span-6 resize-none outline-none rounded-lg p-2 duration-300 focus:border-slate-600"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                      ></input>
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        className="bg-slate-100 text-slate-600 w-full placeholder:text-slate-600 placeholder:opacity-50 border border-slate-200 col-span-6 resize-none outline-none rounded-lg p-2 duration-300 focus:border-slate-600"
+                        placeholder="Subject"
+                        onChange={(e) => setsubject(e.target.value)}
+                      ></input>
+                    </div>
+                    <textarea
+                      placeholder="Your feedback..."
+                      onChange={(e) => setmsg(e.target.value)}
+                      className="bg-slate-100 text-slate-600 h-28 placeholder:text-slate-600 placeholder:opacity-50 border border-slate-200 col-span-6 resize-none outline-none rounded-lg p-2 duration-300 focus:border-slate-600"
+                    ></textarea>
+
+                    <span className="col-span-2"></span>
+                    <button
+                      className="bg-black stroke-white border w-auto border-slate-200 col-span-2 flex justify-center rounded-lg p-2 duration-300 hover:border-slate-600 hover:text-black hover:scale-95"
+                      type="submit"
+                    >
+                      <svg
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        height="30px"
+                        width="30px"
+                        stroke="#ffffff"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linejoin="round"
+                          stroke-linecap="round"
+                          stroke-width="1.5"
+                          d="M7.39999 6.32003L15.89 3.49003C19.7 2.22003 21.77 4.30003 20.51 8.11003L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23003 7.39999 6.32003Z"
+                        ></path>
+                        <path
+                          stroke-linejoin="round"
+                          stroke-linecap="round"
+                          stroke-width="1.5"
+                          d="M10.11 13.6501L13.69 10.0601"
+                        ></path>
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </motion.div>
+            </div>
+          )}
+          <div className="w-full flex justify-center items-center h-[60px] ">
+            <div className=" border-[1.5px] border-white p-1 hover:scale-105 transition-all duration-300 rounded-l-xl rounded-t-xl ">
+              <button
+                className="w-[150px] bg-white h-[50px] hover:scale-100 text-xl font-bold  flex items-center justify-center  cursor-pointer transition-all duration-500  text-[#000000] rounded-l-lg rounded-t-lg"
+                onClick={openmodal}
+              >
+                FeedBack
+              </button>
             </div>
           </div>
         </div>

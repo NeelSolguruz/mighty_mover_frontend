@@ -19,7 +19,7 @@ import {
 } from "@/constant/login";
 import { useDispatch, useSelector } from "react-redux";
 import { useradd } from "@/redux/userSlice";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -53,8 +53,8 @@ export default function Login() {
           email: user_details.data.data.email,
         })
       );
-      
-      router.push("/", { scroll: false });
+
+      router.push("/Booking", { scroll: false });
       setLoading(false);
       resetForm();
     } catch (error) {
@@ -74,7 +74,6 @@ export default function Login() {
       }
     } finally {
       setLoading(false);
-
       setOtp("");
     }
   };
