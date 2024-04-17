@@ -3,16 +3,30 @@ import Image from "next/image";
 import { useState } from "react";
 import { DELIVERY_PARTNER_STRING } from "../constant/constant";
 // import Delivery from "../assets/Images/delivery.jpg";
-import { FormData } from "../constant/type/data.type";
+import { FormData, documentData } from "../constant/type/data.type";
 // import  regularTrip from "../assets/Images/regularTrip.png"
+import { toast } from "sonner";
+import axios, { AxiosError } from "axios";
+import {motion} from 'framer-motion';
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Delivery,
   driverExperience,
   ownVehicles,
 } from "../assets/Images/imageassets";
+import { driver_register } from "@/http/staticTokenService";
+import { driverAdd } from "@/redux/driverSlice";
+import http from "@/http/http";
+import Link from "next/link";
+import router from "next/router";
 
 export default function DeliveryPage(): JSX.Element {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state);
+
+  console.log(data)
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -21,12 +35,13 @@ export default function DeliveryPage(): JSX.Element {
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    mobileNumber: "",
+    contact: "",
     email: "",
-    city: "",
-    vehicle: "",
-    sources: "",
+    shift:"",
+    password:""
   });
+
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -38,20 +53,60 @@ export default function DeliveryPage(): JSX.Element {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   console.log("Form submitted:", formData);
+
+  //   setFormData({
+  //     name: "",
+  //     mobileNumber: "",
+  //     email: "",
+  //     shift:"",
+  //     password:""
+  //   });
+  // };
+  
+  
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("Form submitted:", formData);
-
     setFormData({
       name: "",
-      mobileNumber: "",
+      contact: "",
       email: "",
-      city: "",
-      vehicle: "",
-      sources: "",
-    });
+      shift: "",
+      password: ""
+    })
+    try {
+      const response = await driver_register(formData)
+      dispatch(driverAdd(response.data.data.jwt))
+      toast.success(response.data.message)
+      router.push("/delivery-partner-login");
+    }
+    catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    }
+    // finally {
+    //   setLoading(false)
+    // }
+
   };
+
+
 
   return (
     <>
@@ -69,6 +124,8 @@ export default function DeliveryPage(): JSX.Element {
           {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE}
         </div>
       </div>
+
+      
       {/* registration form __ section __ strat from here */}
       <div className="w-full max-sm:p-8">
         <div className="flex flex-col md:flex-col w-full justify-between p-5 md:p-10">
@@ -123,19 +180,6 @@ export default function DeliveryPage(): JSX.Element {
                   </div>
                   <div className="relative">
                     <input
-                      type="number"
-                      id="mobilenumber"
-                      name="mobileNumber"
-                      placeholder="Enter Your Mobile Number"
-                      value={formData.mobileNumber}
-                      onChange={handleChange}
-                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      required
-                    />
-                  </div>
-                  <div className="relative">
-                    <input
                       type="email"
                       id="email"
                       name="email"
@@ -147,7 +191,54 @@ export default function DeliveryPage(): JSX.Element {
                       required
                     />
                   </div>
-                  <select
+                  <div className="relative">
+                    <input
+                      type="input"
+                      id="contact"
+                      name="contact"
+                      placeholder="Enter Your Mobile Number"
+                      value={formData.contact}
+                      onChange={handleChange}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                  </div>
+                  {/* <div className="relative flex gap-4 items-center">
+                    <label htmlFor="day">Day
+                      <input type="radio" id="day" value="day" name="shift" checked={shift} onChange={handleChange}/>
+                    </label>
+                    <label htmlFor="day">Night
+                      <input type="radio" id="night" value="night" name="shift" checked={shift} onChange={handleChange}/>
+                    </label>
+                  </div> */}
+                      <select
+                        name="shift"
+                        value={formData.shift}
+                        onChange={handleChange}
+                        className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      >
+                        <option value="">Select Shift</option>
+                        {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
+                          <option key={source} value={source}>
+                            {source}
+                          </option>
+                        ))}
+                      </select>
+                  <div className="relative">
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Enter Your Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      required
+                    />
+                  </div>
+                  {/* <select
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
@@ -160,8 +251,8 @@ export default function DeliveryPage(): JSX.Element {
                         {city}
                       </option>
                     ))}
-                  </select>
-                  <select
+                  </select> */}
+                  {/* <select
                     name="vehicle"
                     value={formData.vehicle}
                     onChange={handleChange}
@@ -174,32 +265,66 @@ export default function DeliveryPage(): JSX.Element {
                         {vehicle}
                       </option>
                     ))}
-                  </select>
-                  <select
-                    name="sources"
-                    value={formData.sources}
-                    onChange={handleChange}
-                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                  >
-                    <option value="">Select Sources</option>
-                    {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
-                      <option key={source} value={source}>
-                        {source}
-                      </option>
-                    ))}
-                  </select>
+                  </select> */}
+                  
                   <button
                     type="submit"
                     className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
                   >
                     Register
                   </button>
+                  <div className="flex justify-center">
+                    <p>Already have Mighty Movers Driver Account? <Link href="/delivery-partner-login" className="text-[#2967FF] font-semibold hover:underline">Sign in</Link></p>
+                  </div> 
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
+      
+        {/* {modal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="fixed top-0 z-10 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-4 rounded-lg w-11/12 h-auto flex flex-col items-center">
+              <div>
+                <h1 className="text-3xl font-bold">VEHICLE DETAILS</h1>
+              </div>
+              <div className="w-1/2">
+                <form onSubmit={handleVehicleSubmit} className="grid grid-cols-2 gap-y-5 items-center my-5">
+                <label htmlFor="vehicle_number" className="text-lg">Vehicle number:</label>
+                <input type="text" id="vehicle_number" name="vehicle_number" placeholder="Enter vehicle number" className="border border-gray-400 p-2 text-base rounded-lg hover:border-black focus:outline-[#2967ff]" onChange={handleVehicleChange} value={vehicleFormData.vehicle_number} />
+                <label htmlFor="max_weight" className="text-lg">Max carrying capacity: </label>
+                <input type="text" id="max_weight" name="max_weight" placeholder="Enter max weight" className="border border-gray-400 p-2 text-base rounded-lg hover:border-black focus:outline-[#2967ff]"  onChange={handleVehicleChange} value={vehicleFormData.max_weight}/>
+                <label htmlFor="length" className="text-lg">Length: </label>
+                <input type="text" id="length" name="length" placeholder="Enter length" className="border border-gray-400 p-2 text-base rounded-lg hover:border-black focus:outline-[#2967ff]"  onChange={handleVehicleChange} value={vehicleFormData.length}/>
+                <label htmlFor="width" className="text-lg">Width: </label>
+                <input type="text" id="width" name="width" placeholder="Enter width" className="border border-gray-400 p-2 text-base rounded-lg hover:border-black focus:outline-[#2967ff]"  onChange={handleVehicleChange}  value={vehicleFormData.width}/>
+                <label htmlFor="per_km_charge" className="text-lg">Per KM charge: </label>
+                <input type="text" id="per_km_charge" name="per_km_charge" placeholder="Enter per km charge" className="border border-gray-400 p-2 text-base rounded-lg hover:border-black focus:outline-[#2967ff]"  onChange={handleVehicleChange} value={vehicleFormData.per_km_charge}/>
+                <label htmlFor="category">Vehicle Type:</label>
+                <select name="category" id="category" className="p-2 border border-gray-400 rounded-lg hover:border-black focus:outline-[#2967ff] text-gray-400" onChange={handleVehicleChange} value={vehicleFormData.category}>
+                  <option value="">Select vehicle category</option>
+                  <option value="2-wheeler">2 Wheeler</option>
+                  <option value="4-wheeler">4 Wheeler</option>
+                </select>
+                <label htmlFor="order">Order Type:</label>
+                <select name="order" id="order" className="p-2 border border-gray-400 rounded-lg hover:border-black focus:outline-[#2967ff] text-gray-400" onChange={handleVehicleChange} value={vehicleFormData.order}>
+                  <option value="">Select Order Type</option>
+                  <option value="local">Local</option>
+                  <option value="outdoor">Inter State</option>
+                  <option value="both">Both</option>
+                </select>
+                <button type="submit" className="bg-[#2967ff] p-2 font-semibold text-white rounded-xl col-span-2">Submit</button>
+                </form>
+              </div>
+            </div>
+          </motion.div>
+        )} */}
+      
 
       {/* making your life easy__ section___ start from here */}
       <div className="w-full bg-black text-white mb-8">
@@ -390,3 +515,4 @@ export default function DeliveryPage(): JSX.Element {
     </>
   );
 }
+  

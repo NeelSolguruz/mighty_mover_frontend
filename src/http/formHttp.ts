@@ -1,4 +1,3 @@
-
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 // import { userToken } from 'utils'
 
@@ -18,16 +17,16 @@ const generateRequestToken = (config: InternalAxiosRequestConfig) => {
 };
 
 // Create instance of axios
-const http = axios.create({
-  baseURL:  "http://192.168.68.68:3000",
+const form_http = axios.create({
+  baseURL: "http://192.168.68.68:3000",
   headers: {
     Accept: "application/json",
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
   },
 });
 
 // Create a request interceptor for the instance and get accessToken
-http.interceptors.request.use(
+form_http.interceptors.request.use(
   async (config) => {
     // Attach an AbortController to the request
     const requestToken = generateRequestToken(config);
@@ -41,9 +40,9 @@ http.interceptors.request.use(
     // Set Authorization header
     const data = localStorage.getItem("data") || null;
     const token = data && JSON.parse(data || "");
-    console.log(token.token)
+    console.log(token.token);
     config.headers.Authorization = `Bearer ${token.token} `;
-    
+
     return config;
   },
   async (error: any) => {
@@ -52,7 +51,7 @@ http.interceptors.request.use(
   }
 );
 
-http.interceptors.response.use(
+form_http.interceptors.response.use(
   (response: any) => response,
   async (error: AxiosError<ApiErrorData>) => {
     if (axios.isAxiosError(error) && error.response) {
@@ -76,4 +75,4 @@ export const cancelRequest = (config: InternalAxiosRequestConfig) => {
   }
 };
 
-export default http;
+export default form_http;

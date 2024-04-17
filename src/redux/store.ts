@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import useReducer from "./userSlice";
-
+import driverReducer from "./driverSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
       user: useReducer,
+      driver: driverReducer,
     },
   });
 };
