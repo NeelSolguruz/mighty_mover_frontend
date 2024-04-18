@@ -7,6 +7,7 @@ import { FormData, documentData } from "../constant/type/data.type";
 // import  regularTrip from "../assets/Images/regularTrip.png"
 import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 import {
   Delivery,
@@ -20,7 +21,7 @@ import Link from "next/link";
 import router from "next/router";
 
 export default function DeliveryPage(): JSX.Element {
-  
+  const router = useRouter();
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -32,8 +33,8 @@ export default function DeliveryPage(): JSX.Element {
     name: "",
     contact: "",
     email: "",
-    shift:"",
-    password:""
+    shift: "",
+    password: ""
   });
 
 
@@ -61,8 +62,8 @@ export default function DeliveryPage(): JSX.Element {
   //     password:""
   //   });
   // };
-  
-  
+
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,8 +76,9 @@ export default function DeliveryPage(): JSX.Element {
     })
     try {
       const response = await driver_register(formData)
+      console.log("hua log")
       toast.success(response.data.message)
-      router.push("/delivery-partner-login");
+      router.push("/");
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
@@ -119,7 +121,7 @@ export default function DeliveryPage(): JSX.Element {
         </div>
       </div>
 
-      
+
       {/* registration form __ section __ strat from here */}
       <div className="w-full max-sm:p-8">
         <div className="flex flex-col md:flex-col w-full justify-between p-5 md:p-10">
@@ -206,19 +208,19 @@ export default function DeliveryPage(): JSX.Element {
                       <input type="radio" id="night" value="night" name="shift" checked={shift} onChange={handleChange}/>
                     </label>
                   </div> */}
-                      <select
-                        name="shift"
-                        value={formData.shift}
-                        onChange={handleChange}
-                        className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      >
-                        <option value="">Select Shift</option>
-                        {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
-                          <option key={source} value={source}>
-                            {source}
-                          </option>
-                        ))}
-                      </select>
+                  <select
+                    name="shift"
+                    value={formData.shift}
+                    onChange={handleChange}
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                  >
+                    <option value="">Select Shift</option>
+                    {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
+                      <option key={source} value={source}>
+                        {source}
+                      </option>
+                    ))}
+                  </select>
                   <div className="relative">
                     <input
                       type="password"
@@ -260,7 +262,7 @@ export default function DeliveryPage(): JSX.Element {
                       </option>
                     ))}
                   </select> */}
-                  
+
                   <button
                     type="submit"
                     className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
@@ -269,15 +271,15 @@ export default function DeliveryPage(): JSX.Element {
                   </button>
                   <div className="flex justify-center">
                     <p>Already have Mighty Movers Driver Account? <Link href="/delivery-partner-login" className="text-[#2967FF] font-semibold hover:underline">Sign in</Link></p>
-                  </div> 
+                  </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-      
-        {/* {modal && (
+
+      {/* {modal && (
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -318,7 +320,7 @@ export default function DeliveryPage(): JSX.Element {
             </div>
           </motion.div>
         )} */}
-      
+
 
       {/* making your life easy__ section___ start from here */}
       <div className="w-full bg-black text-white mb-8">
@@ -465,9 +467,8 @@ export default function DeliveryPage(): JSX.Element {
                     {item.QUESTION}
                   </span>
                   <svg
-                    className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
+                    className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
+                      }`}
                     width="16"
                     height="16"
                     xmlns="http://www.w3.org/2000/svg"
@@ -491,11 +492,10 @@ export default function DeliveryPage(): JSX.Element {
                   </svg>
                 </button>
                 <div
-                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
-                    openIndex === index
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
+                    }`}
                 >
                   <div className="overflow-hidden">
                     <span className="text-sm text-black">{item.ANSWER}</span>
@@ -509,4 +509,3 @@ export default function DeliveryPage(): JSX.Element {
     </>
   );
 }
-  

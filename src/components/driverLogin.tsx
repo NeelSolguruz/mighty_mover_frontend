@@ -260,7 +260,7 @@ export default function DriverLogin() {
     const handleDocument = async (type: string) => {
         const formData = new FormData();
         formData.append('image', documentFormData[type] as Blob);
-        formData.append('folder', type)
+        formData.append('type', type)
         setLoading(true)
         try {
             const response = await form_http.post('api/v1/document', formData);

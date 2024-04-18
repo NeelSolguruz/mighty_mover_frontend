@@ -2,7 +2,6 @@
 import NavLogo from "@/assets/Images/icons/NavLogo";
 import http from "@/http/http";
 import axios, { AxiosError } from "axios";
-
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Loader from "react-js-loader";

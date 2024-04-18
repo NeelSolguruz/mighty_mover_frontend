@@ -67,3 +67,9 @@ export const driver_forgotpassword = async (payload:any):
 Promise<AxiosResponse<any,any>> => {
   return axios.post("api/V1/driver/forgotPassword", payload, config);
 }
+export const driver_new_password = async (
+  payload: any,
+  token: any
+): Promise<AxiosResponse<any, any>> => {
+  return axios.post(`/api/v1/user/resetPassword/${token}`, payload, config);
+};

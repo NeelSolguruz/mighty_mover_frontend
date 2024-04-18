@@ -20,11 +20,26 @@ const driverSlice = createSlice({
     reducers:{
      driverAdd:(state, action) => {
         state.token = action.payload.token;
-        state.driver = action.payload.name;
+        state.driver = action.payload.driver;
         state.email = action.payload.email;
-     }  
+     },
+     driverUpdate:(state,action) => {
+        state.driver = action.payload;
+        console.log("update", action.payload);
+        const data = localStorage.getItem("driver") || null;
+        const token = data && JSON.parse(data || "");
+        console.log(token);
+        localStorage.setItem(
+          "driver",
+          JSON.stringify({ ...token, driver: action.payload })
+        );
+     },
+     driverLogout:(state) => {
+        (state.token = null), (state.driver = null), (state.email = null);
+        localStorage.clear();
+     }
     }
 })
 
-export const {driverAdd} = driverSlice.actions;
+export const {driverAdd,driverUpdate,driverLogout} = driverSlice.actions;
 export default driverSlice.reducer;

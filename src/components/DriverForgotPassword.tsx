@@ -22,7 +22,7 @@ export default function DriverForgotPassword() {
             setemail("");
 
             router.push("/delivery-partner-login", { scroll: false });
-            console.log("Login successful");
+           
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError;
