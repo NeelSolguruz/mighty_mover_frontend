@@ -45,6 +45,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     useradd: (state, action) => {
+      
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.email = action.payload.email;

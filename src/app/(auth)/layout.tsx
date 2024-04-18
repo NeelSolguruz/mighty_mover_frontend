@@ -1,8 +1,9 @@
 import React from "react";
 import { Toaster } from "sonner";
 const layout = ({ children }: any) => {
-  return <div>
-    <Toaster
+  return (
+    <div>
+      <Toaster
         duration={2000}
         richColors
         position="top-right"
@@ -14,8 +15,9 @@ const layout = ({ children }: any) => {
           },
         }}
       />
-    {children}
-    </div>;
+      {children}
+    </div>
+  );
 };
 
 export default layout;

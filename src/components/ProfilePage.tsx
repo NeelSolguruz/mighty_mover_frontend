@@ -24,8 +24,8 @@ export default function ProfilePage() {
       try {
         const response = await http.get("/api/v1/user/profile");
         setuserdata(response.data.data);
-        setName(response.data.data.firstname);
-        setLastName(response.data.data.lastname);
+        setName(response.data.data.first_name);
+        setLastName(response.data.data.last_name);
         setEmail(response.data.data.email);
         setContact(response.data.data.contact);
 
