@@ -7,8 +7,6 @@ import { FormData, documentData } from "../constant/type/data.type";
 // import  regularTrip from "../assets/Images/regularTrip.png"
 import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
-import {motion} from 'framer-motion';
-import { useDispatch, useSelector } from "react-redux";
 
 import {
   Delivery,
@@ -22,10 +20,7 @@ import Link from "next/link";
 import router from "next/router";
 
 export default function DeliveryPage(): JSX.Element {
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state);
-
-  console.log(data)
+  
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -80,7 +75,6 @@ export default function DeliveryPage(): JSX.Element {
     })
     try {
       const response = await driver_register(formData)
-      dispatch(driverAdd(response.data.data.jwt))
       toast.success(response.data.message)
       router.push("/delivery-partner-login");
     }

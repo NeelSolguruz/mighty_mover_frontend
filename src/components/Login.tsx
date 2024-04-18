@@ -41,14 +41,13 @@ export default function Login() {
   const verifyotp = async () => {
     setLoading(true);
     try {
-      const user_details = await verifyotp_api({ email, otp });
+      const user_details = await verifyotp_api({ "email":email, "OTP":otp });
       toast.success(user_details.data.message);
-      console.log(user_details.data.data);
       dispatch(useradd(user_details.data.data));
       localStorage.setItem(
         "data",
         JSON.stringify({
-          user: user_details.data.data.firstname,
+          user: user_details.data.data.first_name,
           token: user_details.data.data.token,
           email: user_details.data.data.email,
         })

@@ -28,9 +28,9 @@ export default function Navbar() {
   const localUser = localData && JSON.parse(localData);
 
   const [loading, setLoading] = useState(false);
-  const user = useAppSelector((state) => state.user);
-
   const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.user);
+  console.log(user)
 
   useEffect(() => {
     if (localUser) {
@@ -45,46 +45,6 @@ export default function Navbar() {
     setprofile(!profile);
   };
 
-  // useLayoutEffect(() => {
-  //   const localToken =
-  //     typeof window !== "undefined" ? localStorage.getItem("data") : null;
-  //   const token = localToken && JSON.parse(localToken);
-  //   if (token) {
-  //     dispatch(
-  //       useradd({
-  //         token: token.token,
-  //         firstname: token.user,
-  //         email: token.email,
-  //       })
-  //     );
-  //     const fetchdata = async () => {
-  //       setLoading(true);
-  //       try {
-  //         const res = await http.get("/api/v1/user/profile");
-  //         setLoading(false);
-  //         setUserData(res.data.data);
-  //       } catch (error) {
-  //         if (axios.isAxiosError(error)) {
-  //           const axiosError = error as AxiosError<{
-  //             status: number;
-  //             message: string;
-  //           }>;
-  //           if (axiosError.response) {
-  //             console.log("Response Error", axiosError.response);
-  //             toast.error(axiosError.response.data.message);
-  //           } else if (axiosError.request) {
-  //             console.log("Request Error", axiosError.request);
-  //           } else {
-  //             console.log("Error", axiosError.message);
-  //           }
-  //         }
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-  //     fetchdata();
-  //   }
-  // }, [dispatch]);
   const clearstorage = async () => {
     try {
       const logout_data = await http.get("/api/v1/user/logout");

@@ -20,7 +20,7 @@ import {
     OTP_VERIFICATION,
 } from "@/constant/login";
 import { useDispatch, useSelector } from "react-redux";
-import { useradd } from "@/redux/userSlice";
+import { driverAdd } from "@/redux/driverSlice";
 import { Toaster, toast } from "sonner";
 import { documentData } from "@/constant/type/data.type";
 import form_http from "@/http/formHttp";
@@ -49,10 +49,13 @@ export default function DriverLogin() {
             toast.success(user_details.data.message);
             console.log(user_details.data);
             // router.push("/delivery-partner", { scroll: false });
+            dispatch(driverAdd(user_details.data.data))
             localStorage.setItem(
-                "data",
+                "driver",
                 JSON.stringify({
                     token: user_details.data.data.token,
+                    driver:user_details.data.data.name,
+                    email:user_details.data.data.email
                 })
             );
             setLoading(false);
@@ -199,6 +202,7 @@ export default function DriverLogin() {
             setDocumentModal(true)
         } catch (error) {
             // setModal(false);
+            setLoading(false)
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<{
                     status: number;
@@ -214,6 +218,7 @@ export default function DriverLogin() {
                 }
             }
         } finally {
+            setLoading(false)
             setVehicleFormData({
                 vehicle_num: "",
                 max_weight: "",

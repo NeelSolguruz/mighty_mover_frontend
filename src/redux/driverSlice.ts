@@ -2,12 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface initialState {
     token:null|string,
+    driver:null|string,
+    email:null|string,
     
 }
 
 const initialState:initialState = {
     token:null,
-  
+    driver:null,
+    email:null
+    
 }
 
 const driverSlice = createSlice({
@@ -15,8 +19,9 @@ const driverSlice = createSlice({
     initialState:initialState,
     reducers:{
      driverAdd:(state, action) => {
-        console.log(action.payload)
-        state.token = action.payload;
+        state.token = action.payload.token;
+        state.driver = action.payload.name;
+        state.email = action.payload.email;
      }  
     }
 })
