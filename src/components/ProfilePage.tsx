@@ -2,7 +2,6 @@
 import NavLogo from "@/assets/Images/icons/NavLogo";
 import http from "@/http/http";
 import axios, { AxiosError } from "axios";
-
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Loader from "react-js-loader";
@@ -24,8 +23,8 @@ export default function ProfilePage() {
       try {
         const response = await http.get("/api/v1/user/profile");
         setuserdata(response.data.data);
-        setName(response.data.data.firstname);
-        setLastName(response.data.data.lastname);
+        setName(response.data.data.first_name);
+        setLastName(response.data.data.last_name);
         setEmail(response.data.data.email);
         setContact(response.data.data.contact);
 

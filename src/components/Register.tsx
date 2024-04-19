@@ -33,8 +33,8 @@ export default function Register() {
   const handlesubmit = async () => {
     setLoading(true);
     let result = {
-      firstname: firstname,
-      lastname: lastname,
+      first_name: firstname,
+      last_name: lastname,
       email: email,
       contact: contactno,
       password: password,

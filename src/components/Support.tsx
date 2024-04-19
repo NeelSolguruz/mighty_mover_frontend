@@ -151,7 +151,7 @@ export default function Support() {
               <CgLoadbar />
             </div>
             <div
-              className="flex flex-col text-white w-3/12 gap-4
+              className="flex flex-col items-center text-white w-3/12 gap-4
                     max-sm:w-9/12
                     "
             >
@@ -163,7 +163,7 @@ export default function Support() {
                 {SUPPORT_STRING.head_office.city}
               </h2>
               <p
-                className="font-semibold
+                className="text-center font-semibold
                         max-sm:text-sm
                         "
               >
