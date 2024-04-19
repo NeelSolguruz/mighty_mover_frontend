@@ -334,8 +334,7 @@ export default function Navbar() {
             {user.email || driver.email ? (
               <div className="flex gap-2 justify-end items-center w-full">
                 <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                  {/* {user ? user?.user?.split("")[0].toUpperCase() : driver?.driver?.split("")[0].toUpperCase()} */}
-                  {localUser ? user?.user?.split("")[0].toUpperCase() : <FaTruck />}
+                  {localUser ? user?.user?.split("")[0].toUpperCase() : <FaTruck /> }
                 </div>
                 <div onClick={handleProfile}>
                   <Image src={angle_down} alt="down arrow"></Image>
