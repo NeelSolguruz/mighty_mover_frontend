@@ -258,6 +258,7 @@ export default function DriverLogin() {
 
     const [anyOneDocument, setAnyOneDocument] = useState(false);
     const handleDocument = async (type: string) => {
+        console.log('handleDocument function running')
         const formData = new FormData();
         formData.append('image', documentFormData[type] as Blob);
         formData.append('type', type)
