@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { arrow_left, arrow_right } from "@/assets/Images/imageassets";
+import {motion} from "framer-motion"
 interface CarouselProps {
   slides_data: StaticImageData[];
 }
@@ -16,7 +17,11 @@ export default function Carousel({ slides_data }: CarouselProps) {
     setCurr((curr) => (curr === slides_data.length - 1 ? 0 : curr + 1));
 
   return (
-    <div className="overflow-hidden relative">
+    <motion.div
+    initial={{ translateY: -20,opacity:0}}
+    whileInView={{ translateY: 0,opacity:1 }}
+    transition={{ duration: 2 }}
+     className="overflow-hidden relative">
       <div
         className="flex transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -73,6 +78,6 @@ export default function Carousel({ slides_data }: CarouselProps) {
             </div>
             </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

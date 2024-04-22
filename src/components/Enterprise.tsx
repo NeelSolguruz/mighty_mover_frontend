@@ -1,20 +1,75 @@
 "use client";
 import Image from "next/image";
 import { ENTERPRISE_STRING, REVIEWS } from "@/constant/constant";
-// import enterprise from "../assets/Images/enterprise.jpg";
-import { enterpriselogo, trucks_porter } from "../assets/Images/imageassets";
+import enterprise from "../assets/Images/enterprise.jpg";
+import { enterpriselogo, trucks_porter } from "@/assets/Images/imageassets";
 import Logo from "../assets/Images/Enterprise_logo_1.jpg";
-import industry_1 from "../assets/Images/industries_1.webp";
+
 import truck from "../assets/Images/Truck.svg";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { useState } from "react";
 import faq from "../assets/Images/faq.svg";
-import { FAQItem, FAQAccordionProps } from "../constant/type/data.type";
+import { FAQItem, FAQAccordionProps } from "@/constant/type/data.type";
+import { enterprise_register } from "@/http/staticTokenService";
+
+import axios, { AxiosError } from "axios";
+import { isFulfilled } from "@reduxjs/toolkit";
+import { toast } from "sonner";
+import React from "react";
+
 export default function Enterprise() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    console.log(formData);
+    setLoading(true);
+    try {
+      const enterprise_details = await enterprise_register(formData);
+    toast.success(enterprise_details.data?.message);
+
+      console.log(enterprise_details.data?.message);
+
+      setLoading(false);
+      resetForm()
+      
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+  const resetForm = () => {
+    setFormData({});
   };
   return (
     <div className="w-full flex-col justify-center">
@@ -38,88 +93,96 @@ export default function Enterprise() {
             </div>
             <div className="w-full flex gap-2 max-[935px]:justify-center max-[935px]:gap-10 max-[591px]:flex-col">
               {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO.map((item, index) => (
-                <>
-                  <div className="flex flex-col justify-center gap-4 items-center w-[220px] h-[280px] max-breakpoint:w-[150px] max-breakpoint:h-auto max-[935px]:w-full ">
-                    <div>
-                      <Image
-                        src={item.IMG}
-                        alt="Logo"
-                        className="w-32 h-32 "
-                      ></Image>
-                    </div>
-                    <div className="text-base font-bold w-full text-center text-black">
-                      {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DATA}
-                    </div>
-                    <div className="text-sm font-normal w-full text-center text-gray-400">
-                      {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DESC}
-                    </div>
+                <div
+                  key={index}
+                  className="flex flex-col justify-center gap-4 items-center w-[220px] h-[280px] max-breakpoint:w-[150px] max-breakpoint:h-auto max-[935px]:w-full "
+                >
+                  <div>
+                    <Image
+                      src={item.IMG}
+                      alt="Logo"
+                      className="w-32 h-32 "
+                    ></Image>
                   </div>
-                </>
+                  <div className="text-base font-bold w-full text-center text-black">
+                    {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DATA}
+                  </div>
+                  <div className="text-sm font-normal w-full text-center text-gray-400">
+                    {ENTERPRISE_STRING.WHY_USE_PORTER_LOGO[index].DESC}
+                  </div>
+                </div>
               ))}
             </div>
             <div className="w-[342px]  h-auto flex justify-center items-center absolute right-10 top-40 max-breakpoint:top-24 max-[935px]:static max-[935px]:w-full">
               <div className="w-full px-3 py-3 rounded-2xl shadow-gray-400 shadow-md bg-white">
-                <form className="w-full">
-                  <div className="flex flex-col gap-6">
-                    <div className="flex justify-center text-2xl font-semibold text-black text-center">
-                      {ENTERPRISE_STRING.FOR_ENTERPRISE}
-                    </div>
-
-                    {ENTERPRISE_STRING.FORM_DATA.map((item, index) => (
-                      <>
-                        {index === 0 || index === 4 ? (
-                          <div>
-                            {index === 0 ? (
-                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]">
-                                {ENTERPRISE_STRING.FORM_CITIES.map(
-                                  (item, index) => (
-                                    <>
-                                      <option key={index} value={item}>
-                                        {item}
-                                      </option>
-                                    </>
-                                  )
-                                )}
-                              </select>
-                            ) : (
-                              <select className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]">
-                                {ENTERPRISE_STRING.FORM_MONTHLY_TRIPS.map(
-                                  (item, index) => (
-                                    <>
-                                      <option key={index} value={item}>
-                                        {item}
-                                      </option>
-                                    </>
-                                  )
-                                )}
-                              </select>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="relative">
-                            <input
-                              id={item}
-                              name={item}
-                              type="text"
-                              className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer"
-                            />
-                            <label
-                              htmlFor={item}
-                              className="absolute pl-2 left-0 top-1 cursor-text peer-focus:text-xs peer-focus:-top-4 transition-all font-light text-black text-[10px] p-1"
-                            >
-                              {item}
-                            </label>
-                          </div>
-                        )}
-                      </>
-                    ))}
-                    <div>
-                      <button className="w-full bg-[#2967FF] p-2 rounded text-white text-sm font-bold">
-                        {ENTERPRISE_STRING.REQUEST_CALLBACK}
-                      </button>
-                    </div>
+                <div className="flex flex-col gap-6">
+                  <div className="flex justify-center text-2xl font-semibold text-black text-center">
+                    {ENTERPRISE_STRING.FOR_ENTERPRISE}
                   </div>
-                </form>
+
+                  {ENTERPRISE_STRING.FORM_DATA.map((item, index) => (
+                    <div key={index}>
+                      {index === 0 || index === 4 ? (
+                        <div>
+                          {index === 0 ? (
+                            <select
+                              className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]"
+                              name={item}
+                              onChange={handleChange}
+                            >
+                              {ENTERPRISE_STRING.FORM_CITIES.map(
+                                (item, index) => (
+                                  <>
+                                    <option key={index} value={item}>
+                                      {item}
+                                    </option>
+                                  </>
+                                )
+                              )}
+                            </select>
+                          ) : (
+                            <select
+                              className="p-2 w-full  rounded border-[1px] border-gray-400  font-light text-black text-[10px]"
+                              name={item}
+                              onChange={handleChange}
+                            >
+                              {ENTERPRISE_STRING.FORM_MONTHLY_TRIPS.map(
+                                (item, index) => (
+                                  <>
+                                    <option key={index} value={Number(index)}>
+                                      {item}
+                                    </option>
+                                  </>
+                                )
+                              )}
+                            </select>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="relative">
+                          <input
+                            id={item}
+                            name={item}
+                            onChange={handleChange}
+                            placeholder={item}
+                            value={formData[item] || ""}
+                            type="text"
+                            className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:p-2 placeholder:w-full  placeholder:font-light placeholder:text-black placeholder:text-[10px]"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <div>
+                    <button
+                      className="w-full bg-[#2967FF] p-2 rounded text-white text-sm font-bold"
+                      type="submit"
+                      onClick={handleSubmit}
+                    >
+                      {ENTERPRISE_STRING.REQUEST_CALLBACK}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -131,8 +194,8 @@ export default function Enterprise() {
           {ENTERPRISE_STRING.OUR_GROWING_NETWORK}
         </div>
         <div className="font-semibold justify-between flex w-full pr-20 pl-20 max-breakpoint:px-10 max-[949px]:px-0 gap-6 max-ms:grid max-ms:grid-cols-2 max-ms:grid-rows-2 max-ms:items-center ">
-          {ENTERPRISE_STRING.ACHIEVEMENTS.map((item) => (
-            <>
+          {ENTERPRISE_STRING.ACHIEVEMENTS.map((item, index) => (
+            <div key={index}>
               <div className="flex flex-col gap-4 text-center ">
                 <div className="text-5xl font-semibold text-center max-tablet:text-4xl max-[580px]:text-2xl max-[529px]:text-xl max-s:text-lg">
                   {item.DATA}
@@ -141,7 +204,7 @@ export default function Enterprise() {
                   {item.DESC}
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </div>
@@ -154,8 +217,8 @@ export default function Enterprise() {
             {ENTERPRISE_STRING.CITIES_DESC}
           </div>
           <div className="flex justify-center w-full p-8 flex-wrap gap-6">
-            {ENTERPRISE_STRING.POPULAR_CITIES.map((item) => (
-              <>
+            {ENTERPRISE_STRING.POPULAR_CITIES.map((item, index) => (
+              <div key={index}>
                 <div className="flex flex-col justify-center items-center gap-2">
                   <Image
                     src={item.images}
@@ -164,7 +227,7 @@ export default function Enterprise() {
                   ></Image>
                   <div className="font-semibold text-lg">{item.CITY}</div>
                 </div>
-              </>
+              </div>
             ))}
           </div>
         </div>
@@ -223,19 +286,19 @@ export default function Enterprise() {
         </div>
         <div className="w-full flex justify-center items-center gap-20 max-[529px]:flex-col">
           <div className="flex justify-center">
-            <Image
+            {/* <Image
               src={industry_1}
               alt="industires"
               className="w-11/12 h-11/12 max-[426px]:w-3/4 max-[426px]:h-3/4 "
-            ></Image>
+            ></Image> */}
           </div>
           <div className="flex flex-col gap-2">
-            {ENTERPRISE_STRING.ALL_DATA_INDUSTIRES.map((item) => (
-              <>
+            {ENTERPRISE_STRING.ALL_DATA_INDUSTIRES.map((item, index) => (
+              <div key={index}>
                 <div className="text-base bg-[#8E8FF8] p-4 font-semibold text-white transition duration-300 skew-x-12 skew-y-4 shadow-gray-400 shadow-md hover:scale-105 max-[769px]:p-2 max-[769px]:text-sm max-[769px]:w-[230px] max-[529px]:w-[300px] max-[529px]:text-center max-[322px]:w-[250px]">
                   {item}
                 </div>
-              </>
+              </div>
             ))}
           </div>
         </div>

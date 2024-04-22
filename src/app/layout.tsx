@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Head from "next/head";
+
 import "./globals.css";
 import { Titillium_Web } from "next/font/google";
+import StoreProvider from "./StoreProvider";
 
 const TitilliumWeb = Titillium_Web({
   weight: ["400", "600", "700", "900", "200", "300"],
@@ -24,7 +25,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/Mighty_Movers.svg" sizes="any" />
       </head>
-      <body className={TitilliumWeb.className}>{children}</body>
+      <body className={TitilliumWeb.className}>
+        <StoreProvider>   
+          {children}
+        </StoreProvider>
+      </body>
     </html>
   );
 }

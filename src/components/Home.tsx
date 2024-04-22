@@ -2,7 +2,7 @@
 import backgroud_image from "../assets/Images/home_back_image.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IMAGES_CAPTION,
   STATS,
@@ -12,14 +12,60 @@ import {
   SLIDER,
   SLIDER_TITLE,
   REVIEWS_TITLE,
-  BACKGROUND_TEXT
+  BACKGROUND_TEXT,
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
+import { MdLocalCafe } from "react-icons/md";
+import { getToken } from "firebase/messaging";
+import { messaging } from "@/utils/firebase/firebase";
 
 export default function Home() {
 
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+
+  const localData = localStorage.getItem('data') || null;
+  const localUser = localData && JSON.parse(localData)
+
+  // const requestPermission = async () => {
+  //   const permission = await Notification.requestPermission();
+  //   if(permission === "granted"){
+  //     const token = await getToken(messaging, { vapidKey:"BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk"})
+  //     console.log("Token generated",token)
+  //   }else if(permission === "denied"){
+  //     alert("Notification Denied!")
+  //   }
+  // }
+
+
+
+  const requestPermission = async () => {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      try {
+        const token = await getToken(messaging, { vapidKey: "BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk" });
+        console.log(token);
+      } catch (error) {
+        console.error("Error generating token:", error);
+      }
+    } else if (permission === "denied") {
+      console.warn("Notification permission denied!");
+      alert("Alright! we won't send you any notifications")
+    }
+  };
+
+
+  useEffect(() => {
+    if (localUser) {
+      console.log("logged in")
+      requestPermission();
+    } else {
+      console.log("not logged in")
+    }
+  }, [localUser])
+
+
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -30,27 +76,32 @@ export default function Home() {
         {/* STARTING IMAGE*/}
         <div className="relative">
           <div className="bg-black">
-            <Image src={backgroud_image} alt="background image"
+            <Image
+              src={backgroud_image}
+              alt="background image"
               className="opacity-75 w-full h-96 max-lg:h-auto"
             />
           </div>
           <div className="w-full flex justify-center">
             <div className="text-white absolute bottom-40 bg-transparent w-9/12 flex flex-col gap-4 max-lg:bottom-40 max-sm:bottom-14 max-sm:gap-0">
               <div>
-                <h1 className="text-5xl max-md:text-2xl">{BACKGROUND_TEXT.question}</h1>
+                <h1 className="text-5xl max-md:text-2xl">
+                  {BACKGROUND_TEXT.question}
+                </h1>
               </div>
               <div>
-                <h1 className="text-6xl max-md:text-3xl font-bold">{BACKGROUND_TEXT.tagline}</h1>
+                <h1 className="text-6xl max-md:text-3xl font-bold">
+                  {BACKGROUND_TEXT.tagline}
+                </h1>
               </div>
             </div>
           </div>
         </div>
 
-
         {/* Button Panel  */}
         <div className="flex justify-center">
           <div className="absolute h-56 flex justify-center bg-white top-[350px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
-            <div className="grid grid-cols-4 max-lg:w-full max-md:grid-cols-1 max-md:gap-5 w-9/12 items-center">
+            <div className="grid grid-cols-4 max-lg:w-full max-md:grid-cols-2  max-md:gap-5 w-9/12 items-center">
               {IMAGES_CAPTION.map((item, index) => (
                 <Link href={item.url} key={index}>
                   <div className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center">
@@ -60,7 +111,9 @@ export default function Home() {
                       width={100}
                       className="bg-indigo-100 rounded-lg"
                     />
-                    <figcaption className="max-lg:text-sm">{item.caption}</figcaption>
+                    <figcaption className="max-lg:text-sm">
+                      {item.caption}
+                    </figcaption>
                   </div>
                 </Link>
               ))}
@@ -84,14 +137,14 @@ export default function Home() {
             {SLIDER.map((item, index) => (
               <div
                 key={index}
-                className="card bg-gradient-to-r [box-shadow:0_8px_32px_0_rgba(31,_38,_135,_0.37)] backdrop-filter backdrop-blur-[7px] rounded-[10px] p-8 m-4 w-full h-60"
-                style={{ backgroundColor: item.color }}
+                className=" rounded-[10px] p-8 m-4 w-full h-60"
+                style={{ background: item.color }}
               >
                 <div>
-                  <h3 className="title whitespace-nowrap mx-[auto] my-4 font-bold text-white w-60 text-2xl">
+                  <h3 className="title whitespace-nowrap mx-[auto] text-white w-60 text-md font-light">
                     {item.title}
                   </h3>
-                  <p className="text-white text-xl mt-5">{item.description}</p>
+                  <p className="text-white text-2xl font-bold mt-5">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -259,8 +312,8 @@ export default function Home() {
               </button>
               <div
                 className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
-                  ? "grid-rows-[1fr] opacity-100"
-                  : "grid-rows-[0fr] opacity-0"
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
                   }`}
               >
                 <div className="overflow-hidden">
