@@ -78,7 +78,7 @@ export default function DeliveryPage(): JSX.Element {
       const response = await driver_register(formData)
       console.log("hua log")
       toast.success(response.data.message)
-      router.push("/");
+      router.push("/delivery-partner-login");
     }
     catch (error) {
       if (axios.isAxiosError(error)) {

@@ -16,10 +16,56 @@ import {
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
 import { MdLocalCafe } from "react-icons/md";
+import { getToken } from "firebase/messaging";
+import { messaging } from "@/utils/firebase/firebase";
 
 export default function Home() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+
+
+  const localData = localStorage.getItem('data') || null;
+  const localUser = localData && JSON.parse(localData)
+
+  // const requestPermission = async () => {
+  //   const permission = await Notification.requestPermission();
+  //   if(permission === "granted"){
+  //     const token = await getToken(messaging, { vapidKey:"BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk"})
+  //     console.log("Token generated",token)
+  //   }else if(permission === "denied"){
+  //     alert("Notification Denied!")
+  //   }
+  // }
+
+
+
+  const requestPermission = async () => {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      try {
+        const token = await getToken(messaging, { vapidKey: "BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk" });
+        console.log(token);
+      } catch (error) {
+        console.error("Error generating token:", error);
+      }
+    } else if (permission === "denied") {
+      console.warn("Notification permission denied!");
+      alert("Alright! we won't send you any notifications")
+    }
+  };
+
+
+  useEffect(() => {
+    if (localUser) {
+      console.log("logged in")
+      requestPermission();
+    } else {
+      console.log("not logged in")
+    }
+  }, [localUser])
+
+
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const toggleAccordion = (index: number) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -242,9 +288,8 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
+                    }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -266,11 +311,10 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
-                  openIndex === index
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
                     ? "grid-rows-[1fr] opacity-100"
                     : "grid-rows-[0fr] opacity-0"
-                }`}
+                  }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>

@@ -14,7 +14,7 @@ export default function Booking() {
       try {
         const response = await get_coupon_all();
         setcoupondata(response.data.data);
-        console.log(response.data.data)
+        // console.log(response.data.data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError<{
