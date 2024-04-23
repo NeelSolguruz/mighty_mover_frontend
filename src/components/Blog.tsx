@@ -1,6 +1,6 @@
 // Blog.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Like, comment, cross, eye, search } from "@/assets/Images/imageassets";
 import {
   BOOK_PORTER,
@@ -15,16 +15,50 @@ import {
   searchtitle,
   Input_data,
   PostData,
+  blogdata,
 } from "@/constant/blog";
 import Carousel from "./Carousel";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
+import { get_all_blog_api } from "@/http/staticTokenService";
 export default function Blog() {
   const [modal, setmodal] = useState(false);
   const [search12, setsearch] = useState("");
   const [filter_data, setfilter_data] = useState<PostData[]>([]);
+  const [blogdata, setblogdata] = useState<blogdata[]>([]);
   const slides_data = slides;
+  console.log(blogdata);
+  const fetchData = async () => {
+    try {
+      const response = await get_all_blog_api();
+      setblogdata(response.data.data);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  const message_error = (error: any) => {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<{
+        status: number;
+        message: string;
+      }>;
+      if (axiosError.response) {
+        console.log("Response Error", axiosError.response);
+        toast.error(axiosError.response.data.message);
+      } else if (axiosError.request) {
+        console.log("Request Error", axiosError.request);
+      } else {
+        console.log("Error", axiosError.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const searchmodal = () => {
     setmodal(!modal);
   };
@@ -48,11 +82,12 @@ export default function Blog() {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center ">
-        <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-11/12 h-auto flex my-8 ">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-11/12 h-auto flex my-8 "
+        >
           <Carousel slides_data={slides_data} />
         </motion.div>
         <div className="w-full flex justify-center items-center mt-3">
@@ -63,9 +98,9 @@ export default function Blog() {
             {Trending_post_data.map((item, index) => (
               <>
                 <motion.div
-                initial={{ translateY: 40,opacity:0}}
-                whileInView={{ translateY: -10,opacity:1 }}
-                transition={{ duration: 1 }}
+                  initial={{ translateY: 40, opacity: 0 }}
+                  whileInView={{ translateY: -10, opacity: 1 }}
+                  transition={{ duration: 1 }}
                   className="flex flex-col justify-center items-center gap-2"
                   key={index}
                 >
@@ -84,19 +119,21 @@ export default function Blog() {
         </div>
         <div className="w-11/12 mt-10 border-t-2 max-[1081px]:p-2 max-[978px]:w-full max-[978px]:p-[10px]">
           <div className="flex flex-col w-full gap-4 p-10 mt-4 max-[1195px]:p-3">
-            {post_data.map((item, index) => (
+            {blogdata.map((item, index) => (
               <>
                 <motion.div
-                 initial={{ translateY: 40,opacity:0}}
-                 whileInView={{ translateY: -10,opacity:1 }}
-                 transition={{ duration: 1 }}
+                  initial={{ translateY: 40, opacity: 0 }}
+                  whileInView={{ translateY: -10, opacity: 1 }}
+                  transition={{ duration: 1 }}
                   className="w-full flex gap-4 bg-white shadow-lg shadow-gray-400 justify-center items-center p-4 max-[905px]:px-2 max-[905px]:py-0 max-[724px]:flex-col "
                   key={index}
                 >
                   <div className="w-[560px] h-full relative overflow-hidden max-[724px]:pt-12 max-[622px]:pt-12 flex justify-center max-[622px]:w-[450px] max-[517px]:w-[350px] max-[419px]:w-[300px] max-[376px]:pt-4 max-[364px]:w-[250px]">
                     <Image
-                      src={item.img}
-                      alt={item.desc}
+                      src={item.fk_document}
+                      alt="image"
+                      width={100}
+                      height={100}
                       className="transition-transform duration-300 transform hover:scale-110 h-full w-full max-[622px]:w-[450px] max-[622px]:h-[250px] max-[517px]:w-[350px] max-[517px]:h-[150px] max-[419px]:w-full max-[419px]:h-[150px]"
                     ></Image>
                   </div>
@@ -106,9 +143,9 @@ export default function Blog() {
                       <div className="text-2xl font-normal max-[1092px]:text-xl max-[885px]:text-lg">
                         {item.title}
                       </div>
-                      <div className="text-[10px] font-bold">{item.date}</div>
+                      {/* <div className="text-[10px] font-bold">{item.author_name}</div> */}
                       <div className="text-lg max-[1092px]:text-sm max-[885px]:text-xs">
-                        {item.desc}
+                        {item.description.ops[1].insert}
                         <span className="tracking-wider text-lg"> {"..."}</span>
                       </div>
                       <div>
@@ -122,13 +159,13 @@ export default function Blog() {
                               ></Image>
                             </div>
                             <div className="text-xs">
-                              {item.view >= 1000 ? (
+                              {item.views >= 1000 ? (
                                 <>
-                                  {(item.view / 1000).toFixed(1)}
+                                  {(item.views / 1000).toFixed(1)}
                                   {"K"}
                                 </>
                               ) : (
-                                <>{item.view}</>
+                                <>{item.views}</>
                               )}
                             </div>
                           </div>

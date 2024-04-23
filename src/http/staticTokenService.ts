@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
   baseURL: "http://192.168.68.84:3000",
+  baseURL: "http://192.168.68.84:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -47,6 +48,16 @@ export const contact_us_api = async (payload:any)
 : Promise<AxiosResponse<any, any>> => {
   return axios.post(`/api/v1/contactUs`, payload, config);
 };
+
+export const get_all_blog_api = async ()
+: Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/blog/post`, config);
+};
+export const get_indi_blog_api = async (id:any)
+: Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/blog/post/${id}`, config);
+};
+
 export const driver_register = async (payload: any): 
 Promise<AxiosResponse<any, any>> => {
   return axios.post("/api/v1/driver/register", payload, config);

@@ -25,7 +25,33 @@ interface PostData {
   desc: string;
   wholedata: string;
 }
-export type { PostData };
+interface blogdata{
+  id:string;
+  title:string;
+  fk_document:string;
+  views:number;
+  like:number;
+  comment:number;
+  author_name:string;
+  description:string;
+}
+  // "id": "2c882b64-6486-4691-8515-779e3d9e8562",
+  // "fk_admin": "ff1c7a67-c556-413f-a08b-56d1f755acd9",
+  // "author_name": "Ronak",
+  // "title": "Transportation",
+  // "views": 0,
+  // "fk_document": "http://res.cloudinary.com/dxcwnj1cb/image/upload/v1713338393/Blog/ch0ioplhxt4ccil6xbjj.jpg",
+  // "like": 0,
+  // "comment": 0,
+  // "description": {
+  //     "ops": [
+  //         {
+  //             "insert": "ddjdjdjd\n"
+  //         }
+  //     ]
+  // }
+  // }
+export type { PostData,blogdata };
 
 export const blog_social_media = [
   {

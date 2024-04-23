@@ -4,6 +4,7 @@ import {
   Trending_post,
   Trending_post_data,
   all_comments,
+  blogdata,
   comment_comment,
   post_data,
   some_few_blog,
@@ -23,9 +24,13 @@ import {
   trending_post,
 } from "@/assets/Images/imageassets";
 import { motion } from "framer-motion";
+import { get_indi_blog_api } from "@/http/staticTokenService";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 export default function IndiviualBlog({ id }: any) {
   const [prevnextid, setprevnextid] = useState(-1);
   const [sidecomment, setsidecomment] = useState(false);
+  const [indiblogdata,setindiblogdata]=useState<blogdata>({})
   const index = post_data.findIndex(
     (item) => Number(item.id) === Number(id.indiblog)
   );
@@ -61,8 +66,35 @@ export default function IndiviualBlog({ id }: any) {
     } else {
       containerControls.start("close");
     }
+    fetchData()
   }, [sidecomment]);
 
+  const fetchData=async()=>{
+    try{
+      const response=await get_indi_blog_api(id.indiblog)
+      setindiblogdata(response.data.data)
+      console.log(response.data.data)
+    }
+    catch(error){
+      message_error(error)
+    }
+  }
+  const message_error = (error: any) => {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<{
+        status: number;
+        message: string;
+      }>;
+      if (axiosError.response) {
+        console.log("Response Error", axiosError.response);
+        toast.error(axiosError.response.data.message);
+      } else if (axiosError.request) {
+        console.log("Request Error", axiosError.request);
+      } else {
+        console.log("Error", axiosError.message);
+      }
+    }
+  };
   const handlecomment = () => {
      
     setsidecomment(!sidecomment);
@@ -76,20 +108,20 @@ export default function IndiviualBlog({ id }: any) {
         transition={{ duration: 1 }}
         className="w-10/12 flex justify-space between gap-4 mt-4 text-[11px] font-normal flex-wrap max-[564px]:justify-center"
       >
-        <div>{individualPageData[0].date}</div>
+        {/* <div>{indiblogdata.date}</div> */}
         <div className="flex gap-1 items-center">
           <div>
             <Image src={eye} alt="eye" className="h-3 w-3"></Image>
           </div>
           <div>
-            {individualPageData[0].view >= 1000 ? (
+            {indiblogdata.views >= 1000 ? (
               <>
-                {(individualPageData[0].view / 1000).toFixed(1)}
+                {(indiblogdata.views / 1000).toFixed(1)}
                 {"K"} {"Views"}
               </>
             ) : (
               <>
-                {individualPageData[0].view} {"Views"}
+                {indiblogdata.views} {"Views"}
               </>
             )}
           </div>
@@ -100,7 +132,7 @@ export default function IndiviualBlog({ id }: any) {
           </div>
 
           <div onClick={handlecomment} className="cursor-pointer">
-            {individualPageData[0].comment} {"Comments"}
+            {indiblogdata.comments} {"Comments"}
           </div>
         </div>
         <div className="flex gap-1 items-center">
@@ -108,12 +140,12 @@ export default function IndiviualBlog({ id }: any) {
             <Image src={Like} alt="like" className="w-3 h-3"></Image>
           </div>
           <div>
-            {individualPageData[0].like} {"Likes"}
+            {indiblogdata.likes} {"Likes"}
           </div>
         </div>
         <div className="flex gap-2">
           <div>{"~ Posted By"}</div>
-          <div className="font-bold">{individualPageData[0].name}</div>
+          <div className="font-bold">{indiblogdata.author_name}</div>
         </div>
       </motion.div>
       <motion.div
@@ -122,11 +154,13 @@ export default function IndiviualBlog({ id }: any) {
         transition={{ duration: 1 }}
         className="w-10/12 flex justify-start mt-2.5"
       >
-        <Image
-          src={individualPageData[0].img}
+        {/* <Image
+          src={indiblogdata.fk_document}
+          width={100}
+          height={100}
           alt="indi image"
           className="w-[1160px] h-[606px] max-[769px]:h-[350px] max-[426px]:h-[250px]"
-        ></Image>
+        ></Image> */}
       </motion.div>
       <motion.div
       initial={{ translateY: 40, opacity: 0 }}
@@ -154,7 +188,7 @@ export default function IndiviualBlog({ id }: any) {
         transition={{ duration: 1 }}
         className="w-10/12 flex justify-center items-center px-24 mt-[32px] italic text-center text-[19px] text-[#313131] max-[769px]:px-10 max-[426px]:px-4 max-[426px]:text-[15px]"
       >
-        {individualPageData[0].desc}
+        {/* {indiblogdata.description.ops[1].insert} */}
       </motion.div>
       <motion.div
         initial={{ translateY: 40, opacity: 0 }}
@@ -162,7 +196,7 @@ export default function IndiviualBlog({ id }: any) {
         transition={{ duration: 1 }}
         className="w-10/12 flex justify-start items-center px-24 mt-[32px] text-start text-[19px] text-[#313131] p-10 max-[769px]:p-3 max-[769px]:text-[14px]"
       >
-        {individualPageData[0].wholedata}
+        {/* {indiblogdata.description.ops[1].insert} */}
       </motion.div>
       <motion.div
         variants={containerVariants}
@@ -173,7 +207,7 @@ export default function IndiviualBlog({ id }: any) {
         <div className="flex justify-between mx-4 mt-4 text-xl font-semibold">
           <div>
             Responses {"("}
-            {post_data[index].comment}
+            {indiblogdata.comment}
             {")"}
           </div>
           <div onClick={handlecomment} className="cursor-pointer">
@@ -222,14 +256,14 @@ export default function IndiviualBlog({ id }: any) {
           </div>
         </div>
       </motion.div>
-      <motion.div
+      {/* <motion.div
       initial={{ translateY: -40, opacity: 0 }}
       whileInView={{ translateY: 0, opacity: 1 }}
       transition={{ duration: 1 }}
        className="w-full flex justify-center items-center mb-4">
         <div className="text-base">{some_few_blog}</div>
-      </motion.div>
-      <div className="w-10/12 flex">
+      </motion.div> */}
+      {/* <div className="w-10/12 flex">
         {index == 0 ? (
           <div className="flex gap-4">
             <motion.div
@@ -359,7 +393,7 @@ export default function IndiviualBlog({ id }: any) {
             </div>
           </>
         )}
-      </div>
+      </div> */}
       <motion.div
       initial={{ translateY: -40, opacity: 0 }}
       whileInView={{ translateY: 0, opacity: 1 }}
@@ -390,5 +424,6 @@ export default function IndiviualBlog({ id }: any) {
         ))}
       </div>
     </div>
+ 
   );
 }
