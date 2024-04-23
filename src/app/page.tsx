@@ -9,10 +9,7 @@ import { Toaster } from "sonner";
 export default function HomePage() {
   const fcm_token  = useFcmToken();
   if(fcm_token){
-    console.log('token generated')
     localStorage.setItem('fcm_token',fcm_token)
-  }else{
-    console.log('token not generated')
   }
   return (
     <>
