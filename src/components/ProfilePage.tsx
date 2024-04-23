@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import Loader from "react-js-loader";
 import { useDispatch } from "react-redux";
 import { update_name } from "@/redux/userSlice";
+import { useRouter } from "next/navigation";
+
 
 export default function ProfilePage() {
   const [user_data, setuserdata] = useState<any>({});
@@ -15,7 +17,7 @@ export default function ProfilePage() {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-
+  const router=useRouter()
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
@@ -55,12 +57,14 @@ export default function ProfilePage() {
     e.preventDefault();
     try {
       const patch_data = await http.patch("/api/v1/user/profile", {
-        firstname,
-        lastname,
-        contact,
+        "first_name":firstname,
+        "last_name":lastname,
+        "contact":contact,
       });
       dispatch(update_name(firstname))
       toast.success(patch_data.data.message);
+      router.push('/', { scroll: false })
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
