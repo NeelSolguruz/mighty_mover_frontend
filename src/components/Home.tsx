@@ -23,8 +23,8 @@ export default function Home() {
 
 
 
-  const localData = localStorage.getItem('data') || null;
-  const localUser = localData && JSON.parse(localData)
+  // const localData = localStorage.getItem('data') || null;
+  // const localUser = localData && JSON.parse(localData)
 
   // const requestPermission = async () => {
   //   const permission = await Notification.requestPermission();
@@ -38,30 +38,30 @@ export default function Home() {
 
 
 
-  const requestPermission = async () => {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      try {
-        const token = await getToken(messaging, { vapidKey: "BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk" });
-        console.log(token);
-      } catch (error) {
-        console.error("Error generating token:", error);
-      }
-    } else if (permission === "denied") {
-      console.warn("Notification permission denied!");
-      alert("Alright! we won't send you any notifications")
-    }
-  };
+  // const requestPermission = async () => {
+  //   const permission = await Notification.requestPermission();
+  //   if (permission === "granted") {
+  //     try {
+  //       const token = await getToken(messaging, { vapidKey: "BBP1UJVh9UxGFe7gLtNQaTddc-DwPVb7jLWes9_mKMKcujxLiHEJ-yFocWwyM_fZ770UjlhVuw8wuEpvvbHNyuk" });
+  //       console.log(token);
+  //     } catch (error) {
+  //       console.error("Error generating token:", error);
+  //     }
+  //   } else if (permission === "denied") {
+  //     console.warn("Notification permission denied!");
+  //     alert("Alright! we won't send you any notifications")
+  //   }
+  // };
 
 
-  useEffect(() => {
-    if (localUser) {
-      console.log("logged in")
-      requestPermission();
-    } else {
-      console.log("not logged in")
-    }
-  }, [localUser])
+  // useEffect(() => {
+  //   if (localUser) {
+  //     console.log("logged in")
+  //     requestPermission();
+  //   } else {
+  //     console.log("not logged in")
+  //   }
+  // }, [localUser])
 
 
 
