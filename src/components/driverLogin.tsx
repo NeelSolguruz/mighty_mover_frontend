@@ -179,7 +179,7 @@ export default function DriverLogin() {
         width: "",
         per_km_charge: "",
         vehicle_category: "",
-        take_order_type: "",
+        order_type: "",
     });
 
     const handleVehicleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -226,7 +226,7 @@ export default function DriverLogin() {
                 width: "",
                 per_km_charge: "",
                 vehicle_category: "",
-                take_order_type: "",
+                order_type: "",
             })
         }
     };
@@ -495,8 +495,8 @@ export default function DriverLogin() {
                                             <option value="2-wheeler">2 Wheeler</option>
                                             <option value="4-wheeler">4 Wheeler</option>
                                         </select>
-                                        <label htmlFor="take_order_type">Order Type:</label>
-                                        <select name="take_order_type" id="take_order_type" className="p-2 border border-gray-400 rounded-lg hover:border-black focus:outline-[#2967ff] text-gray-400" onChange={handleVehicleChange} value={vehicleFormData.take_order_type}>
+                                        <label htmlFor="order_type">Order Type:</label>
+                                        <select name="order_type" id="order_type" className="p-2 border border-gray-400 rounded-lg hover:border-black focus:outline-[#2967ff] text-gray-400" onChange={handleVehicleChange} value={vehicleFormData.take_order_type}>
                                             <option value="">Select Order Type</option>
                                             <option value="local">Local</option>
                                             <option value="outdoor">Inter State</option>

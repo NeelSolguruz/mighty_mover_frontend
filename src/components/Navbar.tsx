@@ -235,15 +235,11 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const driver = useAppSelector((state) => state.driver);
-  console.log('user', user)
-  console.log('driver', driver)
   useEffect(() => {
     if (localUser) {
-      console.log("user useEffect")
       dispatch(useradd(localUser));
     }
     else if (localDriver) {
-      console.log("driver useEffect")
       dispatch(driverAdd(localDriver));
     }
   }, [dispatch, localUser, user, localDriver, driver]);

@@ -7,14 +7,17 @@ import Coupon_carousel from "./Coupon_carousel";
 import { get_coupon_all } from "@/http/staticTokenService";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+// import useFcmToken from "@/utils/FCM/useFcmToken";
 export default function Booking() {
   const [coupon, setcoupondata] = useState([]);
+  // const token = useFcmToken();
+  // console.log(token)
   useEffect(() => {
     const fetch_coupon = async () => {
       try {
         const response = await get_coupon_all();
         setcoupondata(response.data.data);
-        console.log(response.data.data)
+        // console.log(response.data.data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError<{

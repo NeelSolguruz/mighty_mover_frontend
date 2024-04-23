@@ -20,6 +20,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useradd } from "@/redux/userSlice";
 import { toast } from "sonner";
+import useFcmToken from "@/utils/FCM/useFcmToken";
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -31,17 +32,19 @@ export default function Login() {
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
-
   const resetForm = () => {
     setEmail("");
     setPassword("");
     setEmailError("");
     setPasswordError("");
   };
-  const verifyotp = async () => {
+
+
+  const Verifyotp = async () => {
     setLoading(true);
     try {
-      const user_details = await verifyotp_api({ "email":email, "OTP":otp });
+      const ftoken = localStorage.getItem('fcm_token');
+      const user_details = await verifyotp_api({ "email": email, "OTP": otp, "fcm_token": ftoken });
       toast.success(user_details.data.message);
       dispatch(useradd(user_details.data.data));
       localStorage.setItem(
@@ -74,6 +77,7 @@ export default function Login() {
     } finally {
       setLoading(false);
       setOtp("");
+      localStorage.removeItem('fcm_token')
     }
   };
 
@@ -237,7 +241,7 @@ export default function Login() {
                         <div className="flex w-full justify-center items-center ">
                           <button
                             className="border-none bg-[#2967ff] text-white font-bold px-10 py-4 rounded-lg text-xl"
-                            onClick={verifyotp}
+                            onClick={Verifyotp}
                           >
                             Verify OTP
                           </button>
@@ -277,9 +281,8 @@ export default function Login() {
                       onChange={handleEmailChange}
                     />
                     <p
-                      className={`text-red-500 transition-all ${
-                        emailError ? "opacity-100" : "opacity-0"
-                      }`}
+                      className={`text-red-500 transition-all ${emailError ? "opacity-100" : "opacity-0"
+                        }`}
                     >
                       {emailError}
                     </p>
@@ -306,9 +309,8 @@ export default function Login() {
                       onChange={handlePasswordChange}
                     />
                     <p
-                      className={`text-red-500 transition-all ${
-                        passwordError ? "opacity-100" : "opacity-0"
-                      }`}
+                      className={`text-red-500 transition-all ${passwordError ? "opacity-100" : "opacity-0"
+                        }`}
                     >
                       {passwordError}
                     </p>
