@@ -30,6 +30,9 @@ import {
   useScroll,
   useSpring,
 } from "framer-motion";
+import { search_api } from "@/http/staticTokenService";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function BlogNavbar() {
   const [modal, setmodal] = useState(false);
@@ -79,22 +82,35 @@ export default function BlogNavbar() {
     } else setsidebar(!sidebar);
   };
   const { scrollYProgress } = useScroll();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const message_error = (error: any) => {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError<{
+        status: number;
+        message: string;
+      }>;
+      if (axiosError.response) {
+        console.log("Response Error", axiosError.response);
+        toast.error(axiosError.response.data.message);
+      } else if (axiosError.request) {
+        console.log("Request Error", axiosError.request);
+      } else {
+        console.log("Error", axiosError.message);
+      }
+    }
+  };
+  const handleChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     setsearch(searchTerm);
     console.log(searchTerm);
+    try{
+      const response=await search_api({"title":search12})
+      setfilter_data(response.data.data)
+    }
+    catch(error){
+      message_error(error)
+    }
 
-    const filteredData =
-      searchTerm.length === 0
-        ? []
-        : post_data.filter(
-            (item) =>
-              item.title.toLowerCase().includes(searchTerm) ||
-              item.desc.toLowerCase().includes(searchTerm)
-          );
 
-    setfilter_data(filteredData);
   };
   return (
     <>
@@ -186,7 +202,7 @@ export default function BlogNavbar() {
             </div>
             <div className="flex gap-2 justify-center items-center w-[196px]  max-tablet:hidden">
               {blog_social_media.map((item) => (
-                <div key={item.name}>
+                <div key={item.name} className="cursor-pointer">
                   <Image
                     src={item.img}
                     alt={item.name}
@@ -210,7 +226,7 @@ export default function BlogNavbar() {
             initial={{  opacity: 0 }}
             whileInView={{  opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="w-11/12 flex justify-center items-center py-0.5 border-t-[1px] border-b-[1px] gap-4 sticky top-20 z-10 bg-white opacity-95 hover:py-6 transition-all duration-300 max-[1081px]:w-full max-tablet:hidden"
+            className="w-11/12 flex justify-center items-center py-0.5 border-t-[1px] border-b-[1px] gap-4 sticky top-20 z-10 bg-white opacity-95 transition-all duration-300 max-[1081px]:w-full max-tablet:hidden"
           >
             <Link href="/">
               <div className="text-base font-bold ">{Porter_Home}</div>
@@ -271,7 +287,9 @@ export default function BlogNavbar() {
                                 <div className="flex gap-4 shadow-md shadow-gray-400 w-full">
                                   <div className="py-4 pl-4 ">
                                     <Image
-                                      src={item.img}
+                                      src={item.document}
+                                      height={100}
+                                      width={100}
                                       alt="image"
                                       className="w-20 h-20"
                                     ></Image>
@@ -281,7 +299,7 @@ export default function BlogNavbar() {
                                       {item.title}
                                     </div>
                                     <div className="text-sm font-light">
-                                      {item.date}
+                                      {item.created_at.substring(0,10)}
                                     </div>
                                     <div className="text-sm font-light">
                                       <div className="flex text-black font-semibold text-sx gap-2 w-full justify-start items-start ">
@@ -294,13 +312,13 @@ export default function BlogNavbar() {
                                             ></Image>
                                           </div>
                                           <div className="text-xs">
-                                            {item.view >= 1000 ? (
+                                            {item.views >= 1000 ? (
                                               <>
-                                                {(item.view / 1000).toFixed(1)}
+                                                {(item.views / 1000).toFixed(1)}
                                                 {"K"}
                                               </>
                                             ) : (
-                                              <>{item.view}</>
+                                              <>{item.views}</>
                                             )}
                                           </div>
                                         </div>

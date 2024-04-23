@@ -23,12 +23,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { get_all_blog_api } from "@/http/staticTokenService";
+import { Trending_post_api, get_all_blog_api, get_indi_blog_api } from "@/http/staticTokenService";
 export default function Blog() {
   const [modal, setmodal] = useState(false);
   const [search12, setsearch] = useState("");
   const [filter_data, setfilter_data] = useState<PostData[]>([]);
   const [blogdata, setblogdata] = useState<blogdata[]>([]);
+  const [trending_post,settrending_post]=useState<blogdata[]>([])
+
   const slides_data = slides;
   console.log(blogdata);
   const fetchData = async () => {
@@ -55,9 +57,23 @@ export default function Blog() {
       }
     }
   };
+  const fetchTrendingData=async()=>{
+    try{
+
+      const response=await Trending_post_api()
+      settrending_post(response.data.data)
+
+    }
+    catch(error){
+      message_error(error)
+    }
+  }
+
 
   useEffect(() => {
     fetchData();
+    fetchTrendingData()
+
   }, []);
   const searchmodal = () => {
     setmodal(!modal);
@@ -95,8 +111,9 @@ export default function Blog() {
         </div>
         <div className="w-11/12 mt-8 ">
           <div className="flex gap-6 justify-center max-[800px]:grid-cols-2 max-[800px]:grid-rows-2 max-[800px]:grid max-[800px]:gap-2 max-[376px]:grid max-[376px]:grid-cols-1 ">
-            {Trending_post_data.map((item, index) => (
+            {trending_post.map((item, index) => (
               <>
+              <Link href={`/blog/${item.id}`}>
                 <motion.div
                   initial={{ translateY: 40, opacity: 0 }}
                   whileInView={{ translateY: -10, opacity: 1 }}
@@ -106,13 +123,16 @@ export default function Blog() {
                 >
                   <div>
                     <Image
-                      src={item.img}
-                      alt={item.desc}
+                      src={item.document}
+                      alt="image"
+                      width={100}
+                      height={100}
                       className="w-[268px] h-[200px]"
                     ></Image>
                   </div>
-                  <div className="text-center p-2">{item.desc}</div>
+                  <div className="text-center p-2">{item.title}</div>
                 </motion.div>
+                </Link>
               </>
             ))}
           </div>
@@ -130,7 +150,7 @@ export default function Blog() {
                 >
                   <div className="w-[560px] h-full relative overflow-hidden max-[724px]:pt-12 max-[622px]:pt-12 flex justify-center max-[622px]:w-[450px] max-[517px]:w-[350px] max-[419px]:w-[300px] max-[376px]:pt-4 max-[364px]:w-[250px]">
                     <Image
-                      src={item.fk_document}
+                      src={item.document}
                       alt="image"
                       width={100}
                       height={100}
@@ -145,7 +165,7 @@ export default function Blog() {
                       </div>
                       {/* <div className="text-[10px] font-bold">{item.author_name}</div> */}
                       <div className="text-lg max-[1092px]:text-sm max-[885px]:text-xs">
-                        {item.description.ops[1].insert}
+                        {item.description.ops[0].insert}
                         <span className="tracking-wider text-lg"> {"..."}</span>
                       </div>
                       <div>

@@ -331,7 +331,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex justify-center max-lg:hidden w-1/12 mr-2">
-            {user.email || driver.email ? (
+            {user.email || driver?.email ? (
               <div className="flex gap-2 justify-end items-center w-full">
                 <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
                   {/* {user ? user?.user?.split("")[0].toUpperCase() : driver?.driver?.split("")[0].toUpperCase()} */}

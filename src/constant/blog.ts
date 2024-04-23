@@ -15,43 +15,43 @@ import {
 import { StaticImageData } from "next/image";
 interface PostData {
   id: number;
-  name:string
-  img: StaticImageData;
+  author_name: string;
+  document: string;
   title: string;
-  date: string;
-  view: number;
-  comment: number;
+  views: number;
+  comments: number;
+  likes: number;
+  created_at:string;
+  description: string;
+}
+interface blogdata {
+  id: string;
+  title: string;
+  fk_document: string;
+  views: number;
   like: number;
-  desc: string;
-  wholedata: string;
+  comment: number;
+  author_name: string;
+  description: string;
+  document: string;
 }
-interface blogdata{
-  id:string;
-  title:string;
-  fk_document:string;
-  views:number;
-  like:number;
-  comment:number;
-  author_name:string;
-  description:string;
-}
-  // "id": "2c882b64-6486-4691-8515-779e3d9e8562",
-  // "fk_admin": "ff1c7a67-c556-413f-a08b-56d1f755acd9",
-  // "author_name": "Ronak",
-  // "title": "Transportation",
-  // "views": 0,
-  // "fk_document": "http://res.cloudinary.com/dxcwnj1cb/image/upload/v1713338393/Blog/ch0ioplhxt4ccil6xbjj.jpg",
-  // "like": 0,
-  // "comment": 0,
-  // "description": {
-  //     "ops": [
-  //         {
-  //             "insert": "ddjdjdjd\n"
-  //         }
-  //     ]
-  // }
-  // }
-export type { PostData,blogdata };
+// "id": "2c882b64-6486-4691-8515-779e3d9e8562",
+// "fk_admin": "ff1c7a67-c556-413f-a08b-56d1f755acd9",
+// "author_name": "Ronak",
+// "title": "Transportation",
+// "views": 0,
+// "fk_document": "http://res.cloudinary.com/dxcwnj1cb/image/upload/v1713338393/Blog/ch0ioplhxt4ccil6xbjj.jpg",
+// "like": 0,
+// "comment": 0,
+// "description": {
+//     "ops": [
+//         {
+//             "insert": "ddjdjdjd\n"
+//         }
+//     ]
+// }
+// }
+export type { PostData, blogdata };
 
 export const blog_social_media = [
   {
@@ -102,7 +102,7 @@ export const Trending_post_data = [
 export const post_data: PostData[] = [
   {
     id: 1,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
     img: trending_post,
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
@@ -116,7 +116,7 @@ export const post_data: PostData[] = [
   },
   {
     id: 2,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     img: trending_post,
     title:
@@ -132,7 +132,7 @@ export const post_data: PostData[] = [
   {
     id: 3,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise ",
@@ -147,7 +147,7 @@ export const post_data: PostData[] = [
   {
     id: 4,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
@@ -162,7 +162,7 @@ export const post_data: PostData[] = [
   {
     id: 5,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
@@ -177,7 +177,7 @@ export const post_data: PostData[] = [
   {
     id: 6,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
@@ -192,7 +192,7 @@ export const post_data: PostData[] = [
   {
     id: 7,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
 
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
@@ -207,7 +207,7 @@ export const post_data: PostData[] = [
   {
     id: 8,
     img: trending_post,
-    name:"Myrtle Rodriquez",
+    name: "Myrtle Rodriquez",
     title:
       "Shades of emotions - Berger Paints partners with Porter for Enterprise",
     date: "2021-04-02",
@@ -239,37 +239,42 @@ export const footer_data = [
 ];
 export const searchtitle = "SEARCH FOR:";
 export const Input_data = "Input your search keywords and press Enter.";
-export const some_few_blog="Checkout Some More Blogs";
-export const comment_comment="Comments"
-export const all_comments=[
+export const some_few_blog = "Checkout Some More Blogs";
+export const comment_comment = "Comments";
+export const all_comments = [
   {
-    id:1,
-    user:"Anne Ruiz",
-    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
-    date:"2021-10-08"
+    id: 1,
+    user: "Anne Ruiz",
+    comment:
+      "kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date: "2021-10-08",
   },
   {
-    id:2,
-    user:"prit Ruiz",
-    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
-    date:"2021-10-08"
-  }
-  ,{
-    id:3,
-    user:"Utkarsh Ruiz",
-    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
-    date:"2021-10-08"
-  }
-  ,{
-    id:4,
-    user:"Neel Ruiz",
-    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
-    date:"2021-10-08"
+    id: 2,
+    user: "prit Ruiz",
+    comment:
+      "kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date: "2021-10-08",
   },
   {
-    id:5,
-    user:"Masd Ruiz",
-    comment:"kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
-    date:"2021-10-08"
-  }
-]
+    id: 3,
+    user: "Utkarsh Ruiz",
+    comment:
+      "kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date: "2021-10-08",
+  },
+  {
+    id: 4,
+    user: "Neel Ruiz",
+    comment:
+      "kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date: "2021-10-08",
+  },
+  {
+    id: 5,
+    user: "Masd Ruiz",
+    comment:
+      "kasndk amsndkansd lkansdlknasd lkasndlknasdk a;sdlalsdknklansdl lasdnklkansdlkansd lkansdlknasdknasd lkansdlnasdlnasd",
+    date: "2021-10-08",
+  },
+];
