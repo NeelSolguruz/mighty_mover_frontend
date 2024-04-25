@@ -77,7 +77,6 @@ export default function Login() {
     } finally {
       setLoading(false);
       setOtp("");
-      localStorage.removeItem('fcm_token')
     }
   };
 

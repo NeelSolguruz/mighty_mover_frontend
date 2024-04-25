@@ -13,4 +13,4 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig)
 export default firebaseApp
-export const messaging = getMessaging(firebaseApp)
+// export const messaging = getMessaging(firebaseApp)
