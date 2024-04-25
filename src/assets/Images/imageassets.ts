@@ -94,7 +94,9 @@ import copied from "./icons/file_download_done_FILL0_wght400_GRAD0_opsz24.svg"
 import contact_use_bg from "./topographic-map-background_23-2148596456.jpg"
 import contact_us from "./icons/julian-hochgesang-psGV5KhidlY-unsplash 1.svg"
 import login_blog from "./premium_photo-1681487916420-8f50a06eb60e.avif"
+import squint from "./icons/squint.svg"
 export {
+  squint,
   login_blog,
   contact_us,
   contact_use_bg,
