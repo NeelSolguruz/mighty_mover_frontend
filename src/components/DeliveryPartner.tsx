@@ -37,10 +37,8 @@ export default function DeliveryPage(): JSX.Element {
     contact: "",
     email: "",
     shift: "",
-    password: ""
+    password: "",
   });
-
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -66,8 +64,6 @@ export default function DeliveryPage(): JSX.Element {
   //   });
   // };
 
-
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormData({
@@ -75,15 +71,14 @@ export default function DeliveryPage(): JSX.Element {
       contact: "",
       email: "",
       shift: "",
-      password: ""
-    })
+      password: "",
+    });
     try {
-      const response = await driver_register(formData)
-      console.log("hua log")
-      toast.success(response.data.message)
+      const response = await driver_register(formData);
+      console.log("hua log");
+      toast.success(response.data.message);
       router.push("/delivery-partner-login");
-    }
-    catch (error) {
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
           status: number;
@@ -102,20 +97,167 @@ export default function DeliveryPage(): JSX.Element {
     // finally {
     //   setLoading(false)
     // }
-
   };
-
-
 
   return (
     <>
       <div className="w-full ">
-        <div>
-          <Image
-            src={Delivery}
-            className="w-full"
-            alt="Picture of the Delivery"
-          />
+        <div className="bg-gray-100  relative">
+          <div className=" ">
+            <Image
+              src={Delivery}
+              className=" w-full h-[500px] max-lg:h-auto  "
+              alt="Picture of the Delivery z-0"
+            />
+          </div>
+          <div className="lg:flex lg:items-center lg:justify-between z-10  w-full ">
+            <div className="lg:w-1/2 absolute bottom-[10px] ml-4 max-md:relative max-md:bottom-0">
+              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-md max-md:text-md">
+                Attach mini trucks or bike
+              </h2>
+              <p className="mt-3 max-w-3xl text-lg text-gray-500 sm:text-md max-md:text-md">
+                Earn money by delivering goods, courier and packages. Get a part
+                time or full time delivery job.
+              </p>
+            </div>
+          </div>
+          <div className="absolute max-md:relative max-md:bottom-0 px-3 py-3 bottom-[50px]  w-full h-[450px] max-md:px-0 ">
+            <div className=" lg:px-8 w-[40%] max-md:w-full float-right max-md:float-none">
+              <div className="flex justify-center w-full h-[450px] max-md:h-[420px] max-md:bottom-4">
+                <div className="w-[80%] h-auto md:flex-row md:p-10 rounded-3xl shadow-gray-400 bg-white shadow max-md:w-full max-md:h-auto ">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-4 justify-center  max-md:w-full max-md:justify-center  max-md:gap-4 max-md:p-6 h-96 max-md:h-auto"
+                  >
+                    <div className="font-bold text-2xl text-center max-md:text-md">
+                      {DELIVERY_PARTNER_STRING.FORM_HEADERS}
+                    </div>
+                    <div className="flex flex-col gap-4 relative">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          value={formData.name}
+                          placeholder="Enter Your Name"
+                          onChange={handleChange}
+                          // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                          className="w-full border-b rounded  p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                          required
+                        />
+                      </div>
+                      <div className="relative">
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          placeholder="Enter Your Email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                          className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                          required
+                        />
+                      </div>
+                      <div className="relative">
+                        <input
+                          type="input"
+                          id="contact"
+                          name="contact"
+                          placeholder="Enter Your Mobile Number"
+                          value={formData.contact}
+                          onChange={handleChange}
+                          // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                          className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                          required
+                        />
+                      </div>
+                      {/* <div className="relative flex gap-4 items-center">
+                    <label htmlFor="day">Day
+                      <input type="radio" id="day" value="day" name="shift" checked={shift} onChange={handleChange}/>
+                    </label>
+                    <label htmlFor="day">Night
+                      <input type="radio" id="night" value="night" name="shift" checked={shift} onChange={handleChange}/>
+                    </label>
+                  </div> */}
+                      <select
+                        name="shift"
+                        value={formData.shift}
+                        onChange={handleChange}
+                        className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                      >
+                        <option value="">Select Shift</option>
+                        {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
+                          <option key={source} value={source}>
+                            {source}
+                          </option>
+                        ))}
+                      </select>
+                      <div className="relative">
+                        <input
+                          type="password"
+                          id="password"
+                          name="password"
+                          placeholder="Enter Your Password"
+                          value={formData.password}
+                          onChange={handleChange}
+                          // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
+                          className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                          required
+                        />
+                      </div>
+                      {/* <select
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                    required
+                  >
+                    <option value="">Select your City</option>
+                    {DELIVERY_PARTNER_STRING.FORM_CITIES.map((city) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select> */}
+                      {/* <select
+                    name="vehicle"
+                    value={formData.vehicle}
+                    onChange={handleChange}
+                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
+                    required
+                  >
+                    <option value="">Select your Vehicle</option>
+                    {DELIVERY_PARTNER_STRING.FORM_VEHICLE.map((vehicle) => (
+                      <option key={vehicle} value={vehicle}>
+                        {vehicle}
+                      </option>
+                    ))}
+                  </select> */}
+
+                      <button
+                        type="submit"
+                        className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
+                      >
+                        Register
+                      </button>
+                      <div className="flex justify-center">
+                        <p>
+                          Already have Mighty Movers Driver Account?{" "}
+                          <Link
+                            href="/delivery-partner-login"
+                            className="text-[#2967FF] font-semibold hover:underline"
+                          >
+                            Sign in
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-full">
@@ -123,7 +265,6 @@ export default function DeliveryPage(): JSX.Element {
           {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE}
         </div>
       </div>
-
 
       {/* registration form __ section __ strat from here */}
       <div className="w-full max-sm:p-8">
@@ -151,132 +292,6 @@ export default function DeliveryPage(): JSX.Element {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="flex justify-center">
-            <div className="w-[80%] max-sm:w-full mt-8 md:flex-row md:p-10 rounded-3xl shadow-gray-400 shadow">
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-4 justify-center  max-sm:w-full max-sm:justify-center  max-sm:gap-4 max-sm:p-8 "
-              >
-                <div className="font-bold text-2xl text-center">
-                  {DELIVERY_PARTNER_STRING.FORM_HEADERS}
-                </div>
-                <div className="flex flex-col gap-4 relative">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      value={formData.name}
-                      placeholder="Enter Your Name"
-                      onChange={handleChange}
-                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded  p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      required
-                    />
-                  </div>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Enter Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      required
-                    />
-                  </div>
-                  <div className="relative">
-                    <input
-                      type="input"
-                      id="contact"
-                      name="contact"
-                      placeholder="Enter Your Mobile Number"
-                      value={formData.contact}
-                      onChange={handleChange}
-                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      required
-                    />
-                  </div>
-                  {/* <div className="relative flex gap-4 items-center">
-                    <label htmlFor="day">Day
-                      <input type="radio" id="day" value="day" name="shift" checked={shift} onChange={handleChange}/>
-                    </label>
-                    <label htmlFor="day">Night
-                      <input type="radio" id="night" value="night" name="shift" checked={shift} onChange={handleChange}/>
-                    </label>
-                  </div> */}
-                  <select
-                    name="shift"
-                    value={formData.shift}
-                    onChange={handleChange}
-                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                  >
-                    <option value="">Select Shift</option>
-                    {DELIVERY_PARTNER_STRING.FORM_SOURCES.map((source) => (
-                      <option key={source} value={source}>
-                        {source}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="relative">
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Enter Your Password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      // className="w-full border-b rounded border-gray-300 py-1 focus:border-amber-800 transition-colors focus:outline-none peer"
-                      className="w-full border-b rounded p-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                      required
-                    />
-                  </div>
-                  {/* <select
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                    required
-                  >
-                    <option value="">Select your City</option>
-                    {DELIVERY_PARTNER_STRING.FORM_CITIES.map((city) => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select> */}
-                  {/* <select
-                    name="vehicle"
-                    value={formData.vehicle}
-                    onChange={handleChange}
-                    className="w-full border-b rounded  py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:text-[#232323]"
-                    required
-                  >
-                    <option value="">Select your Vehicle</option>
-                    {DELIVERY_PARTNER_STRING.FORM_VEHICLE.map((vehicle) => (
-                      <option key={vehicle} value={vehicle}>
-                        {vehicle}
-                      </option>
-                    ))}
-                  </select> */}
-
-                  <button
-                    type="submit"
-                    className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
-                  >
-                    Register
-                  </button>
-                  <div className="flex justify-center">
-                    <p>Already have Mighty Movers Driver Account? <Link href="/delivery-partner-login" className="text-[#2967FF] font-semibold hover:underline">Sign in</Link></p>
-                  </div>
-                </div>
-              </form>
-            </div>
           </div>
         </div>
       </div>
@@ -322,7 +337,6 @@ export default function DeliveryPage(): JSX.Element {
             </div>
           </motion.div>
         )} */}
-
 
       {/* making your life easy__ section___ start from here */}
       <div className="w-full bg-black text-white mb-8">
@@ -469,8 +483,9 @@ export default function DeliveryPage(): JSX.Element {
                     {item.QUESTION}
                   </span>
                   <svg
-                    className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
-                      }`}
+                    className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
+                      openIndex === index ? "rotate-180" : ""
+                    }`}
                     width="16"
                     height="16"
                     xmlns="http://www.w3.org/2000/svg"
@@ -494,10 +509,11 @@ export default function DeliveryPage(): JSX.Element {
                   </svg>
                 </button>
                 <div
-                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                    }`}
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                    openIndex === index
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
                 >
                   <div className="overflow-hidden">
                     <span className="text-sm text-black">{item.ANSWER}</span>
