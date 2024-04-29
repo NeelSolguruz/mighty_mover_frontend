@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { IoNotificationsOffOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import Loader from "react-js-loader";
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import dayjs from "dayjs";
+const relativeTime = require("dayjs/plugin/relativeTime");
 
+const day: any = dayjs.extend(relativeTime);
 
 export default function DisplayNotifications() {
     useEffect(() => {
@@ -40,19 +42,29 @@ export default function DisplayNotifications() {
         }
     }
 
+    const getTimeAgo = (timestamp: string) => {
+        const commentDate = new Date(timestamp.substring(0, timestamp.length - 1));
+        const getTime = day(commentDate).fromNow();
+        return getTime;
+    };
+
+    const getDaysAgo = (timestamp: string) => {
+        const commentDate = dayjs(timestamp.substring(0, timestamp.length - 1));
+
+        // Get the difference in days between the comment date and today
+        const diffInDays = dayjs().diff(commentDate, 'day');
+
+        if (diffInDays === 0) {
+            return 'Today';
+        } else if (diffInDays === 1) {
+            return 'Yesterday';
+        } else {
+            return `${diffInDays} days ago`;
+        }
+    };
+
     return (
         <>
-            {loading ? (
-                <div className="flex justify-center items-center">
-                    <Loader
-                        type="spinner-default"
-                        bgColor={"black"}
-                        color={"black"}
-                        size={50}
-                    />
-                </div>
-
-            ) : (
                 <div className="flex flex-col items-center">
                     <h1 className="text-3xl py-2 font-bold border-b border-black w-full text-center">Notifications</h1 >
                     {
@@ -64,9 +76,9 @@ export default function DisplayNotifications() {
                                             <div className="flex justify-between items-center">
                                                 <div className="flex flex-col">
                                                     <h3 className="font-semibold">{item.title}</h3>
-                                                    <p className="text-xs">{new Date(item.created_at).toLocaleTimeString()}</p>
+                                                    <p className="text-xs">{getTimeAgo(item.created_at)}</p>
                                                 </div>
-                                                <p className="text-xs">{new Date(item.created_at).toLocaleDateString()}</p>
+                                                <p className="text-xs">{getDaysAgo(item.created_at)}</p>
                                             </div>
                                             <p className="text-sm text-gray-700">{item.description}</p>
                                         </div>
@@ -77,16 +89,17 @@ export default function DisplayNotifications() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="flex flex-col gap-5 py-2">
-                                <div className="flex justify-center">
-                                    <IoNotificationsOffOutline className="size-6/12" />
+                            <div className="flex flex-col items-center gap-5 py-2">
+                                <div className="flex flex-col justify-center h-full w-full">
+                                    <div className="flex justify-center">
+                                        <IoNotificationsOffOutline className="size-6/12"/>
+                                    </div>
+                                    <p className="font-semibold text-lg">NO NOTIFICATIONS</p>
                                 </div>
-                                <p className="font-semibold text-lg">NO NOTIFICATIONS</p>
                             </div>
                         )
                     }
-                </div >
-            )}
+                </div>
         </>
     )
 }

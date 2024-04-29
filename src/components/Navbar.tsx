@@ -113,95 +113,7 @@ export default function Navbar() {
           />
         </div>
       ) : (
-        <div
-          className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 `}
-        >
-          <div className="ml-10 max-md:ml-2">
-            <Link href="/">
-              <div className="w-[130px]">
-                <NavLogo />
-              </div>
-            </Link>
-          </div>
-
-          <div className="flex mr-12 gap-10 text-base max-lg:hidden">
-            {NAVBAR.LAPTOP.map((item, index) => (
-              <Link key={index} href={item.url} className={item.class}>
-                {item.text}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex justify-between items-center max-lg:hidden w-1/12 mr-2">
-            {user.email || driver?.email ? (              
-              <div className="flex gap-2 justify-end items-center w-full">
-                  <button className="rounded-full hover:bg-gray-200 active:bg-gray-300 p-2" onClick={handleNotification}>
-                    <IoMdNotificationsOutline className="size-8" />
-                  </button>
-                  {notificationPanel ? (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.5 }}
-                      className="fixed border shadow-md overflow-auto max-h-96 top-[50px] w-[400px] right-[80px] bg-white z-[1000000]"
-                    >
-                      <DisplayNotifications/>
-                    </motion.div>
-                  ) : (<></>)}
-                <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                  {localUser ? user?.user?.split("")[0].toUpperCase() : <FaTruck /> }
-                </div>
-                <div onClick={handleProfile}>
-                  <Image src={angle_down} alt="down arrow"></Image>
-                </div>
-                {profile ? (
-                  <>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 0.9 }}
-                      transition={{ duration: 0.5 }}
-                      className="fixed top-[60px] w-[100px] bg-white z-[1000000] rounded-lg"
-                    >
-                      <div
-                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 cursor-pointer"
-                        onClick={openprofile}
-                      >
-                        <div>
-                          <Image
-                            src={user_circle}
-                            alt="user"
-                            className="h-[24px] w-[24px] text-bold"
-                          ></Image>
-                        </div>
-                        <div>Profile</div>
-                      </div>
-                      <div
-                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
-                        onClick={clearstorage}
-                      >
-                        <div>
-                          <BiLogOut className="h-[20px] w-[20px] text-bold" />
-                        </div>
-                        <div>logout</div>
-                      </div>
-                    </motion.div>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ) : (
-              <Link href="/login">
-                <FaUserCircle className="size-10 hover:text-[#2967ff] hover:scale-125 transition-all" />
-              </Link>
-            )}
-            {/* <div>
-            <Link href='/register'><button className="bg-[#2967ff] p-3 rounded-lg text-white font-semibold transition duration-300 hover:bg-blue-500 hover:scale-105">Get Started</button></Link>
-          </div> */}
-          </div>
-
-          {/* side panel */}
-
+        <div className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 max-lg:justify-start`}>
           <div className="max-lg:block hidden w-16 text-center mr-3 max-sm:mr-0">
             <button onClick={handleClick}>
               <IoMenu className={`${clicked ? "hidden" : "block"} text-3xl`} />
@@ -232,6 +144,105 @@ export default function Navbar() {
               </div>
             </div>
           </div>
+          <div className="flex justify-center w-2/12 max-md:ml-2">
+            <Link href="/">
+              <div className="w-[130px]">
+                <NavLogo />
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex gap-10 w-8/12 justify-center text-base max-lg:hidden">
+            {NAVBAR.LAPTOP.map((item, index) => (
+              <Link key={index} href={item.url} className={item.class}>
+                {item.text}
+              </Link>
+            ))}
+          </div>
+
+          <div className="max-lg:hidden w-2/12">
+            {user.email || driver?.email ? (              
+              <div className="flex justify-evenly items-center w-full">
+                <div>
+                    <button className="rounded-full hover:bg-gray-200 active:bg-gray-300 p-2" onClick={handleNotification}>
+                      <IoMdNotificationsOutline className="size-8" />
+                    </button>
+                    {notificationPanel ? (
+                      <motion.div
+                        // initial={{ opacity: 0 }}
+                        // whileInView={{ opacity: 1 }}
+                        // transition={{ duration: 0.5 }}
+                        initial={{ height: "0%", opacity: 0 }}
+                        whileInView={{ height: "100%", opacity: 1 }}
+                        transition={{
+                          type: "fade",
+                          damping: 15,
+                          stiffness: 300,
+                          duration: 0.3,
+                        }}
+                        className="fixed border shadow-md overflow-auto max-h-96 top-[50px] w-[400px] right-32 bg-white z-[1000000]"
+                      >
+                        <DisplayNotifications />
+                      </motion.div>
+                    ) : (<></>)}
+                </div>
+                <div className="flex items-center">
+                    <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
+                      {localUser ? user?.user?.split("")[0].toUpperCase() : <FaTruck />}
+                    </div>
+                    <div onClick={handleProfile}>
+                      <Image src={angle_down} alt="down arrow"></Image>
+                    </div>
+                </div>
+                {profile ? (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="fixed top-[60px] right-5 w-[100px] bg-white z-[1000000] rounded-lg"
+                    >
+                      <div
+                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 cursor-pointer"
+                        onClick={openprofile}
+                      >
+                        <div>
+                          <Image
+                            src={user_circle}
+                            alt="user"
+                            className="h-[24px] w-[24px] text-bold"
+                          >
+                          </Image>
+                        </div>
+                        <div>Profile</div>
+                      </div>
+                      <div
+                        className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
+                        onClick={clearstorage}
+                      >
+                        <div>
+                          <BiLogOut className="h-[20px] w-[20px] text-bold" />
+                        </div>
+                        <div>logout</div>
+                      </div>
+                    </motion.div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : (
+              <Link href="/login">
+                <FaUserCircle className="size-10 hover:text-[#2967ff] hover:scale-125 transition-all" />
+              </Link>
+            )}
+            {/* <div>
+            <Link href='/register'><button className="bg-[#2967ff] p-3 rounded-lg text-white font-semibold transition duration-300 hover:bg-blue-500 hover:scale-105">Get Started</button></Link>
+          </div> */}
+          </div>
+
+          {/* side panel */}
+
         </div>
       )}
     </>
