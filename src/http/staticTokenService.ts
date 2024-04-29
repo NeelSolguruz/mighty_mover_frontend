@@ -112,3 +112,7 @@ export const comments_api = async (id:any): Promise<AxiosResponse<any, any>> => 
 export const Likes_api = async (id:any): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/${id}/count-like`, config);
 };
+export const get_all_comments_data = async (id:any): Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/blog/post/${id}/get-all-comment`, config);
+};
+

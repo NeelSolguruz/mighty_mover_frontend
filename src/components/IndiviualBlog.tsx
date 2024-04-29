@@ -6,6 +6,7 @@ import {
   all_comments,
   blogdata,
   comment_comment,
+  commentdata,
   post_data,
   some_few_blog,
 } from "@/constant/blog";
@@ -22,6 +23,7 @@ import {
   eye,
   google_play,
   login_blog,
+  squint,
   trending_post,
 } from "@/assets/Images/imageassets";
 import { motion } from "framer-motion";
@@ -29,13 +31,21 @@ import {
   Likes_api,
   Trending_post_api,
   comments_api,
+  get_all_comments_data,
   get_indi_blog_api,
 } from "@/http/staticTokenService";
+import { formatDistanceToNow } from "date-fns";
+
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import http from "@/http/http";
 import { DiAtlassian } from "react-icons/di";
 import NavLogo from "@/assets/Images/icons/NavLogo";
+import dayjs from "dayjs";
+const relativeTime = require("dayjs/plugin/relativeTime");
+
+const day: any = dayjs.extend(relativeTime);
+
 export default function IndiviualBlog({ id }: any) {
   const [prevnextid, setprevnextid] = useState(-1);
   const [sidecomment, setsidecomment] = useState(false);
@@ -43,16 +53,29 @@ export default function IndiviualBlog({ id }: any) {
   const [trending_post, settrending_post] = useState<blogdata[]>([]);
   const [likes_indi, setlikes] = useState("");
   const [comments_indi, setcomments] = useState("");
+  const [comments_indi_data, setcomments_data] = useState<commentdata[]>([]);
+  const [post_comment, setpost_comment] = useState("");
+  const [replyinput, setreplyinput] = useState(true);
+  const [replyinputname, setreplyinputname] = useState("");
+
+  const [replyid, setreplyid] = useState("");
   const [logindata, setlogindata] = useState(false);
+  const [view_replies, setview_replies] = useState(false);
   const index = post_data.findIndex(
     (item) => Number(item.id) === Number(id.indiblog)
   );
+
   console.log(index);
   const prev_next = post_data;
 
   const individualPageData = post_data.filter((item) => {
     return item.id == id.indiblog;
   });
+  const [expandedCommentId, setExpandedCommentId] = useState(null);
+
+const handleViewReplies = (commentId:any) => {
+  setExpandedCommentId(expandedCommentId === commentId ? null : commentId);
+};
   const containerVariants = {
     close: {
       x: "400px",
@@ -82,7 +105,55 @@ export default function IndiviualBlog({ id }: any) {
     fetchTrendingData();
     fetchLikes();
     fetchcomments();
+    comments_data();
   }, [sidecomment]);
+
+  const getTimeAgo = (timestamp: string) => {
+    const commentDate = new Date(timestamp.substring(0, timestamp.length - 1));
+    const getTime = day(commentDate).fromNow();
+    return getTime;
+  };
+
+  const post_comment_api = async () => {
+    if (replyinput) {
+      try {
+        const response = await http.post(
+          `/api/v1/blog/post/comment/${id.indiblog}`,
+          { comment: post_comment }
+        );
+        console.log(response.data.data);
+        setpost_comment("")
+        comments_data();
+        fetchcomments();
+      } catch (error) {
+        message_error(error);
+      }
+    } else {
+      try {
+        const response = await http.post(
+          `/api/v1/blog/post/comment/${id.indiblog}/${replyid}/reply`,
+          { comment: post_comment }
+        );
+        setreplyid("");
+        setreplyinput(!replyinput);
+        setpost_comment("")
+
+        console.log(response.data.data);
+        comments_data();
+      } catch (error) {
+        message_error(error);
+      }
+    }
+  };
+
+  const comments_data = async () => {
+    try {
+      const response = await get_all_comments_data(id.indiblog);
+      setcomments_data(response.data.data);
+    } catch (error) {
+      message_error(error);
+    }
+  };
 
   const fetchLikes = async () => {
     try {
@@ -163,7 +234,6 @@ export default function IndiviualBlog({ id }: any) {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center  "
-            
           >
             <motion.div
               initial={{ opacity: 0 }}
@@ -175,16 +245,12 @@ export default function IndiviualBlog({ id }: any) {
                 <div className="max-w-[130px] flex justify-center items-center">
                   <NavLogo />
                 </div>
-                  <div className="w-1/2 rounded-full text-center p-2 shadow-md shadow-gray-400 bg-[#2967ff] text-white font-semibold cursor-pointer">
-                <Link href="/register">
-                    Please Sign up
-                </Link>
-                  </div>
-                  <div className="w-1/2 rounded-full text-center p-2 shadow-md shadow-gray-400 transition-all duration-300 font-semibold hover:bg-black hover:text-white cursor-pointer">
-                <Link href="/login">
-                    Already Have an account?
-                </Link>
-                  </div>
+                <div className="w-1/2 rounded-full text-center p-2 shadow-md shadow-gray-400 bg-[#2967ff] text-white font-semibold cursor-pointer">
+                  <Link href="/register">Please Sign up</Link>
+                </div>
+                <div className="w-1/2 rounded-full text-center p-2 shadow-md shadow-gray-400 transition-all duration-300 font-semibold hover:bg-black hover:text-white cursor-pointer">
+                  <Link href="/login">Already Have an account?</Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -310,12 +376,18 @@ export default function IndiviualBlog({ id }: any) {
               <div className="w-[80%]">
                 <input
                   type="text"
-                  placeholder="What are your thoughts?"
+                  value={post_comment}
+                  placeholder={
+                    replyinput
+                      ? `What are your thoughts?`
+                      : `Reply to @${replyinputname}`
+                  }
+                  onChange={(e) => setpost_comment(e.target.value)}
                   className="rounded-md text-black w-full p-2 shadow-sm shadow-gray-400 placeholder:text-sm"
                 ></input>
               </div>
               <div className="bg-white w-[17%] rounded-md flex justify-center items-center shadow-md shadow-gray-400 p-2">
-                <button>
+                <button onClick={post_comment_api}>
                   <Image src={arrow_right} alt="arrow left"></Image>
                 </button>
               </div>
@@ -323,27 +395,102 @@ export default function IndiviualBlog({ id }: any) {
             <div className="flex justify-between mx-4 mt-4 text-xl font-semibold">
               {comment_comment}
             </div>
-            <div className="flex flex-col w-full m-2 justify-center mt-4 text-xl font-semibold">
-              {all_comments.map((item) => (
+            <div className="flex flex-col w-full  justify-center mt-4 text-xl font-semibold">
+              {comments_indi_data.length === 0 ? (
+                <div className="w-full flex flex-col justify-center items-center pt-10">
+                  <div className="text-3xl">No comments yet</div>
+                  <div className="text-sm">Start the conversation</div>
+                </div>
+              ) : (
                 <>
-                  <div className="flex flex-col w-11/12 m-2.5 shadow-sm shadow-gray-400 gap-2 p-4 rounded-md">
-                    <div className="flex w-full gap-2">
-                      <div className="rounded-full bg-gray-300 text-black uppercase px-4 text-sm flex items-center font-bold">
-                        {item.user.substring(0, 1)}
-                      </div>
-                      <div className="capitalize flex-col gap-0.5 w-full font-bold tracking-wide">
-                        <div>{item.user}</div>
-                        <div className="w-full flex text-xs justify-start text-gray-600 ">
-                          {item.date}
+                  {comments_indi_data.map((item) => (
+                    <>
+                      <div className="flex flex-col w-11/12 m-2.5 shadow-sm shadow-gray-400 gap-2 py-4 px-2 rounded-md">
+                        <div className="flex w-full gap-2">
+                          <div className="rounded-full bg-gray-300 text-black uppercase px-4 py-2 text-lg flex items-center font-bold h-12">
+                            {item.user_name.substring(0, 1)}
+                          </div>
+                          <div className=" flex flex-col gap-0.5 w-full text-xs font-bold tracking-wide items-start">
+                            <div className="flex gap-2 w-full text-xs font-bold tracking-wide items-start">
+                              <div className="capitalize">{item.user_name}</div>
+                              <div className="w-full flex text-xs justify-start text-gray-600 ">
+                                {getTimeAgo(item.created_at)}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="w-full text-xs text-normal  text-left font-normal ">
+                                {item.comment}
+                              </div>
+                            </div>
+                            <div>
+                              <div
+                                className="text-xs flex items-center cursor-pointer"
+                                onClick={() => {
+                                  handleViewReplies(item.id)
+                                  setreplyinput(!replyinput);
+                                  setreplyinputname(item.user_name)
+                                  setreplyid(item.id);
+                                }}
+                              >
+                                {item.childComment.length === 0 ? (
+                                  <>{"Reply"}</>
+                                ) : (
+                                  <>
+                                    <div
+                                      onClick={() =>
+                                        setview_replies(!view_replies)
+                                      }
+                                    >
+                                      View {item.childComment.length} replies
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                              <div>
+                               
+                                    {expandedCommentId === item.id && item.childComment.map((subitem) => (
+                                      <>
+                                        <div className="flex gap-2 mt-6">
+                                          <div>
+                                            <div className="rounded-full bg-gray-300 text-black uppercase px-4 py-1.5 text-lg flex  items-center font-bold h-12">
+                                              {subitem.user_name.substring(
+                                                0,
+                                                1
+                                              )}
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <div className=" flex flex-col gap-0.5 w-full text-xs font-bold tracking-wide items-start">
+                                              <div className="flex gap-2 w-full text-xs font-bold tracking-wide items-center">
+                                                <div className="capitalize">
+                                                  {subitem.user_name}
+                                                </div>
+                                                <div className="w-full flex text-xs justify-start text-gray-600 ">
+                                                  {getTimeAgo(
+                                                    subitem.created_at
+                                                  )}
+                                                </div>
+                                              </div>
+                                              <div>
+                                                <div className="w-full text-xs text-normal  text-left font-normal ">
+                                                  {subitem.comment}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </>
+                                    ))}
+                                 
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="w-full px-1 text-[14px] text-normal my-2 text-left font-normal ">
-                      {item.comment}
-                    </div>
-                  </div>
+                    </>
+                  ))}
                 </>
-              ))}
+              )}
             </div>
           </div>
         </motion.div>

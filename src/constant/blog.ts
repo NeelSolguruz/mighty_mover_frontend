@@ -35,6 +35,19 @@ interface blogdata {
   description: string;
   document: string;
 }
+interface commentdata{
+  id:string;
+  user_name:string;
+  comment:string;
+  created_at:string;
+  childComment:child_comment[]
+
+}
+interface child_comment{
+  user_name:string;
+  created_at:string;
+  comment:string;
+}
 // "id": "2c882b64-6486-4691-8515-779e3d9e8562",
 // "fk_admin": "ff1c7a67-c556-413f-a08b-56d1f755acd9",
 // "author_name": "Ronak",
@@ -51,7 +64,7 @@ interface blogdata {
 //     ]
 // }
 // }
-export type { PostData, blogdata };
+export type { PostData, blogdata ,commentdata};
 
 export const blog_social_media = [
   {
