@@ -102,7 +102,11 @@ import exchange from "./icons/exchange-alt.svg";
 import blue_marker from "./icons/blue-marker.svg";
 import map_pin from "./icons/map-pin-alt.svg";
 import discount from "./icons/discount.svg";
+import lock from "./icons/lock-alt.svg";
+import check from "./icons/check.svg";
 export {
+  check,
+  lock,
   discount,
   map_pin,
   blue_marker,

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.89:3000",
+  baseURL: "http://192.168.68.85:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -105,14 +105,25 @@ export const search_api = async (
 export const Trending_post_api = async (): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/trending-post?limit=4&offset=0`, config);
 };
-export const comments_api = async (id:any): Promise<AxiosResponse<any, any>> => {
+export const comments_api = async (
+  id: any
+): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/${id}/count-comment`, config);
 };
 
-export const Likes_api = async (id:any): Promise<AxiosResponse<any, any>> => {
+export const Likes_api = async (id: any): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/${id}/count-like`, config);
 };
-export const get_all_comments_data = async (id:any): Promise<AxiosResponse<any, any>> => {
+export const get_all_comments_data = async (
+  id: any
+): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/${id}/get-all-comment`, config);
 };
-
+export const get_all_services = async (): Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/services`, config);
+};
+export const get_all_services_indi = async (
+  id: string
+): Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/services/${id}`, config);
+};

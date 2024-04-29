@@ -261,6 +261,28 @@ export const FAQ_STRING = {
     {
       QUESTION: "Does Porter provide door-to-door delivery?",
       ANSWER: "Yes, Porter provides door-to-door delivery of your goods.",
-    }
-    ],
+    },
+  ],
 };
+export const User_select = [
+  {
+    img: Bike,
+    Price: 195,
+  },
+  {
+    img: Bike,
+    Price: 195,
+  },
+  {
+    img: Bike,
+    Price: 195,
+  },
+  {
+    img: Bike,
+    Price: 195,
+  },
+  {
+    img: Bike,
+    Price: 195,
+  },
+];
