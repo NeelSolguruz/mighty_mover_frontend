@@ -25,10 +25,8 @@ const driverSlice = createSlice({
      },
      driverUpdate:(state,action) => {
         state.driver = action.payload;
-        console.log("update", action.payload);
         const data = localStorage.getItem("driver") || null;
         const token = data && JSON.parse(data || "");
-        console.log(token);
         localStorage.setItem(
           "driver",
           JSON.stringify({ ...token, driver: action.payload })
