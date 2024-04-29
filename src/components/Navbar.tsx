@@ -16,8 +16,8 @@ import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import Loader from "react-js-loader";
-import { angle_down, user_circle } from "@/assets/Images/imageassets";
-import { motion } from "framer-motion";
+import { angle_down, cross, user_circle } from "@/assets/Images/imageassets";
+import { motion, useAnimationControls } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { driverAdd, driverLogout } from "@/redux/driverSlice";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -28,7 +28,7 @@ export default function Navbar() {
   const [clicked, setClicked] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
   const localData = localStorage.getItem("data") || null;
-  const driverData = localStorage.getItem('driver') || null;
+  const driverData = localStorage.getItem("driver") || null;
   const [profile, setprofile] = useState(false);
   const localUser = localData && JSON.parse(localData);
   const localDriver = driverData && JSON.parse(driverData);
@@ -39,8 +39,7 @@ export default function Navbar() {
   useEffect(() => {
     if (localUser) {
       dispatch(useradd(localUser));
-    }
-    else if (localDriver) {
+    } else if (localDriver) {
       dispatch(driverAdd(localDriver));
     }
   }, [dispatch, localUser, user, localDriver, driver]);
@@ -51,12 +50,31 @@ export default function Navbar() {
   const handleProfile = () => {
     setprofile(!profile);
   };
+  const containerVariants = {
+    close: {
+      x: "-300px",
+      transition: {
+        type: "spring",
+        damping: 20,
+        duration: 1,
+      },
+    },
+    open: {
+      x: "0px",
+      transition: {
+        type: "spring",
+        damping: 20,
+        duration: 1,
+      },
+    },
+  };
+  const containerControls = useAnimationControls();
 
-  const [notificationPanel,setNotificationPanel] = useState(false)
-  
+  const [notificationPanel, setNotificationPanel] = useState(false);
+
   const handleNotification = () => {
-    setNotificationPanel(!notificationPanel)
-  }
+    setNotificationPanel(!notificationPanel);
+  };
 
   const clearstorage = async () => {
     try {
@@ -69,8 +87,6 @@ export default function Navbar() {
         toast.success(logout_data.data.message);
         dispatch(driverLogout());
       }
-
-
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
@@ -92,14 +108,23 @@ export default function Navbar() {
     setClicked(false);
   };
   const openprofile = () => {
-    if(localUser){
+    if (localUser) {
       console.log("user is logged in");
-      router.push("/profile", { scroll: false });}
-    else{
-      console.log("driver is logged in")
-      router.push("/driver-profile",{scroll:false});}
-
+      router.push("/profile", { scroll: false });
+    } else {
+      console.log("driver is logged in");
+      router.push("/driver-profile", { scroll: false });
+    }
   };
+  const [sidecomment, setsidecomment] = useState(false);
+
+  useEffect(() => {
+    if (clicked) {
+      containerControls.start("open");
+    } else {
+      containerControls.start("close");
+    }
+  }, [clicked]);
 
   return (
     <>
@@ -113,43 +138,74 @@ export default function Navbar() {
           />
         </div>
       ) : (
-        <div className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 max-lg:justify-start`}>
-          <div className="max-lg:block hidden w-16 text-center mr-3 max-sm:mr-0">
-            <button onClick={handleClick}>
-              <IoMenu className={`${clicked ? "hidden" : "block"} text-3xl`} />
-            </button>
-          </div>
-
-          <div
-            className={`${clicked ? "hidden max-lg:block mt-64" : "hidden"}`}
-          >
-            <div
-              className={`${clicked ? "block" : "hidden"
-                } text-3xl w-full h-full max-sm:text-2xl`}
+        <div
+          className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 px-2`}
+        >
+          {clicked && (
+            <motion.div
+              variants={containerVariants}
+              initial="close"
+              animate={containerControls}
+              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000]"
             >
-              <div className="flex flex-col bg-white items-end p-2 shadow-md rounded-xl max-sm:text-lg">
-                <button onClick={handleClose}>
-                  <RxCross2 className="text-4xl" />
-                </button>
-                {NAVBAR.MOBILE.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={item.url}
-                    className={item.class}
-                    onClick={handleClose}
-                  >
-                    {item.text}
-                  </Link>
-                ))}
+              <div className="flex flex-col w-full fixed top-0 left-0">
+                <div className="mt-6 ">
+                  <div className="flex justify-between">
+                    <div className="flex w-full justify-center items-center mb-6 py-2 text-xl pl-6">
+                      <div className="w-[130px]">
+                        <NavLogo />
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        className="text-3xl font-bold pr-4 py-2"
+                        onClick={handleClick}
+                      >
+                        <Image src={cross} alt="cross"></Image>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="w-full flex-col justify-center items-center gap-4">
+                      <Link href="/">
+                        <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                          <div className="px-4">Enterprise</div>
+                        </div>
+                      </Link>
+                      <Link href="/two-wheelers">
+                        <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                          <div className="px-4">Delivery Partner</div>
+                        </div>
+                      </Link>
+                      <Link href="/two-wheelers">
+                        <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                          <div className="px-4">Support</div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </motion.div>
+          )}
+          <div className="pl-2 flex gap-2 ">
+            <div className="max-lg:flex items-center hidden w-16 text-center justify-center">
+              <button
+                onClick={handleClick}
+                className="w-full flex justify-center items-center"
+              >
+                <IoMenu className={`text-3xl`} />
+              </button>
             </div>
-          </div>
-          <div className="flex justify-center w-2/12 max-md:ml-2">
-            <Link href="/">
-              <div className="w-[130px]">
-                <NavLogo />
-              </div>
-            </Link>
+
+            <div className="flex justify-center w-full ">
+              <Link href="/">
+                <div className="w-[130px]">
+                  <NavLogo />
+                </div>
+              </Link>
+            </div>
           </div>
 
           <div className="flex gap-10 w-8/12 justify-center text-base max-lg:hidden">
@@ -160,39 +216,48 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="max-lg:hidden w-2/12">
-            {user.email || driver?.email ? (              
-              <div className="flex justify-evenly items-center w-full">
+          <div className="w-2/12">
+            {user.email || driver?.email ? (
+              <div className="flex justify-end gap-2 items-center w-full px-2">
                 <div>
-                    <button className="rounded-full hover:bg-gray-200 active:bg-gray-300 p-2" onClick={handleNotification}>
-                      <IoMdNotificationsOutline className="size-8" />
-                    </button>
-                    {notificationPanel ? (
-                      <motion.div
-                        // initial={{ opacity: 0 }}
-                        // whileInView={{ opacity: 1 }}
-                        // transition={{ duration: 0.5 }}
-                        initial={{ height: "0%", opacity: 0 }}
-                        whileInView={{ height: "100%", opacity: 1 }}
-                        transition={{
-                          type: "fade",
-                          damping: 15,
-                          stiffness: 300,
-                          duration: 0.3,
-                        }}
-                        className="fixed border shadow-md overflow-auto max-h-96 top-[50px] w-[400px] right-32 bg-white z-[1000000]"
-                      >
-                        <DisplayNotifications />
-                      </motion.div>
-                    ) : (<></>)}
+                  <button
+                    className="rounded-full hover:bg-gray-200 active:bg-gray-300 p-2"
+                    onClick={handleNotification}
+                  >
+                    <IoMdNotificationsOutline className="size-8" />
+                  </button>
+                  {notificationPanel ? (
+                    <motion.div
+                      // initial={{ opacity: 0 }}
+                      // whileInView={{ opacity: 1 }}
+                      // transition={{ duration: 0.5 }}
+                      initial={{ height: "0%", opacity: 0 }}
+                      whileInView={{ height: "100%", opacity: 1 }}
+                      transition={{
+                        type: "fade",
+                        damping: 15,
+                        stiffness: 300,
+                        duration: 0.3,
+                      }}
+                      className="fixed border shadow-md overflow-auto max-h-96 top-[50px] w-[400px] right-32 bg-white z-[1000000]"
+                    >
+                      <DisplayNotifications />
+                    </motion.div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="flex items-center">
-                    <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                      {localUser ? user?.user?.split("")[0].toUpperCase() : <FaTruck />}
-                    </div>
-                    <div onClick={handleProfile}>
-                      <Image src={angle_down} alt="down arrow"></Image>
-                    </div>
+                  <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
+                    {localUser ? (
+                      user?.user?.split("")[0].toUpperCase()
+                    ) : (
+                      <FaTruck />
+                    )}
+                  </div>
+                  <div onClick={handleProfile}>
+                    <Image src={angle_down} alt="down arrow"></Image>
+                  </div>
                 </div>
                 {profile ? (
                   <>
@@ -211,8 +276,7 @@ export default function Navbar() {
                             src={user_circle}
                             alt="user"
                             className="h-[24px] w-[24px] text-bold"
-                          >
-                          </Image>
+                          ></Image>
                         </div>
                         <div>Profile</div>
                       </div>
@@ -232,7 +296,10 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link href="/login">
+              <Link
+                href="/login"
+                className="w-full flex items-end justify-end px-2"
+              >
                 <FaUserCircle className="size-10 hover:text-[#2967ff] hover:scale-125 transition-all" />
               </Link>
             )}
@@ -242,7 +309,6 @@ export default function Navbar() {
           </div>
 
           {/* side panel */}
-
         </div>
       )}
     </>
