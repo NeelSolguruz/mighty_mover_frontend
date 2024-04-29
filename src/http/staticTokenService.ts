@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.97:3000",
+  baseURL: "http://192.168.68.89:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -112,3 +112,7 @@ export const comments_api = async (id:any): Promise<AxiosResponse<any, any>> => 
 export const Likes_api = async (id:any): Promise<AxiosResponse<any, any>> => {
   return axios.get(`/api/v1/blog/post/${id}/count-like`, config);
 };
+export const get_all_comments_data = async (id:any): Promise<AxiosResponse<any, any>> => {
+  return axios.get(`/api/v1/blog/post/${id}/get-all-comment`, config);
+};
+

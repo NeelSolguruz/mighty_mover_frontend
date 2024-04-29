@@ -39,12 +39,15 @@ export default function Login() {
     setPasswordError("");
   };
 
-
   const Verifyotp = async () => {
     setLoading(true);
     try {
-      const ftoken = localStorage.getItem('fcm_token');
-      const user_details = await verifyotp_api({ "email": email, "OTP": otp, "fcm_token": ftoken });
+      const ftoken = localStorage.getItem("fcm_token");
+      const user_details = await verifyotp_api({
+        email: email,
+        OTP: otp,
+        fcm_token: ftoken,
+      });
       toast.success(user_details.data.message);
       dispatch(useradd(user_details.data.data));
       localStorage.setItem(
@@ -280,8 +283,9 @@ export default function Login() {
                       onChange={handleEmailChange}
                     />
                     <p
-                      className={`text-red-500 transition-all ${emailError ? "opacity-100" : "opacity-0"
-                        }`}
+                      className={`text-red-500 transition-all ${
+                        emailError ? "opacity-100" : "opacity-0"
+                      }`}
                     >
                       {emailError}
                     </p>
@@ -308,8 +312,9 @@ export default function Login() {
                       onChange={handlePasswordChange}
                     />
                     <p
-                      className={`text-red-500 transition-all ${passwordError ? "opacity-100" : "opacity-0"
-                        }`}
+                      className={`text-red-500 transition-all ${
+                        passwordError ? "opacity-100" : "opacity-0"
+                      }`}
                     >
                       {passwordError}
                     </p>

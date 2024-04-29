@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
-
+import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 export const metadata: Metadata = {
   title: "Mighty Movers",
   description: "Created by 3 fresh developers",

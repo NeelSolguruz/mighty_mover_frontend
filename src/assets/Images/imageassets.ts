@@ -68,33 +68,49 @@ import professional_electical from "./icons/electrician_7658c2a2e8.svg";
 import door_to_door from "./icons/Door_to_door_courier_a49b2de43e.svg";
 import on_time from "./icons/On_Time_Everytime_Courier_084628ed70.svg";
 import shipping_label_printing from "./icons/No_Printing_Courier_Label_6fc1ab25ab.svg";
-import youtube from "./icons/youtube.svg"
-import twitter from "./icons/twitter.svg"
-import linkdin from "./icons/linkedin.svg"
-import facebook from "./icons/facebook.svg"
-import instagram from "./icons/instagram.svg"
-import search from "./icons/search.svg"
-import caro1 from "./carousel/photo-1476631840528-13bdc7f18072.avif"
-import caro2 from "./carousel/photo-1566576721346-d4a3b4eaeb55.avif"
-import caro3 from "./carousel/photo-1601887031610-d72bf3987fb2.avif"
-import caro4 from "./carousel/premium_photo-1682090260563-191f8160ca48.avif"
-import arrow_left from "./icons/arrow-left.svg"
-import arrow_right from "./icons/arrow-right.svg"
-import trending_post from "./carousel/Medika_b_blog-1-no-heading.png"
-import eye from "./icons/eye.svg"
-import comment from "./icons/comment-alt-lines.svg"
-import otp_page from "./icons/privacy-policy-concept-illustration_114360-7853.svg"
-import cross from "./icons/multiply.svg"
-import Like from "./icons/heart.svg"
-import hamburger from "./icons/align-justify.svg"
-import angle_down from "./icons/angle-down.svg"
-import FavIcon from "@/app/favicon.ico"
-import user_circle from "./icons/user-circle.svg"
-import copied from "./icons/file_download_done_FILL0_wght400_GRAD0_opsz24.svg"
-import contact_use_bg from "./topographic-map-background_23-2148596456.jpg"
-import contact_us from "./icons/julian-hochgesang-psGV5KhidlY-unsplash 1.svg"
-import login_blog from "./premium_photo-1681487916420-8f50a06eb60e.avif"
+import youtube from "./icons/youtube.svg";
+import twitter from "./icons/twitter.svg";
+import linkdin from "./icons/linkedin.svg";
+import facebook from "./icons/facebook.svg";
+import instagram from "./icons/instagram.svg";
+import search from "./icons/search.svg";
+import caro1 from "./carousel/photo-1476631840528-13bdc7f18072.avif";
+import caro2 from "./carousel/photo-1566576721346-d4a3b4eaeb55.avif";
+import caro3 from "./carousel/photo-1601887031610-d72bf3987fb2.avif";
+import caro4 from "./carousel/premium_photo-1682090260563-191f8160ca48.avif";
+import arrow_left from "./icons/arrow-left.svg";
+import arrow_right from "./icons/arrow-right.svg";
+import trending_post from "./carousel/Medika_b_blog-1-no-heading.png";
+import eye from "./icons/eye.svg";
+import comment from "./icons/comment-alt-lines.svg";
+import otp_page from "./icons/privacy-policy-concept-illustration_114360-7853.svg";
+import cross from "./icons/multiply.svg";
+import Like from "./icons/heart.svg";
+import hamburger from "./icons/align-justify.svg";
+import angle_down from "./icons/angle-down.svg";
+import FavIcon from "@/app/favicon.ico";
+import user_circle from "./icons/user-circle.svg";
+import copied from "./icons/file_download_done_FILL0_wght400_GRAD0_opsz24.svg";
+import contact_use_bg from "./topographic-map-background_23-2148596456.jpg";
+import contact_us from "./icons/julian-hochgesang-psGV5KhidlY-unsplash 1.svg";
+import login_blog from "./premium_photo-1681487916420-8f50a06eb60e.avif";
+import squint from "./icons/squint.svg";
+import smile from "./icons/smile.svg";
+import green_marker from "./icons/map-marker.svg";
+import red_marker from "./icons/red map-marker.svg";
+import exchange from "./icons/exchange-alt.svg";
+import blue_marker from "./icons/blue-marker.svg";
+import map_pin from "./icons/map-pin-alt.svg";
+import discount from "./icons/discount.svg";
 export {
+  discount,
+  map_pin,
+  blue_marker,
+  exchange,
+  green_marker,
+  red_marker,
+  smile,
+  squint,
   login_blog,
   contact_us,
   contact_use_bg,
