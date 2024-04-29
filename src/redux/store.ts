@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import useReducer from "./userSlice";
 import driverReducer from "./driverSlice";
+import mapreducer from "./mapSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
       user: useReducer,
       driver: driverReducer,
+      lat_lng: mapreducer,
     },
   });
 };

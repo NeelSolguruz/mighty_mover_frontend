@@ -1,10 +1,10 @@
-import Twowheelerbooking from '@/components/2-wheeler-booking'
-import React from 'react'
+import Map from "@/components/Map";
+import React from "react";
 
 export default function page() {
   return (
     <div>
-        <Twowheelerbooking/>
+      <Map />
     </div>
-  )
+  );
 }
