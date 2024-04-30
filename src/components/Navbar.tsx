@@ -66,7 +66,7 @@ export default function Navbar() {
       },
     },
     open: {
-      x: "0px",
+      x: "-3px",
       transition: {
         type: "spring",
         damping: 20,
@@ -152,7 +152,7 @@ export default function Navbar() {
               variants={containerVariants}
               initial="close"
               animate={containerControls}
-              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000]"
+              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000] max-[324px]:w-[320px]"
             >
               <div className="flex flex-col w-full fixed top-0 left-0">
                 <div className="mt-6 ">
@@ -314,7 +314,7 @@ export default function Navbar() {
                         stiffness: 300,
                         duration: 0.3,
                       }}
-                      className="fixed border shadow-md overflow-auto max-h-96 top-[50px] w-[400px] right-32 bg-white z-[1000000]"
+                      className="fixed border shadow-md overflow-auto max-h-96 top-[64px] w-[400px] max-[531px]:w-[300px] max-[376px]:w-[200px] right-32 max-lg:right-12 bg-white z-[1000000] "
                     >
                       <DisplayNotifications />
                     </motion.div>
@@ -337,14 +337,8 @@ export default function Navbar() {
                 {profile ? (
                   <>
                     <motion.div
-                      initial={{ height: "0%" }}
-                      whileInView={{ height: "auto" }}
-                      transition={{
-                        type: "fade",
-                        damping: 15,
-                        stiffness: 300,
-                        duration: 0.3,
-                      }}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
                       className="fixed top-[60px] right-5 w-[100px] bg-white z-[1000000] rounded-lg "
                     >
                       <div

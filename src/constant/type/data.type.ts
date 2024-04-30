@@ -35,7 +35,14 @@ interface coupon {
   status: string | boolean;
   max_usage_count: number;
 }
+interface notification_interface {
+  title: string;
+  description: string;
+  created_at: string;
+  id: string;
+}
 export type {
+  notification_interface,
   FormData,
   FAQItem,
   FAQAccordionProps,

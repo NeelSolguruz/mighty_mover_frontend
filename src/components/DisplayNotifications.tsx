@@ -6,6 +6,7 @@ import Loader from "react-js-loader";
 import dayjs from "dayjs";
 import { notifications_svg } from "@/assets/Images/imageassets";
 import Image from "next/image";
+import { notification_interface } from "@/constant/type/data.type";
 const relativeTime = require("dayjs/plugin/relativeTime");
 
 const day: any = dayjs.extend(relativeTime);
@@ -17,7 +18,9 @@ export default function DisplayNotifications() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [allNotifications, setAllNotifications] = useState([]);
+  const [allNotifications, setAllNotifications] = useState<
+    notification_interface[]
+  >([]);
   const [date, setDate] = useState<string>("");
 
   const fetchNotifications = async () => {
@@ -74,19 +77,23 @@ export default function DisplayNotifications() {
         {allNotifications.length !== 0 ? (
           <div className="py-2">
             {allNotifications?.map((item, index) => (
-              <div key={index} className="hover:bg-gray-100 flex p-2">
-                <div className="flex flex-col">
-                  <div className="flex justify-between items-center">
-                    <div className="flex flex-col">
+              <div
+                key={index}
+                className="hover:bg-gray-100 flex p-2 w-full justify-between"
+              >
+                <div className="flex flex-col w-full">
+                  <div className="flex justify-between items-center w-full">
+                    <div className="flex flex-col w-full">
                       <h3 className="font-semibold">{item.title}</h3>
                       <p className="text-xs">{getTimeAgo(item.created_at)}</p>
                     </div>
-                    <p className="text-xs">{getDaysAgo(item.created_at)}</p>
                   </div>
-                  <p className="text-sm text-gray-700">{item.description}</p>
+                  <p className="text-sm w-full text-gray-700">
+                    {item.description}
+                  </p>
                 </div>
                 <button
-                  className="active:text-gray-500"
+                  className="active:text-gray-500 flex justify-start items-start"
                   onClick={() => deleteSingleNotification(item.id)}
                 >
                   <RxCross2 className="size-5" />

@@ -106,7 +106,11 @@ import health_care from "./heatlh_care.png";
 import insurance from "./insurance.png";
 import fualcardsaving from "./fualcardsaving.png";
 import discountVehical from "./discountVehical.png";
+import check from "./icons/check.svg";
+import lock from "./icons/lock-alt.svg";
+import notifications_svg from "./icons/notifications_svg.svg";
 export {
+  notifications_svg,
   check,
   lock,
   discount,

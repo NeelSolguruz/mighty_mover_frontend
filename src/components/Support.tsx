@@ -10,7 +10,7 @@ import { useState } from "react";
 import { contact_us_api } from "@/http/staticTokenService";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 export default function Support() {
   const [email, setEmail] = useState("");
   const [subject, setsubject] = useState("");
@@ -72,6 +72,7 @@ export default function Support() {
               className="text-xl text-white font-bold
                             max-lg:text-lg
                             max-sm:text-base
+                            text-center
                             "
             >
               {SUPPORT_STRING.main_desc}
@@ -153,17 +154,18 @@ export default function Support() {
             <div
               className="flex flex-col items-center text-white w-3/12 gap-4
                     max-sm:w-9/12
+                    
                     "
             >
               <h2
                 className="text-2xl font-bold mt-5
-                        max-sm:text-xl
+                        max-sm:text-xl text-start w-full
                         "
               >
                 {SUPPORT_STRING.head_office.city}
               </h2>
               <p
-                className="text-center font-semibold
+                className="text-start font-semibold
                         max-sm:text-sm
                         "
               >
@@ -249,15 +251,14 @@ export default function Support() {
             </div>
           </div>
           {modal && (
-            <div
-           
-             className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center ">
-              <motion.div 
-               initial={{ translateY: 40, opacity: 0 }}
-               whileInView={{ translateY: -10, opacity: 1 }}
-               transition={{ duration: 0.5 }}
-              className="absolute w-full flex justify-center items-center ">
-                <div className="w-[40%] p-4 bg-white flex flex-col gap-2 rounded-lg">
+            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center ">
+              <motion.div
+                initial={{ translateY: 40, opacity: 0 }}
+                whileInView={{ translateY: -10, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="absolute w-full flex justify-center items-center "
+              >
+                <div className="w-[40%] p-4 bg-white flex flex-col gap-2 rounded-lg max-[949px]:w-[60%] max-[655px]:w-[70%] max-[492px]:w-[90%]">
                   <div className="flex w-full justify-between items-center p-4">
                     <div>
                       <h1 className="text-center text-black text-3xl font-bold col-span-6">

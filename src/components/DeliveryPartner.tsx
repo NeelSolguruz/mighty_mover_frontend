@@ -126,7 +126,7 @@ export default function DeliveryPage(): JSX.Element {
           <div className="absolute max-md:relative max-md:bottom-0 px-3 py-3 bottom-[50px]  w-full h-[450px] max-md:px-0 ">
             <div className=" lg:px-8 w-[40%] max-md:w-full float-right max-md:float-none">
               <div className="flex justify-center w-full h-[450px] max-md:h-[420px] max-md:bottom-4">
-                <div className="w-[80%] h-auto md:flex-row md:p-10 rounded-3xl shadow-gray-400 bg-white shadow max-md:w-full max-md:h-auto ">
+                <div className="w-[80%] h-auto md:flex-row md:p-10 rounded-md shadow-gray-400 bg-white shadow max-md:w-full max-md:h-auto ">
                   <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-4 justify-center  max-md:w-full max-md:justify-center  max-md:gap-4 max-md:p-6 h-96 max-md:h-auto"

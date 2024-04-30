@@ -9,7 +9,6 @@ import {
   Trending_post,
   Trending_post_data,
   blog_social_media,
-  post_data,
   slides,
   footer_data,
   searchtitle,
@@ -23,13 +22,17 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { Trending_post_api, get_all_blog_api, get_indi_blog_api } from "@/http/staticTokenService";
+import {
+  Trending_post_api,
+  get_all_blog_api,
+  get_indi_blog_api,
+} from "@/http/staticTokenService";
 export default function Blog() {
   const [modal, setmodal] = useState(false);
   const [search12, setsearch] = useState("");
   const [filter_data, setfilter_data] = useState<PostData[]>([]);
   const [blogdata, setblogdata] = useState<blogdata[]>([]);
-  const [trending_post,settrending_post]=useState<blogdata[]>([])
+  const [trending_post, settrending_post] = useState<blogdata[]>([]);
 
   const slides_data = slides;
   console.log(blogdata);
@@ -57,23 +60,18 @@ export default function Blog() {
       }
     }
   };
-  const fetchTrendingData=async()=>{
-    try{
-
-      const response=await Trending_post_api()
-      settrending_post(response.data.data)
-
+  const fetchTrendingData = async () => {
+    try {
+      const response = await Trending_post_api();
+      settrending_post(response.data.data);
+    } catch (error) {
+      message_error(error);
     }
-    catch(error){
-      message_error(error)
-    }
-  }
-
+  };
 
   useEffect(() => {
     fetchData();
-    fetchTrendingData()
-
+    fetchTrendingData();
   }, []);
   const searchmodal = () => {
     setmodal(!modal);
@@ -81,18 +79,6 @@ export default function Blog() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     setsearch(searchTerm);
-    console.log(searchTerm);
-
-    const filteredData =
-      searchTerm.length === 0
-        ? []
-        : post_data.filter(
-            (item) =>
-              item.title.toLowerCase().includes(searchTerm) ||
-              item.desc.toLowerCase().includes(searchTerm)
-          );
-
-    setfilter_data(filteredData);
   };
 
   return (
@@ -113,25 +99,25 @@ export default function Blog() {
           <div className="flex gap-6 justify-center max-[800px]:grid-cols-2 max-[800px]:grid-rows-2 max-[800px]:grid max-[800px]:gap-2 max-[376px]:grid max-[376px]:grid-cols-1 ">
             {trending_post.map((item, index) => (
               <>
-              <Link href={`/blog/${item.id}`}>
-                <motion.div
-                  initial={{ translateY: 40, opacity: 0 }}
-                  whileInView={{ translateY: -10, opacity: 1 }}
-                  transition={{ duration: 1 }}
-                  className="flex flex-col justify-center items-center gap-2"
-                  key={index}
-                >
-                  <div>
-                    <Image
-                      src={item.document}
-                      alt="image"
-                      width={100}
-                      height={100}
-                      className="w-[268px] h-[200px]"
-                    ></Image>
-                  </div>
-                  <div className="text-center p-2">{item.title}</div>
-                </motion.div>
+                <Link href={`/blog/${item.id}`}>
+                  <motion.div
+                    initial={{ translateY: 40, opacity: 0 }}
+                    whileInView={{ translateY: -10, opacity: 1 }}
+                    transition={{ duration: 1 }}
+                    className="flex flex-col justify-center items-center gap-2"
+                    key={index}
+                  >
+                    <div>
+                      <Image
+                        src={item.document}
+                        alt="image"
+                        width={100}
+                        height={100}
+                        className="w-[268px] h-[200px]"
+                      ></Image>
+                    </div>
+                    <div className="text-center p-2">{item.title}</div>
+                  </motion.div>
                 </Link>
               </>
             ))}

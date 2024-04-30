@@ -21,8 +21,14 @@ interface PostData {
   views: number;
   comments: number;
   likes: number;
-  created_at:string;
+  created_at: string;
   description: string;
+}
+interface ops_blog {
+  insert: string;
+}
+interface description_blog {
+  ops: ops_blog[];
 }
 interface blogdata {
   id: string;
@@ -32,21 +38,21 @@ interface blogdata {
   like: number;
   comment: number;
   author_name: string;
-  description: string;
+  description: description_blog;
   document: string;
 }
-interface commentdata{
-  id:string;
-  user_name:string;
-  comment:string;
-  created_at:string;
-  childComment:child_comment[]
 
+interface commentdata {
+  id: string;
+  user_name: string;
+  comment: string;
+  created_at: string;
+  childComment: child_comment[];
 }
-interface child_comment{
-  user_name:string;
-  created_at:string;
-  comment:string;
+interface child_comment {
+  user_name: string;
+  created_at: string;
+  comment: string;
 }
 // "id": "2c882b64-6486-4691-8515-779e3d9e8562",
 // "fk_admin": "ff1c7a67-c556-413f-a08b-56d1f755acd9",
@@ -64,7 +70,7 @@ interface child_comment{
 //     ]
 // }
 // }
-export type { PostData, blogdata ,commentdata};
+export type { PostData, blogdata, commentdata };
 
 export const blog_social_media = [
   {
@@ -112,126 +118,7 @@ export const Trending_post_data = [
     desc: "Right On Time,Every Time",
   },
 ];
-export const post_data: PostData[] = [
-  {
-    id: 1,
-    name: "Myrtle Rodriquez",
-    img: trending_post,
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 1537,
-    comment: 11,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 2,
-    name: "Myrtle Rodriquez",
 
-    img: trending_post,
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3439,
-    comment: 51,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 3,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise ",
-    date: "2021-04-02",
-    view: 7537,
-    comment: 41,
-    like: 12,
-    desc: "The famous Irish poet, zzz Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 4,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3340,
-    comment: 32,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 5,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3340,
-    comment: 32,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 6,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3340,
-    comment: 32,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 7,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3340,
-    comment: 32,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-  {
-    id: 8,
-    img: trending_post,
-    name: "Myrtle Rodriquez",
-    title:
-      "Shades of emotions - Berger Paints partners with Porter for Enterprise",
-    date: "2021-04-02",
-    view: 3340,
-    comment: 32,
-    like: 12,
-    desc: "The famous Irish poet, Oscar Wilde once said, “Mere color, unspoiled by meaning, and unallied with definite form, can speak to the soul in a thousand different ways.”",
-    wholedata:
-      "So when a company like Berger Paints wanted a logistics partner to instantly deliver their cans of joy to their customers, Porter for Enterprise (PFE) was brought on board. \n In the Indian paint industry, the majority of the orders are made by customers or small-scale enterprises. For these micro-scale enterprises, storing large inventories of these paint cans is not a financially viable option. With a plethora of paint manufacturers in the market , the fastest who refills his limited shelf space sells the maximum number of cans. Therefore, the most efficient way to cater to such quick demand is for brands to work closely with these small business customers and cater to their requirements on an in-time fulfillment model. Under this model, the products are delivered from the company warehouse to the retailers on a need basis. \n Under such a model, it is crucial for paint brands to deliver their product in a manner where the TAT is as low as 2 hours. When Berger paints partnered with Porter for Enterprise, it was observed that the majority of the deliveries were made within 120 mins . \n Additionally, with Porter’s helper category, where the driver doubles up as a helper for loading and unloading the goods, Berger was able to leverage the service for 83% of its trips to simplify the task of unloading at the destination point. \n Therefore by partnering with PFE, Berger has been able to increase efficiency in the movement of the products and has also improved its loading and unloading times. \n Mr Mohan, Administrative Head, Berger paints, comments “Partnering with Porter for Enterprise has been fruitful for us. Among the many features this platform provides us with, it is the ease of multi-bookings of varied vehicle kinds that helps us in catering to our audience on a wider scale. Additionally, with the OTP on delivery feature, we’ve been able to make the logistics movement more transparent. Currently, our operations are running in Bangalore and soon we would like to expand to other cities. Thank you team PFE for helping us in our mission to maximize shareholder value by developing and delivering innovative and best solutions for our customers.” \n So to all businesses out there looking to make logistics a smooth and easy affair, get on board with Porter for Enterprise and never look back. \n To consult, write to us at enterprise@theporter.in or give us a missed call at 9667309777",
-  },
-];
 export const footer_data = [
   {
     name: "Mighty Movers Home",
