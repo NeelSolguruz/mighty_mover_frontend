@@ -106,8 +106,8 @@ export default function DeliveryPage(): JSX.Element {
           <div className="">
             <Image
               src={Delivery}
-              className=" w-full h-[500px] max-lg:h-auto max-md:h-[200px]"
-              alt="Picture of the Delivery z-0"
+              className=" w-full h-[500px] max-lg:h-[500px] max-md:h-[200px]"
+              alt="Picture of the Delivery"
             />
           </div>
           <div className="lg:flex lg:items-center lg:justify-between z-10  w-full ">
@@ -123,10 +123,10 @@ export default function DeliveryPage(): JSX.Element {
           </div>
           {/* registration form __ section __ strat from here */}
 
-          <div className="absolute max-md:relative max-md:bottom-0 px-3 py-3 bottom-[50px]  w-full h-[450px] max-md:px-0 ">
-            <div className=" lg:px-8 w-[40%] max-md:w-full float-right max-md:float-none">
-              <div className="flex justify-center w-full h-[450px] max-md:h-[420px] max-md:bottom-4">
-                <div className="w-[80%] h-auto md:flex-row md:p-10 rounded-3xl shadow-gray-400 bg-white shadow max-md:w-full max-md:h-auto ">
+          <div className="absolute  px-3 py-3 bottom-[50px]  w-full h-[450px] max-md:relative max-md:bottom-0 max-md:px-0 ">
+            <div className=" w-[40%] max-md:w-full float-right max-md:float-none max-lg:w-auto">
+              <div className="flex justify-center w-full h-[450px] max-md:h-[420px] max-md:bottom-4 max-md:p-4 max-lg:h-[420px] max-lg:bottom-8 max-lg:p-0 max-lg:w-full">
+                <div className="w-[80%] h-auto md:flex-row md:p-5 rounded-md shadow-gray-400 bg-white shadow max-md:w-full max-md:h-fit max-lg:h-fit max-lg:w-[80%] max-lg:p-5">
                   <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-4 justify-center  max-md:w-full max-md:justify-center  max-md:gap-4 max-md:p-6 h-96 max-md:h-auto"
@@ -341,19 +341,21 @@ export default function DeliveryPage(): JSX.Element {
 
       {/* making your life easy__ section___ start from here */}
       <div className="w-full bg-black text-white mb-8">
-        <div className="text-3xl font-semibold text-center p-8">
+        <div className="text-2xl font-bold text-center p-8">
           {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY}
         </div>
-        <div className="mainSection bg-black w-full flex justify-center">
-          <div className="flex max-lg:flex-col w-8/12 lg:flex-row gap-14 items-center justify-evenly md:gap-8 max-sm:w-[85%]">
-            <div className="w-full md:w-full">
+        <div className="mainSection bg-black w-full flex justify-center p-8 max-sm:p-0 max-md:p-2 max-lg:p-2">
+          <div className="flex max-lg:flex-row max-md:flex-col w-10/12 lg:flex-row gap-14 p-8 max-lg:p-0 max-lg:gap-2 items-center justify-evenly max-md:gap-8 max-sm:w-[85%]">
+            <div className="w-full md:w-full ">
               <Image
                 src={driverExperience}
-                className="w-full h-full rounded-lg object-contain shadow-md transition-all hover:scale-105 p-2"
+                width={700}
+                height={800}
+                className="rounded-md  max-lg:w-full"
                 alt="Picture of the Delivery"
               />
             </div>
-            <div className="w-full md:w-full p-12 md:p-5 max-sm:p-0  sm:w-full max-sm:mb-8 text-base ">
+            <div className="w-full md:w-full max-lg:w-fit max-lg:p-0 font-bold p-12 md:p-5 max-sm:p-0  max-sm:mb-8 text-base max-lg:text-xs  ">
               {DELIVERY_PARTNER_STRING.MAKING_YOUR_LIFE_EASY_DATA}
             </div>
           </div>
@@ -433,12 +435,12 @@ export default function DeliveryPage(): JSX.Element {
 
       {/* OWN MULTIPLE VEHICLES? sections */}
 
-      <div className="w-full h-auto mb-8 max-sm:p-8">
+      <div className="w-full h-auto mb-8 max-sm:p-8 max-md:p-5 max-lg:p-8">
         <div className="text-3xl font-semibold text-center p-8 ">
           {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_TITLE}
         </div>
         <div className="mainSection w-full">
-          <div className="flex flex-col md:flex-row gap-10 items-center justify-evenly">
+          <div className="flex flex-col md:flex-row gap-10 items-center justify-evenly max-md:p-5 max-lg:p-8">
             <div className="w-auto max-md:1/5 h-full">
               <Image
                 src={ownVehicles}
@@ -459,7 +461,7 @@ export default function DeliveryPage(): JSX.Element {
               <br />
               <button
                 type="button"
-                className="w-1/3 max-md:w-1/2 bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
+                className="w-1/3 max-md:w-1/2  bg-[#2967FF] max-lg:w-[60%] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
               >
                 {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_BUTTON}
               </button>
