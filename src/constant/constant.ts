@@ -47,6 +47,10 @@ import {
   profile,
   grp1,
   grp2,
+  health_care,
+  insurance,
+  fualcardsaving,
+  discountVehical,
 } from "../assets/Images/imageassets";
 export const DELIVERY_PARTNER_STRING = {
   PARTNER_BANNER_LINE1: `Attach mini trucks or bike`,
@@ -97,7 +101,7 @@ export const DELIVERY_PARTNER_STRING = {
     // "SMART SHIFT",
     "Day",
     "Night",
-    "Both"
+    "Both",
   ],
 
   FORM_REGISTRATION_BUTTONS: "register",
@@ -131,7 +135,7 @@ export const DELIVERY_PARTNER_STRING = {
   ADDITIONAL_BENEFITS_TITLE: " ADDITIONAL_BENEFITS",
   ADDITIONAL_BENEFITS: [
     {
-      images: regularTrip,
+      images: health_care,
       title: "Health Care Assistance",
       description:
         "Get healthcare benefits for you and your family with mini truck attachment.",
@@ -140,16 +144,16 @@ export const DELIVERY_PARTNER_STRING = {
       title: "Insurance",
       description:
         "Save money with reduced annual maintenance and insurance costs on your vehicle.",
-      images: BetterEearning,
+      images: insurance,
     },
     {
       title: "Fuel card for Savings",
       description:
         "Save big on fuel costs with our smart fuel card and increase your profit margins!",
-      images: onTImePayment,
+      images: fualcardsaving,
     },
     {
-      images: regularTrip,
+      images: discountVehical,
       title: "Discount on Vehicle Purchase",
       description:
         "Get major discounts on purchase of new vehicles. Add to your fleet and grow your business!",

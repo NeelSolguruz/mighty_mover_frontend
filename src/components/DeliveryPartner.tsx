@@ -103,10 +103,10 @@ export default function DeliveryPage(): JSX.Element {
     <>
       <div className="w-full ">
         <div className="bg-gray-100  relative">
-          <div className=" ">
+          <div className="">
             <Image
               src={Delivery}
-              className=" w-full h-[500px] max-lg:h-auto  "
+              className=" w-full h-[500px] max-lg:h-auto max-md:h-[200px]"
               alt="Picture of the Delivery z-0"
             />
           </div>
@@ -121,6 +121,8 @@ export default function DeliveryPage(): JSX.Element {
               </p>
             </div>
           </div>
+          {/* registration form __ section __ strat from here */}
+
           <div className="absolute max-md:relative max-md:bottom-0 px-3 py-3 bottom-[50px]  w-full h-[450px] max-md:px-0 ">
             <div className=" lg:px-8 w-[40%] max-md:w-full float-right max-md:float-none">
               <div className="flex justify-center w-full h-[450px] max-md:h-[420px] max-md:bottom-4">
@@ -260,38 +262,37 @@ export default function DeliveryPage(): JSX.Element {
           </div>
         </div>
       </div>
+      {/* porter advantage section */}
       <div className="w-full">
         <div className="text-3xl font-semibold text-center w-full p-8">
           {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE}
         </div>
-      </div>
-
-      {/* registration form __ section __ strat from here */}
-      <div className="w-full max-sm:p-8">
-        <div className="flex flex-col md:flex-col w-full justify-between p-5 md:p-10">
-          <div className="w-full md:w-fit md:flex-row flex max-md:flex-wrap flex-nowrap justify-center gap-5 md:ml-0  md:justify-center ">
-            {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE_DATA.map((item) => (
-              <div
-                key={item.title}
-                className="flex flex-col justify-center gap-5 items-center w-full md:w-1/2 lg:w-1/3"
-              >
-                <div className="w-full h-48">
-                  <Image
-                    src={item.images}
-                    alt={item.title}
-                    className="w-full h-full rounded-lg object-contain shadow-gray-400 shadow-md transition-all hover:scale-105"
-                  />
-                </div>
-                <div className="p-2">
-                  <div className="text-center text-xl font-semibold">
-                    {item.title}
+        <div className="w-full max-sm:p-8">
+          <div className="flex flex-col md:flex-col w-full justify-between p-8 md:p-10">
+            <div className="w-full md:w-fit max-md:flex-row flex max-md:flex-wrap flex-nowrap justify-evenly gap-2 md:ml-0 p-8 max-md:p-0 md:justify-center ">
+              {DELIVERY_PARTNER_STRING.PORTER_ADVANTAGE_DATA.map((item) => (
+                <div
+                  key={item.title}
+                  className="flex flex-col justify-center  items-center w-full md:w-1/2 lg:w-1/3 "
+                >
+                  <div className="w-full h-48">
+                    <Image
+                      src={item.images}
+                      alt={item.title}
+                      className="w-full h-full rounded-lg object-contain "
+                    />
                   </div>
-                  <div className="text-sm font-light text-center">
-                    {item.description}
+                  <div className="p-2">
+                    <div className="text-center text-xl font-semibold">
+                      {item.title}
+                    </div>
+                    <div className="text-sm font-light text-center px-8 max-md:px-0">
+                      {item.description}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -364,25 +365,28 @@ export default function DeliveryPage(): JSX.Element {
         <div className="text-3xl font-semibold text-center p-8 max-sm:text-xl md:text-2xl">
           {DELIVERY_PARTNER_STRING.ADDITIONAL_BENEFITS_TITLE}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-10 text-mint fill-current">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-10 text-mint fill-current">
           {DELIVERY_PARTNER_STRING.ADDITIONAL_BENEFITS.map((item) => (
-            <div key={item.title}>
+            <div
+              key={item.title}
+              // className="p-2"
+            >
               <div className="divForImage w-full max-h-48 h-44 relative">
                 <Image
                   src={item.images}
                   alt={item.title}
-                  layout="fill"
-                  // width={250}
-                  // height={250}
+                  // layout="fill"
+                  width={250}
+                  height={250}
                   objectFit="contain"
-                  className="rounded-lg shadow-gray-300 shadow-md transition-all hover:scale-105"
+                  className="w-full h-full rounded-lg object-contain "
                 />
               </div>
               <div className="divForDescription py-4">
                 <div className="divForTitle text-center text-xl font-semibold">
                   {item.title}
                 </div>
-                <div className="divForDes text-sm font-light text-center">
+                <div className="divForDes text-sm font-light text-center px-8 py-2">
                   {item.description}
                 </div>
               </div>
@@ -434,11 +438,14 @@ export default function DeliveryPage(): JSX.Element {
           {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_TITLE}
         </div>
         <div className="mainSection w-full">
-          <div className="flex flex-col md:flex-row gap-10 items-center justify-center">
-            <div className="w-full md:w-1/5">
+          <div className="flex flex-col md:flex-row gap-10 items-center justify-evenly">
+            <div className="w-auto max-md:1/5 h-full">
               <Image
                 src={ownVehicles}
-                className="w-full h-full rounded-lg object-contain shadow-md transition-all hover:scale-105"
+                width={600}
+                height={600}
+                // className="w-full h-full rounded-lg object-contain "
+                className=" rounded-lg object-cover"
                 alt="Picture of the Delivery"
               />
             </div>
@@ -452,7 +459,7 @@ export default function DeliveryPage(): JSX.Element {
               <br />
               <button
                 type="button"
-                className="w-full bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
+                className="w-1/3 max-md:w-1/2 bg-[#2967FF] p-2 rounded text-white text-lg font-semibold hover:scale-105 transition-all transition-300"
               >
                 {DELIVERY_PARTNER_STRING.OWN_MULTI_VEHICLES_BUTTON}
               </button>
