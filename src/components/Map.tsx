@@ -582,7 +582,7 @@ export default function Map() {
                                 ))}
                               </div>
                             ) : (
-                              <div className="flex w-full items-center justify-center font-semibold">
+                              <div className="flex w-full items-center justify-center font-semibold text-gray-400">
                                 No Coupons Available
                               </div>
                             )}

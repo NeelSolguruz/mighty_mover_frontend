@@ -16,7 +16,12 @@ import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import Loader from "react-js-loader";
-import { angle_down, cross, user_circle } from "@/assets/Images/imageassets";
+import {
+  angle_down,
+  arrow_right,
+  cross,
+  user_circle,
+} from "@/assets/Images/imageassets";
 import { motion, useAnimationControls } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { driverAdd, driverLogout } from "@/redux/driverSlice";
@@ -33,6 +38,7 @@ export default function Navbar() {
   const localUser = localData && JSON.parse(localData);
   const localDriver = driverData && JSON.parse(driverData);
   const [loading, setLoading] = useState(false);
+  const [show, setshow] = useState(false);
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const driver = useAppSelector((state) => state.driver);
@@ -167,22 +173,91 @@ export default function Navbar() {
                   </div>
 
                   <div>
-                    <div className="w-full flex-col justify-center items-center gap-4">
-                      <Link href="/">
+                    <div className="w-full flex-col justify-center items-center gap-3">
+                      <Link href="/enterprise">
                         <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
                           <div className="px-4">Enterprise</div>
                         </div>
                       </Link>
-                      <Link href="/two-wheelers">
+                      <Link href="/delivery-partner">
                         <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
                           <div className="px-4">Delivery Partner</div>
                         </div>
                       </Link>
-                      <Link href="/two-wheelers">
+                      <Link href="/support">
                         <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
                           <div className="px-4">Support</div>
                         </div>
                       </Link>
+
+                      {user.email || driver?.email ? (
+                        <div className="w-full justify-between items-center flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                          <div className="px-4">
+                            <div className=" flex justify-start items-center gap-3">
+                              {localUser ? (
+                                <div className="bg-[#2967ff] text-white rounded-full py-2 px-4">
+                                  {user?.user?.split("")[0].toUpperCase()}
+                                </div>
+                              ) : (
+                                <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
+                                  <FaTruck />
+                                </div>
+                              )}
+                              <div>
+                                {localUser ? (
+                                  <>{user?.user?.toUpperCase()}</>
+                                ) : (
+                                  <>{driver?.driver?.toUpperCase()}</>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            className="px-4 cursor-pointer"
+                            onClick={() => setshow(!show)}
+                          >
+                            <Image src={angle_down} alt="arrow"></Image>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <Link href="/register">
+                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                              <div className="ml-4 px-4 text-[#2967ff] border border-[#2967ff] py-1 rounded-md hover:bg-[#2967ff] hover:text-white duration-100 transition-all">
+                                Get Started
+                              </div>
+                            </div>
+                          </Link>
+                        </>
+                      )}
+
+                      {(user.email && show) || (driver?.email && show) ? (
+                        <>
+                          <motion.div
+                            initial={{ height: "0px" }}
+                            whileInView={{ height: "auto" }}
+                            transition={{
+                              type: "tween",
+                              duration: 0.5,
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <Link href="/driver-profile">
+                              <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                                <div className="px-4">Profile</div>
+                              </div>
+                            </Link>
+
+                            <div
+                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
+                              onClick={clearstorage}
+                            >
+                              <div className="px-4">logout</div>
+                            </div>
+                          </motion.div>
+                        </>
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -231,8 +306,8 @@ export default function Navbar() {
                       // initial={{ opacity: 0 }}
                       // whileInView={{ opacity: 1 }}
                       // transition={{ duration: 0.5 }}
-                      initial={{ height: "0%", opacity: 0 }}
-                      whileInView={{ height: "100%", opacity: 1 }}
+                      initial={{ height: "0%" }}
+                      whileInView={{ height: "auto" }}
                       transition={{
                         type: "fade",
                         damping: 15,
@@ -247,7 +322,7 @@ export default function Navbar() {
                     <></>
                   )}
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center max-lg:hidden">
                   <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
                     {localUser ? (
                       user?.user?.split("")[0].toUpperCase()
@@ -262,10 +337,15 @@ export default function Navbar() {
                 {profile ? (
                   <>
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 0.9 }}
-                      transition={{ duration: 0.5 }}
-                      className="fixed top-[60px] right-5 w-[100px] bg-white z-[1000000] rounded-lg"
+                      initial={{ height: "0%" }}
+                      whileInView={{ height: "auto" }}
+                      transition={{
+                        type: "fade",
+                        damping: 15,
+                        stiffness: 300,
+                        duration: 0.3,
+                      }}
+                      className="fixed top-[60px] right-5 w-[100px] bg-white z-[1000000] rounded-lg "
                     >
                       <div
                         className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 cursor-pointer"
