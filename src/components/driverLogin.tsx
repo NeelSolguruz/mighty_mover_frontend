@@ -45,7 +45,8 @@ export default function DriverLogin() {
     const verifyotp = async () => {
         setLoading(true);
         try {
-            const user_details = await verify_driver_otp({ "email": email, "OTP": otp });
+            const ftoken = localStorage.getItem('fcm_token')
+            const user_details = await verify_driver_otp({ "email": email, "OTP": otp , "fcm_token":ftoken});
             toast.success(user_details.data.message);
             console.log(user_details.data);
             // router.push("/delivery-partner", { scroll: false });
