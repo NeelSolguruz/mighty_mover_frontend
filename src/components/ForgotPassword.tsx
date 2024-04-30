@@ -25,7 +25,7 @@ export default function ForgotPassword() {
       console.log("Login successful");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError: any = error as AxiosError;
         if (axiosError.response) {
           console.log("Response Error", axiosError.response);
           toast.error(axiosError.response.data.message);

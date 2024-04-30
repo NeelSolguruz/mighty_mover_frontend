@@ -7,7 +7,9 @@ export default function BlogFooter() {
     <div>
       <div className="w-full bg-gray-200 flex flex-col ">
         <div className="flex justify-between items-center px-[120px] pt-[60px] max-[1133px]:px-[50px] max-[850px]:px-[20px] max-[720px]:pt-[20px] max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-6">
-          <div className="text-[28px] font-bold w-auto justify-center flex max-[709px]:w-10/12 max-[440px]:w-full max-[440px]:justify-start">{PORTER_BLOG}</div>
+          <div className="text-[28px] font-bold w-auto justify-center flex max-[709px]:w-10/12 max-[440px]:w-full max-[440px]:justify-start">
+            {PORTER_BLOG}
+          </div>
           <div className="flex gap-16 p-4 max-[1133px]:gap-8 max-[850px]:gap-4 max-[720px]:flex-col max-[440px]:p-0 ">
             {footer_data.map((item, index) => (
               <div key={index}>

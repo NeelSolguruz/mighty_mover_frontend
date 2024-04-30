@@ -1,4 +1,3 @@
-
 // import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 // // import { userToken } from 'utils'
 
@@ -95,7 +94,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const http = axios.create({
-  baseURL: "http://192.168.68.89:3000",
+  baseURL: "http://192.168.68.68:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -159,5 +158,3 @@ export const cancelRequest = (config: any) => {
 };
 
 export default http;
-
-

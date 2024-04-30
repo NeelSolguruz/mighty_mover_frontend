@@ -150,10 +150,7 @@ export default function Login() {
     }
   };
 
-  const handleInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
+  const handleInput = (e: any, index: number) => {
     const value = e.target.value;
     if (value.length > 0) {
       setOtp((prevOtp) => {
@@ -181,9 +178,9 @@ export default function Login() {
         </div>
       ) : (
         <>
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center h-screen">
             <div
-              className={`flex flex-col items-center gap-10 py-10 w-5/12
+              className={`flex flex-col items-center gap-4 pt-10 w-5/12 
                 
               max-lg:w-8/12 max-sm:w-11/12`}
             >
@@ -198,21 +195,23 @@ export default function Login() {
                     transition={{ duration: 0.3 }}
                     className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[10] flex justify-center items-center"
                   >
-                    <div className="w-[35%] flex justify-center items-center gap-2 p-10 bg-white rounded-lg">
-                      <div className="w-full flex flex-col justify-center p-4 gap-6">
+                    <div className="w-[35%] flex justify-center items-center gap-2 p-10 bg-white rounded-lg max-[1228px]:w-[40%] max-[1025px]:w-[50%] max-[818px]:w-[60%] max-[683px]:w-[70%] max-[587px]:w-[80%] max-[517px]:w-[90%] max-[455px]:p-4 max-[386px]:p-2">
+                      <div className="w-full flex flex-col justify-center p-4 gap-6 max-[455px]:p-0">
                         <div className="w-full flex justify-center">
                           <div className="w-[180px]">
                             <NavLogo />
                           </div>
                         </div>
-                        <h1 className="text-4xl font-bold tracking-wide text-center">
+                        <h1 className="text-4xl font-bold tracking-wide text-center max-[332px]:text-3xl ">
                           {OTP_VERIFICATION}
                         </h1>
 
-                        <div className="flex justify-center gap-2 items-center">
-                          <div>{OTP_SENT_TO_EMAIL}</div>
+                        <div className="flex justify-center gap-2 items-center ">
+                          <div className="max-[455px]:text-sm w-full text-end max-[360px]:text-xs">
+                            {OTP_SENT_TO_EMAIL}
+                          </div>
                           <div>
-                            <h5 className="text-lg font-bold text-center">
+                            <h5 className="text-lg font-bold text-center max-[332px]:text-sm">
                               {email.split("").map((item, index) => (
                                 <>{index <= 4 ? <>{"*"}</> : <>{item}</>}</>
                               ))}
@@ -228,7 +227,7 @@ export default function Login() {
                               }
                               type="text"
                               id={`otp${index + 1}`}
-                              className="border border-black w-10 h-10 rounded-lg text-center text-3xl font-bold"
+                              className="border border-black w-10 h-10 rounded-lg text-center text-3xl font-bold max-[386px]:w-8 max-[386px]:h-8 "
                               maxLength={1}
                               onInput={(e) => handleInput(e, index)}
                             />

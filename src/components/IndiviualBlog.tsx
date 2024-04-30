@@ -7,7 +7,6 @@ import {
   blogdata,
   comment_comment,
   commentdata,
-  post_data,
   some_few_blog,
 } from "@/constant/blog";
 import { useAnimationControls } from "framer-motion";
@@ -49,7 +48,7 @@ const day: any = dayjs.extend(relativeTime);
 export default function IndiviualBlog({ id }: any) {
   const [prevnextid, setprevnextid] = useState(-1);
   const [sidecomment, setsidecomment] = useState(false);
-  const [indiblogdata, setindiblogdata] = useState<blogdata>({});
+  const [indiblogdata, setindiblogdata] = useState<any>([]);
   const [trending_post, settrending_post] = useState<blogdata[]>([]);
   const [likes_indi, setlikes] = useState("");
   const [comments_indi, setcomments] = useState("");
@@ -61,21 +60,12 @@ export default function IndiviualBlog({ id }: any) {
   const [replyid, setreplyid] = useState("");
   const [logindata, setlogindata] = useState(false);
   const [view_replies, setview_replies] = useState(false);
-  const index = post_data.findIndex(
-    (item) => Number(item.id) === Number(id.indiblog)
-  );
 
-  console.log(index);
-  const prev_next = post_data;
-
-  const individualPageData = post_data.filter((item) => {
-    return item.id == id.indiblog;
-  });
   const [expandedCommentId, setExpandedCommentId] = useState(null);
 
-const handleViewReplies = (commentId:any) => {
-  setExpandedCommentId(expandedCommentId === commentId ? null : commentId);
-};
+  const handleViewReplies = (commentId: any) => {
+    setExpandedCommentId(expandedCommentId === commentId ? null : commentId);
+  };
   const containerVariants = {
     close: {
       x: "400px",
@@ -122,7 +112,7 @@ const handleViewReplies = (commentId:any) => {
           { comment: post_comment }
         );
         console.log(response.data.data);
-        setpost_comment("")
+        setpost_comment("");
         comments_data();
         fetchcomments();
       } catch (error) {
@@ -136,7 +126,7 @@ const handleViewReplies = (commentId:any) => {
         );
         setreplyid("");
         setreplyinput(!replyinput);
-        setpost_comment("")
+        setpost_comment("");
 
         console.log(response.data.data);
         comments_data();
@@ -426,9 +416,9 @@ const handleViewReplies = (commentId:any) => {
                               <div
                                 className="text-xs flex items-center cursor-pointer"
                                 onClick={() => {
-                                  handleViewReplies(item.id)
+                                  handleViewReplies(item.id);
                                   setreplyinput(!replyinput);
-                                  setreplyinputname(item.user_name)
+                                  setreplyinputname(item.user_name);
                                   setreplyid(item.id);
                                 }}
                               >
@@ -447,41 +437,35 @@ const handleViewReplies = (commentId:any) => {
                                 )}
                               </div>
                               <div>
-                               
-                                    {expandedCommentId === item.id && item.childComment.map((subitem) => (
-                                      <>
-                                        <div className="flex gap-2 mt-6">
-                                          <div>
-                                            <div className="rounded-full bg-gray-300 text-black uppercase px-4 py-1.5 text-lg flex  items-center font-bold h-12">
-                                              {subitem.user_name.substring(
-                                                0,
-                                                1
-                                              )}
-                                            </div>
+                                {expandedCommentId === item.id &&
+                                  item.childComment.map((subitem) => (
+                                    <>
+                                      <div className="flex gap-2 mt-6">
+                                        <div>
+                                          <div className="rounded-full bg-gray-300 text-black uppercase px-4 py-1.5 text-lg flex  items-center font-bold h-12">
+                                            {subitem.user_name.substring(0, 1)}
                                           </div>
-                                          <div>
-                                            <div className=" flex flex-col gap-0.5 w-full text-xs font-bold tracking-wide items-start">
-                                              <div className="flex gap-2 w-full text-xs font-bold tracking-wide items-center">
-                                                <div className="capitalize">
-                                                  {subitem.user_name}
-                                                </div>
-                                                <div className="w-full flex text-xs justify-start text-gray-600 ">
-                                                  {getTimeAgo(
-                                                    subitem.created_at
-                                                  )}
-                                                </div>
+                                        </div>
+                                        <div>
+                                          <div className=" flex flex-col gap-0.5 w-full text-xs font-bold tracking-wide items-start">
+                                            <div className="flex gap-2 w-full text-xs font-bold tracking-wide items-center">
+                                              <div className="capitalize">
+                                                {subitem.user_name}
                                               </div>
-                                              <div>
-                                                <div className="w-full text-xs text-normal  text-left font-normal ">
-                                                  {subitem.comment}
-                                                </div>
+                                              <div className="w-full flex text-xs justify-start text-gray-600 ">
+                                                {getTimeAgo(subitem.created_at)}
+                                              </div>
+                                            </div>
+                                            <div>
+                                              <div className="w-full text-xs text-normal  text-left font-normal ">
+                                                {subitem.comment}
                                               </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </>
-                                    ))}
-                                 
+                                      </div>
+                                    </>
+                                  ))}
                               </div>
                             </div>
                           </div>

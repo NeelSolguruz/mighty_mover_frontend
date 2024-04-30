@@ -95,9 +95,9 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const form_http = axios.create({
-  baseURL: "http://192.168.68.89:3000",
+  baseURL: "http://192.168.68.68:3000",
   headers: {
-    Accept: "application/json",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+    Accept: "application/json",
     "Content-Type": "multipart/form-data",
   },
 });
@@ -159,5 +159,3 @@ export const cancelRequest = (config: any) => {
 };
 
 export default form_http;
-
-

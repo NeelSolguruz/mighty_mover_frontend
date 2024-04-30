@@ -8,10 +8,14 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import {
+  Bike,
+  arrow_right,
   blue_marker,
+  check,
   discount,
   exchange,
   green_marker,
+  lock,
   map_pin,
   red_marker,
 } from "@/assets/Images/imageassets";
@@ -22,6 +26,9 @@ import { motion } from "framer-motion";
 import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import { get_coupon_all } from "@/http/staticTokenService";
+import { coupon } from "@/constant/type/data.type";
+import { User_select } from "@/constant/twoWheeler";
 export default function Map() {
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -36,13 +43,19 @@ export default function Map() {
   const [fromLng, setFromLng] = useState("");
   const [ToLats, setToLats] = useState("");
   const [ToLng, setToLng] = useState("");
-
+  const [coupon, setcoupon] = useState(false);
   const [area, setarea] = useState("");
-  const originRef = useRef();
-  const destiantionRef = useRef();
+  const originRef = useRef<any>(null);
+  const destiantionRef = useRef<any>(null);
   const [editloaction, seteditloaction] = useState(false);
   const [address, setadrress] = useState("");
   const [payment, setpayment] = useState(true);
+  const [card, setcard] = useState(true);
+  const [distance, setdistance] = useState("");
+  const [couponData, setCouponData] = useState<coupon>([]);
+  const [apply_coupon, setapply_coupon] = useState("");
+  const [apply, setapply] = useState(false);
+  const [couponid, setcouponid] = useState("");
   const center_coordinates = { lat: 23.0225, lng: 72.5714 };
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE",
@@ -71,35 +84,55 @@ export default function Map() {
     setDirectionsResponse(results);
     if (results && results.routes && results.routes.length > 0) {
       const route = results.routes[0];
-      const distance = route.legs[0].distance.text;
+      const distance1 = route.legs[0].distance.text;
+      const distance2 = route.legs[0].distance;
+
       const duration = route.legs[0].duration.text;
+      setdistance(distance2.value / 1000);
 
       setInfoWindowPosition(route.legs[0].end_location);
-      setInfoWindowText(`Distance: ${distance}<br>Duration: ${duration}`);
+      setInfoWindowText(`Distance: ${distance1}<br>Duration: ${duration}`);
       fetchDestinationarea(
         results.routes[0].legs[0].end_location.lat(),
         results.routes[0].legs[0].end_location.lng()
       );
       seteditloaction(!editloaction);
     }
+    setFromLats(String(results.routes[0].legs[0].start_location.lat()));
+    setFromLng(String(results.routes[0].legs[0].start_location.lng()));
+    setToLats(String(results.routes[0].legs[0].end_location.lat()));
+    setToLng(String(results.routes[0].legs[0].end_location.lng()));
   }
   const handlepayment = async (e: any) => {
     e.preventDefault();
     try {
       const response = await http.post("api/v1/addresses", {
-        From: {
-          address_type: 0,
-          full_address: fromlocation,
-          receiver_name: recieverName,
-          receiver_mobile_number: recieverNo,
-          house_or_Apartment: recieverAdress,
+        from: {
+          faddress_type: 0,
+          ffull_address: originRef.current.value,
+          freceiver_name: recieverName,
+          freceiver_mobile_number: recieverNo,
+          fhouse_or_Apartment: recieverAdress,
+          flatitude: fromLats,
+          flongitude: fromLng,
+          fdistance: distance,
+        },
+        to: {
+          taddress_type: 1,
+          tfull_address: destiantionRef.current.value,
+          treceiver_name: recieverName,
+          treceiver_mobile_number: recieverNo,
+          thouse_or_Apartment: recieverAdress,
+          tlatitude: ToLats,
+          tlongitude: ToLng,
         },
       });
+      setpayment(!payment);
     } catch (error) {
       message_error(error);
     }
-    setpayment(true);
   };
+
   const message_error = (error: any) => {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError<{
@@ -116,7 +149,7 @@ export default function Map() {
       }
     }
   };
-  const fetchDestinationarea = async (lat, lng) => {
+  const fetchDestinationarea = async (lat: string, lng: string) => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE`
     );
@@ -143,6 +176,18 @@ export default function Map() {
       }
     }
   };
+  const fetchCouponData = async () => {
+    try {
+      const response = await get_coupon_all();
+      console.log(response.data.data);
+      setCouponData(response.data.data);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCouponData();
+  }, []);
 
   return isLoaded ? (
     <div className="flex flex-col gap-4 p-4 w-full  ">
@@ -384,103 +429,254 @@ export default function Map() {
           </GoogleMap>
         </div>
       </motion.div>
+      <div className="w-full flex gap-4 justify-center items-center">
+        {User_select.map((item, index) => (
+          <>
+            <div
+              key={index}
+              className="flex flex-col justify-center items-center"
+            >
+              <div>
+                <Image src={item.img} alt="img" className="h-20 w-20"></Image>
+              </div>
+              <div className=" pl-3 text-center text-sm font-semibold">
+                Rs {item.Price}
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
       {payment && (
         <>
-          <div className="w-full border rounded-lg border-gray-400 flex gap-2 p-4">
+          <div className="w-full rounded-lg flex gap-2 p-4">
             <div className="rounded-lg w-1/2 flex flex-col gap-4 item-start p-4">
-              <div className="flex flex-col gap-2 border rounded-lg">
+              <motion.div
+                initial={{ translateY: 40, opacity: 0 }}
+                whileInView={{ translateY: 0, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  damping: 15,
+                  stiffness: 300,
+                  duration: 1,
+                }}
+                className="flex flex-col gap-2 border rounded-lg"
+              >
                 <div className="flex">
-                  <div className="border-r border-gray-400 p-2 rounded-t-lg shadow-[8px_0px_10px_-5px_rgba(239,239,240,1)]">
+                  <div
+                    className={`border-r border-gray-400 p-2 rounded-t-lg  ${
+                      !card
+                        ? "border-b "
+                        : "shadow-[8px_0px_10px_rgba(239,239,240,1)]"
+                    }`}
+                    onClick={() => setcard(!card)}
+                  >
                     Credit/Debit
                   </div>
-                  <div className="border-r border-gray-400 p-2 rounded-t-lg shadow-[8px_0px_10px_-5px_rgba(239,239,240,1)]">
+                  <div
+                    className={`border-r border-gray-400 p-2 rounded-t-lg  ${
+                      card
+                        ? "border-b "
+                        : "shadow-[8px_0px_10px_rgba(239,239,240,1)]"
+                    }`}
+                    onClick={() => setcard(!card)}
+                  >
                     Cash on Delivery
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 p-4">
-                  <div className="flex flex-col gap-1 w-full">
-                    <label htmlFor="user" className="font-bold text-sm">
-                      <Image src={discount} alt="discount"></Image>
+                  <div className="flex flex-col gap-4 w-full">
+                    <label
+                      htmlFor="user"
+                      className="font-bold text-sm flex gap-2 items-center"
+                      onClick={() => setcoupon(!coupon)}
+                    >
+                      <Image
+                        src={discount}
+                        alt="discount"
+                        className="cursor-pointer"
+                      ></Image>{" "}
+                      <div className="text-[#318A5E] cursor-pointer">
+                        See All Coupons
+                      </div>
                     </label>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         placeholder="Apply Coupon Code"
                         className="p-2 w-3/4 border border-gray-400 text-sm rounded-md
+
+                        
                     "
+                        style={{}}
                       />
                       <button className="p-2 w-1/4 bg-black rounded-md text-white">
                         Apply
                       </button>
                     </div>
+                    {coupon && (
+                      <>
+                        <div className="flex flex-col gap-4">
+                          <div className="border-b border-gray-400 px-2 pt-2 font-semibold text-sm text-gray-400">
+                            Available Coupons
+                          </div>
+                          <div className="flex flex-col gap-2 px-2 pt-2 border rounded-md pb-2 shadow-sm shadow-gray-400">
+                            {couponData.length !== 0 ? (
+                              <div>
+                                {couponData.map((item, index) => (
+                                  <div
+                                    className="flex flex-col gap-2"
+                                    key={index}
+                                  >
+                                    <div className="flex justify-between items-center">
+                                      <div className="text-[#2967ff] border-2 border-[#2967ff] border-dashed flex  justify-center items-center rounded-sm">
+                                        <div className="border-r-2 border-[#2967ff] border-dashed flex px-1 py-1">
+                                          %
+                                        </div>
+                                        <div className="flex px-1 py-1">
+                                          {item.coupon_code}
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <button
+                                          className={`px-2 py-1 border border-[#2967ff] rounded-md text-[#2967ff] transition-all duration-100 active:scale-90 ${
+                                            apply && couponid == item.id
+                                              ? "border-green-500 text-green-500"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            navigator.clipboard.writeText(
+                                              item.coupon_code
+                                            );
+                                            setapply_coupon(item.coupon_code);
+                                            setcouponid(item.id);
+                                            setapply(!apply);
+                                          }}
+                                        >
+                                          {apply && couponid == item.id ? (
+                                            <div className="flex items-center gap-2">
+                                              <Image
+                                                src={check}
+                                                alt="check"
+                                              ></Image>
+                                              Copied
+                                            </div>
+                                          ) : (
+                                            <>Copy</>
+                                          )}
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div className="text-sm font-semibold">
+                                      {item.description}
+                                    </div>
+                                    <div className="text-xs font-light">
+                                      {item.description}
+                                    </div>
+                                    <div className="text-xs font-normal">
+                                      valid till:{item.expiry_date}
+                                    </div>
+                                    <div className="text-xs font-normal">
+                                      Max Usage:{item.max_usage_count}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="flex w-full items-center justify-center font-semibold text-gray-400">
+                                No Coupons Available
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <div className="flex w-full ">
+                      {card ? (
+                        <>
+                          <button className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center">
+                            Proceed with Card
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center">
+                            Proceed with Cash
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4">
+              <div className="text-4xl text-black font-bold">
+                Payment Details
+              </div>
+              <div className="text-md text-black font-light">
+                Check your Payment Details
+              </div>
+              <div className="flex w-full justify-between items-center border-b-2 border-black">
+                <div className="flex flex-col gap-2 p-2">
+                  <div className="text-2xl font-bold flex gap-2 items-center">
+                    <Image src={green_marker} alt="green marker"></Image>
+                    From:
+                  </div>
+                  {/* <div>{originRef?.current?.value}</div> */}
+                  <div className="text-start text-xs w-[170px]">
+                    Paldi, Ahmedabad, Gujarat, India
+                  </div>
+                </div>
+                <div>
+                  <Image src={arrow_right} alt="arrow"></Image>
+                </div>
+                <div className="flex flex-col gap-2 p-2">
+                  <div
+                    className="text-2xl font-bold flex gap-2 items-center
+                  "
+                  >
+                    <Image src={red_marker} alt="red marker"></Image>
+                    To:
+                  </div>
+                  {/* <div>{destiantionRef?.current?.value}</div> */}
+                  <div className="text-start text-xs w-[170px]">
+                    Sardar Kunj Society, Old City, Shahpur, Ahmedabad, Gujarat,
+                    India
                   </div>
                 </div>
               </div>
-
-              {/* <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="user" className="font-bold text-sm">
-                  Card details
-                </label>
-                <div className="flex items-center justify-center bg-white overflow-hidden border border-black border-opacity-30 rounded-lg  h-9 w-3/4">
-                  <input
-                    className="w-full h-full border-none outline-none text-sm  text-gray-400 font-semibold caret-orange-500 pl-2 p-3"
-                    type="text"
-                    name="text"
-                    id="input"
-                    placeholder="0000 0000 0000 0000"
-                  />
-                  <div className="flex items-center justify-center relative w-10 h-6 bg-gray-800 border border-white border-opacity-20 rounded-md p-2">
-                    <svg
-                      className="text-white fill-current"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="23"
-                      height="23"
-                      viewBox="0 0 48 48"
-                    >
-                      <path
-                        fill="#ff9800"
-                        d="M32 10A14 14 0 1 0 32 38A14 14 0 1 0 32 10Z"
-                      ></path>
-                      <path
-                        fill="#d50000"
-                        d="M16 10A14 14 0 1 0 16 38A14 14 0 1 0 16 10Z"
-                      ></path>
-                      <path
-                        fill="#ff3d00"
-                        d="M18,24c0,4.755,2.376,8.95,6,11.48c3.624-2.53,6-6.725,6-11.48s-2.376-8.95-6-11.48 C20.376,15.05,18,19.245,18,24z"
-                      ></path>
-                    </svg>
+              <div className="px-2 font-bold">Fare Sumamary</div>
+              <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
+                <div className="flex w-full justify-between items-center">
+                  <div className="text-sm font-normal">
+                    Trip Fare {"(incl.Toll)"}
                   </div>
-                  <div className="flex items-center justify-center relative w-10 h-6 bg-gray-200 border border-white border-opacity-20 rounded-md mx-2 p-2">
-                    <svg
-                      viewBox="0 0 256 83"
-                      width="33"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <defs>
-                        <linearGradient
-                          y2="100%"
-                          y1="-2.006%"
-                          x2="54.877%"
-                          x1="45.974%"
-                          id="logosVisa0"
-                        >
-                          <stop stop-color="#222357" offset="0%"></stop>
-                          <stop stop-color="#254AA5" offset="100%"></stop>
-                        </linearGradient>
-                      </defs>
-                      <path
-                        transform="matrix(1 0 0 -1 0 82.668)"
-                        d="M132.397 56.24c-.146-11.516 10.263-17.942 18.104-21.763c8.056-3.92 10.762-6.434 10.73-9.94c-.06-5.365-6.426-7.733-12.383-7.825c-10.393-.161-16.436 2.806-21.24 5.05l-3.744-17.519c4.82-2.221 13.745-4.158 23-4.243c21.725 0 35.938 10.724 36.015 27.351c.085 21.102-29.188 22.27-28.988 31.702c.069 2.86 2.798 5.912 8.778 6.688c2.96.392 11.131.692 20.395-3.574l3.636 16.95c-4.982 1.814-11.385 3.551-19.357 3.551c-20.448 0-34.83-10.87-34.946-26.428m89.241 24.968c-3.967 0-7.31-2.314-8.802-5.865L181.803 1.245h21.709l4.32 11.939h26.528l2.506-11.939H256l-16.697 79.963zm3.037-21.601l6.265-30.027h-17.158zm-118.599 21.6L88.964 1.246h20.687l17.104 79.963zm-30.603 0L53.941 26.782l-8.71 46.277c-1.022 5.166-5.058 8.149-9.54 8.149H.493L0 78.886c7.226-1.568 15.436-4.097 20.41-6.803c3.044-1.653 3.912-3.098 4.912-7.026L41.819 1.245H63.68l33.516 79.963z"
-                        fill="url(#logosVisa0)"
-                      ></path>
-                    </svg>
+                  <div className="text-sm font-normal text-start">Rs 92.93</div>
+                </div>
+                <div className="flex w-full justify-between items-center">
+                  <div className="text-sm font-normal">
+                    Coupon discount - AHMXS
+                  </div>
+                  <div className="text-sm font-normal text-green-500 text-start">
+                    - Rs 20
                   </div>
                 </div>
-              </div> */}
-              <div></div>
+                <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+                  <div className="text-sm font-normal">Net Fare</div>
+                  <div className="text-sm font-normal text-start">Rs 72.93</div>
+                </div>
+                <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+                  <div className="text-sm font-semibold">Amount Payable</div>
+                  <div className="text-sm font-semibold text-start">
+                    Rs 72.93
+                  </div>
+                </div>
+              </div>
+              <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
+                <Image src={lock} alt="lock" className="h-4 w-4"></Image>
+                Payment are secured and encrypted
+              </div>
             </div>
-            <div className="bg-gray-100 w-1/2 rounded-lg">Total Bill</div>
           </div>
         </>
       )}
