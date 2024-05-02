@@ -268,21 +268,49 @@ export const User_select = [
   {
     img: Bike,
     Price: 195,
+    vehicle_type: "2 wheeler",
+    weight: "20kg",
   },
   {
     img: Bike,
     Price: 195,
+    vehicle_type: "tata ace",
+    weight: "20kg",
   },
   {
     img: Bike,
     Price: 195,
+    vehicle_type: "14 ft",
+    weight: "20kg",
   },
   {
     img: Bike,
     Price: 195,
+    vehicle_type: "8 ft",
+    weight: "20kg",
   },
   {
     img: Bike,
     Price: 195,
+    vehicle_type: "8 ft",
+    weight: "20kg",
+  },
+  {
+    img: Bike,
+    Price: 195,
+    vehicle_type: "8 ft",
+    weight: "20kg",
+  },
+  {
+    img: Bike,
+    Price: 195,
+    vehicle_type: "8 ft",
+    weight: "20kg",
+  },
+  {
+    img: Bike,
+    Price: 195,
+    vehicle_type: "8 ft",
+    weight: "20kg",
   },
 ];

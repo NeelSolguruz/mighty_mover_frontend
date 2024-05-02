@@ -366,7 +366,7 @@ export default function DriverLogin() {
                               }
                               type="text"
                               id={`otp${index + 1}`}
-                              className="border border-black w-10 h-10 rounded-lg text-center text-3xl font-bold"
+                              className="border border-black w-10 h-10 rounded-lg text-center text-xl font-medium max-[386px]:w-8 max-[386px]:h-8 "
                               maxLength={1}
                               onInput={(e) => handleInput(e, index)}
                             />

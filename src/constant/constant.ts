@@ -1151,11 +1151,12 @@ export const ABOUT_US = {
 };
 
 export const LOGIN = {
-  sign_in: "Sign In",
-  tagline: "Delivery hai? #HoJayega",
+  account: "Account",
+  sign_in: "Sign in to your account",
+  tagline: "Enter your credentials to view all insights",
   forgot_text: "Forgot password?",
   forgot_link: "/forgot-password",
-  email_label: "Email Address",
+  email_label: "Email",
   password_label: "Password",
 };
 

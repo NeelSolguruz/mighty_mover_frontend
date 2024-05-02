@@ -26,9 +26,7 @@ export default function RootLayout({
         <link rel="icon" href="/Mighty_Movers.svg" sizes="any" />
       </head>
       <body className={TitilliumWeb.className}>
-        <StoreProvider>   
-          {children}
-        </StoreProvider>
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
