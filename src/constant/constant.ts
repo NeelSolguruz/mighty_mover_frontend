@@ -1165,7 +1165,7 @@ export const FORGOT_PASSWORD = {
 };
 
 export const SIGNUP = {
-  title: "Sign Up",
+  title: "Create your new account",
   tagline: "Delivering everything, anytime, anywhere.",
   fname_label: "First Name",
   lname_label: "Last Name",
