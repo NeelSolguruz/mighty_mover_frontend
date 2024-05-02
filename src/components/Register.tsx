@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import login_image from "../assets/Images/icons/login_image.svg";
 import Image from "next/image";
 
-
 export default function Register() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -82,7 +81,7 @@ export default function Register() {
         </div>
       ) : (
         <>
-            <div className="h-screen flex items-center bg-[#e5edff] overflow-hidden">
+          <div className="h-screen flex items-center bg-[#e5edff] overflow-hidden">
             <div className="flex justify-center items-center w-full">
               <div className="w-full scale-[0.8] bg-white shadow-2xl shadow-gray-400 rounded-lg">
                 <div className="grid grid-cols-2 max-lg:block">
@@ -93,7 +92,9 @@ export default function Register() {
                       </div>
                       <div className="w-full">
                         <div className="flex flex-col items-center">
-                          <h1 className="text-3xl font-bold max-md:text-2xl">{SIGNUP.title}</h1>
+                          <h1 className="text-3xl font-bold max-md:text-2xl">
+                            {SIGNUP.title}
+                          </h1>
                           <h3 className="text-lg max-[368px]:text-base">
                             {SIGNUP.tagline}
                           </h3>
@@ -102,7 +103,10 @@ export default function Register() {
                       <div className="flex flex-col gap-2 w-11/12">
                         <div className="flex justify-between w-full max-md:flex-col">
                           <div className="w-[48%] max-md:w-full">
-                            <label htmlFor="firstname" className="font-bold text-lg max:md-text-base">
+                            <label
+                              htmlFor="firstname"
+                              className="font-bold text-lg max:md-text-base"
+                            >
                               First Name
                             </label>
                             <input
@@ -116,7 +120,10 @@ export default function Register() {
                             />
                           </div>
                           <div className="w-[48%] max-md:w-full">
-                            <label htmlFor="lastname" className="font-bold text-lg max-md:text-base">
+                            <label
+                              htmlFor="lastname"
+                              className="font-bold text-base max-md:text-base"
+                            >
                               Last Name
                             </label>
                             <input
@@ -125,14 +132,17 @@ export default function Register() {
                               name="lastname"
                               value={lastname}
                               placeholder="Enter your last name"
-                              className="p-2 text-lg max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
+                              className="p-2  max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
                               onChange={(e) => setLastname(e.target.value)}
                             />
                           </div>
                         </div>
                         <div className="flex flex-col w-full gap-2">
                           <div className="w-full">
-                            <label htmlFor="email" className="font-bold text-lg max-md:text-base">
+                            <label
+                              htmlFor="email"
+                              className="font-bold  max-md:text-base"
+                            >
                               Email Address
                             </label>
                             <input
@@ -141,12 +151,15 @@ export default function Register() {
                               name="email"
                               value={email}
                               placeholder="Enter your email address"
-                              className="p-2 text-lg max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
+                              className="p-2  max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
                               onChange={(e) => setEmail(e.target.value)}
                             />
                           </div>
                           <div className="w-full">
-                            <label htmlFor="number" className="font-bold text-lg max-md:text-base">
+                            <label
+                              htmlFor="number"
+                              className="font-bold  max-md:text-base"
+                            >
                               Contact Number
                             </label>
                             <input
@@ -155,13 +168,16 @@ export default function Register() {
                               name="contact"
                               value={contactno}
                               placeholder="Enter your contact number"
-                              className="p-2 text-lg max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
+                              className="p-2  max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
                               onChange={(e) => setContactno(e.target.value)}
                             />
                           </div>
                           <div className="w-full">
                             <div className="flex justify-between">
-                              <label htmlFor="password" className="font-bold text-lg max-md:text-base">
+                              <label
+                                htmlFor="password"
+                                className="font-bold  max-md:text-base"
+                              >
                                 Password
                               </label>
                             </div>
@@ -171,13 +187,16 @@ export default function Register() {
                               name="password"
                               value={password}
                               placeholder="Enter your password"
-                              className="p-2 text-lg max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
+                              className="p-2  max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
                               onChange={(e) => setPassword(e.target.value)}
                             />
                           </div>
                           <div className="w-full">
                             <div className="flex justify-between">
-                              <label htmlFor="cpassword" className="font-bold text-lg max-md:text-base">
+                              <label
+                                htmlFor="cpassword"
+                                className="font-bold  max-md:text-base"
+                              >
                                 Confirm Password
                               </label>
                             </div>
@@ -187,14 +206,16 @@ export default function Register() {
                               name="cpassword"
                               value={confirmpassword}
                               placeholder="Re-Enter your password"
-                              className="p-2 text-lg max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
-                              onChange={(e) => setComfirmpassword(e.target.value)}
+                              className="p-2  max-md:text-base max-md:p-1 w-full border border-gray-300 transition duration-300 hover:border-black rounded-md focus:outline-blue-600"
+                              onChange={(e) =>
+                                setComfirmpassword(e.target.value)
+                              }
                             />
                           </div>
                         </div>
                         <div className="w-full flex flex-col gap-1 items-center">
                           <button
-                            className="bg-[#2967ff] text-white w-full p-2 max-md:p-1 text-lg rounded-md font-bold hover:bg-blue-500 transition-all"
+                            className="bg-[#2967ff] text-white w-full p-2 max-md:p-1  rounded-md font-bold hover:bg-blue-500 transition-all"
                             onClick={handlesubmit}
                           >
                             Create Account
@@ -207,12 +228,15 @@ export default function Register() {
                           </p>
                         </div>
                       </div>
-                      <div>
-                      </div>
+                      <div></div>
                     </div>
                   </div>
                   <div className="max-lg:hidden">
-                    <Image src={login_image} alt="sign up image" className="object-cover w-full h-full rounded-r-lg" />
+                    <Image
+                      src={login_image}
+                      alt="sign up image"
+                      className="object-cover w-full h-full rounded-r-lg"
+                    />
                   </div>
                 </div>
               </div>
@@ -223,4 +247,3 @@ export default function Register() {
     </>
   );
 }
-
