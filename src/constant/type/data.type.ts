@@ -41,7 +41,16 @@ interface notification_interface {
   created_at: string;
   id: string;
 }
+interface userSelectInterface {
+  vehicle_id: string;
+  vehicle_type: string;
+  total_amount: string;
+  max_weight: string;
+  length: string;
+  height: string;
+}
 export type {
+  userSelectInterface,
   notification_interface,
   FormData,
   FAQItem,

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Mighty Movers",
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
-        
+
         <Toaster
           duration={2000}
           richColors
