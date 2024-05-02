@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import http from "@/http/http";
 import Image from "next/image";
-import InfoSvg from "@/assets/Images/icons/infoSvg";
+// import InfoSvg from "@/assets/Images/icons/infoSvg";
 import { documentData } from "@/constant/type/data.type";
 import form_http from "@/http/formHttp";
 
@@ -20,6 +20,8 @@ function DriverDocument() {
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
   const [isloading, setIsLoading] = useState(false);
   const [updateId, setUpdateId] = useState("");
+  // const [selectOptions, setSelectOptions] = useState("");
+  const [selectOptions, setSelectOptions] = useState<Set<string>>(new Set());
   // const [updatePrivewUrl, setUpdatePrivewUrl] = useState<string | undefined>(undefined);
 
   const [selectedDocumentType, setSelectedDocumentType] =
@@ -29,7 +31,7 @@ function DriverDocument() {
     aadhar: null,
     licence: null,
     pancard: null,
-    image: null,
+    vehicle: null,
   });
 
   useEffect(() => {
@@ -40,6 +42,13 @@ function DriverDocument() {
     try {
       const response = await http.get("api/v1/document");
       setDocuments(response.data.data);
+      // setSelectOptions(response.data.data.internal_path.split("/")[0]);
+      const documentTypes = new Set(
+        response.data.data.map(
+          (doc: Document) => doc.internal_path.split("/")[0]
+        )
+      );
+      setSelectOptions(documentTypes);
     } catch (error) {
       console.log(error);
     }
@@ -132,71 +141,96 @@ function DriverDocument() {
     <>
       <div className="flex flex-col gap-4 w-full h-auto">
         <div>
-          <table className="table-auto w-full text-sm text-left">
-            <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto ">
-              <tr>
-                <th scope="col" className="px-6 py-3 ">
-                  Index
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Document Type
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Upload Documnet
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Document Preview
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="text-center border">1</td>
-                <td className="text-center border">
-                  <select
-                    name="documentType"
-                    id="documentType"
-                    value={selectedDocumentType}
-                    onChange={(e) =>
-                      setSelectedDocumentType(
-                        e.target.value as keyof documentData
-                      )
-                    }
-                  >
-                    <option value="aadhar">Aadhar Card</option>
-                    <option value="licence">Driving licence</option>
-                    <option value="pancard">Pancard</option>
-                    <option value="image">Image</option>
-                  </select>
-                </td>
-                <td className="text-center border">
-                  <input
-                    type="file"
-                    id="documentFile"
-                    name="documentFile"
-                    onChange={handleDocumentChange(selectedDocumentType)}
-                  />
-                </td>
-                <td className=" border whitespace-nowrap p-3 flex justify-center content-center">
-                  {documentFormData[selectedDocumentType] && (
-                    <Image
-                      src={selectedDocumentPreview || ""}
-                      width={500}
-                      height={500}
-                      alt="Document Preview"
-                      className="w-44 h-44"
-                    />
-                  )}
-                </td>
-                <td className="text-center border">
-                  <button onClick={handleUpload}>Upload</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {!selectOptions.has("Adharcard") ||
+          !selectOptions.has("Licence") ||
+          !selectOptions.has("Image") ||
+          !selectOptions.has("Pancard") ? (
+            <>
+              <table className="table-auto w-full text-sm text-left">
+                <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 ">
+                      Index
+                    </th>
+
+                    <th scope="col" className="px-6 py-3 ">
+                      Document Type
+                    </th>
+
+                    <th scope="col" className="px-6 py-3 ">
+                      Upload Documnet
+                    </th>
+                    <th scope="col" className="px-6 py-3 ">
+                      Document Preview
+                    </th>
+                    <th scope="col" className="px-6 py-3 ">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="text-center border">1</td>
+                    {!selectOptions.has("Adharcard") ||
+                    !selectOptions.has("Licence") ||
+                    !selectOptions.has("Vehicle") ||
+                    !selectOptions.has("Pancard") ? (
+                      <td className="text-center border">
+                        <select
+                          name="documentType"
+                          id="documentType"
+                          value={selectedDocumentType}
+                          onChange={(e) =>
+                            setSelectedDocumentType(
+                              e.target.value as keyof documentData
+                            )
+                          }
+                        >
+                          {/* <option selected>select your document</option> */}
+                          {!selectOptions.has("Adharcard") && (
+                            <option value="aadhar">Aadhar Card</option>
+                          )}
+                          {!selectOptions.has("Licence") && (
+                            <option value="licence">Driving licence</option>
+                          )}
+                          {!selectOptions.has("Pancard") && (
+                            <option value="pancard">Pancard</option>
+                          )}
+                          {!selectOptions.has("Vehicle") && (
+                            <option value="vehicle">Vehicle</option>
+                          )}
+                        </select>
+                      </td>
+                    ) : null}
+                    <td className="text-center border">
+                      <input
+                        type="file"
+                        id="documentFile"
+                        name="documentFile"
+                        onChange={handleDocumentChange(selectedDocumentType)}
+                      />
+                    </td>
+                    <td className=" border whitespace-nowrap p-3 flex justify-center content-center">
+                      {documentFormData[selectedDocumentType] && (
+                        <Image
+                          src={selectedDocumentPreview || ""}
+                          width={500}
+                          height={500}
+                          alt="Document Preview"
+                          className="w-44 h-44"
+                        />
+                      )}
+                    </td>
+                    <td className="text-center border">
+                      <button onClick={handleUpload}>Upload</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="max-w-full max-h-[200px] overflow-auto ">
           <table className="table-auto w-full text-sm text-left ">
