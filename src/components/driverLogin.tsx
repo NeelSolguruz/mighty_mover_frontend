@@ -41,56 +41,51 @@ export default function DriverLogin() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
 
-  const resetForm = () => {
-    setEmail("");
-    setPassword("");
-    setEmailError("");
-    setPasswordError("");
-  };
-  const verifyotp = async () => {
-    setLoading(true);
-    try {
-      const ftoken = localStorage.getItem("fcm_token");
-      const user_details = await verify_driver_otp({
-        email: email,
-        OTP: otp,
-        fcm_token: ftoken,
-      });
-      toast.success(user_details.data.message);
-      console.log(user_details.data);
-      // router.push("/delivery-partner", { scroll: false });
-      dispatch(driverAdd(user_details.data.data));
-      localStorage.setItem(
-        "driver",
-        JSON.stringify({
-          token: user_details.data.data.token,
-          driver: user_details.data.data.name,
-          email: user_details.data.data.email,
-        })
-      );
-      setLoading(false);
-      resetForm();
-      setModal(true);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{
-          status: number;
-          message: string;
-        }>;
-        if (axiosError.response) {
-          console.log("Response Error", axiosError.response);
-          toast.error(axiosError.response.data.message);
-        } else if (axiosError.request) {
-          console.log("Request Error", axiosError.request);
-        } else {
-          console.log("Error", axiosError.message);
+    const resetForm = () => {
+        setEmail("");
+        setPassword("");
+        setEmailError("");
+        setPasswordError("");
+    };
+    const verifyotp = async () => {
+        setLoading(true);
+        try {
+            const ftoken = localStorage.getItem('fcm_token')
+            const user_details = await verify_driver_otp({ "email": email, "OTP": otp , "fcm_token":ftoken});
+            toast.success(user_details.data.message);
+            console.log(user_details.data);
+            dispatch(driverAdd(user_details.data.data));
+            localStorage.setItem(
+                "driver",
+                JSON.stringify({
+                    token: user_details.data.data.token,
+                    driver:user_details.data.data.name,
+                    email:user_details.data.data.email
+                })
+            );
+            setLoading(false);
+            resetForm();
+            setModal(true);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as AxiosError<{
+                    status: number;
+                    message: string;
+                }>;
+                if (axiosError.response) {
+                    console.log("Response Error", axiosError.response);
+                    toast.error(axiosError.response.data.message);
+                } else if (axiosError.request) {
+                    console.log("Request Error", axiosError.request);
+                } else {
+                    console.log("Error", axiosError.message);
+                }
+            }
+        } finally {
+            setLoading(false);
+            setOtp("");
         }
-      }
-    } finally {
-      setLoading(false);
-      setOtp("");
-    }
-  };
+    };
 
   const validateEmail = (value: string | any) => {
     if (!value.trim()) {
@@ -202,49 +197,47 @@ export default function DriverLogin() {
     }));
   };
 
-  const handleVehicleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(vehicleFormData);
-    setLoading(true);
-    try {
-      const response = await http.post(
-        "api/v1/driver/vehicle",
-        vehicleFormData
-      );
-      console.log("Success:", response.data);
-      toast.success(response.data.message);
-      setLoading(false);
-      setDocumentModal(true);
-    } catch (error) {
-      // setModal(false);
-      setLoading(false);
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{
-          status: number;
-          message: string;
-        }>;
-        if (axiosError.response) {
-          console.log("Response Error", axiosError.response);
-          toast.error(axiosError.response.data.message);
-        } else if (axiosError.request) {
-          console.log("Request Error", axiosError.request);
-        } else {
-          console.log("Error", axiosError.message);
+    const handleVehicleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(vehicleFormData)
+        setLoading(true);
+        try {
+            const response = await http.post("api/v1/driver/vehicle", vehicleFormData);
+            console.log("Success:", response.data);
+            toast.success(response.data.message)
+            setLoading(false)
+            setDocumentModal(true)
+        } catch (error) {
+            // setModal(false);
+            setLoading(false)
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as AxiosError<{
+                    status: number;
+                    message: string;
+                }>;
+                if (axiosError.response) {
+                    console.log("Response Error", axiosError.response);
+                    toast.error(axiosError.response.data.message);
+                } else if (axiosError.request) {
+                    console.log("Request Error", axiosError.request);
+                } else {
+                    console.log("Error", axiosError.message);
+                }
+            }
+        } finally {
+            setLoading(false)
+            setVehicleFormData({
+                vehicle_num: "",
+                max_weight: "",
+                length: "",
+                width: "",
+                per_km_charge:"",
+                vehicle_category:"",
+                order_type:"",
+            })
         }
-      }
-    } finally {
-      setLoading(false);
-      setVehicleFormData({
-        vehicle_num: "",
-        max_weight: "",
-        length: "",
-        width: "",
-        per_km_charge: "",
-        vehicle_category: "",
-        order_type: "",
-      });
-    }
-  };
+    };
+
 
   const [documentModal, setDocumentModal] = useState(false);
   const [documentFormData, setDocumentFormData] = useState<documentData>({
@@ -270,41 +263,45 @@ export default function DriverLogin() {
     vehicle: false,
   });
 
-  const [anyOneDocument, setAnyOneDocument] = useState(false);
-  const handleDocument = async (type: string) => {
-    console.log("handleDocument function running");
-    const formData = new FormData();
-    formData.append("image", documentFormData[type] as Blob);
-    formData.append("type", type);
-    setLoading(true);
-    try {
-      const response = await form_http.post("api/v1/document", formData);
-      setLoading(false);
-      toast.success(response.data.message);
-      setDocumentUploadStatus((prevState) => ({
-        ...prevState,
-        [type]: true,
-      }));
-      setAnyOneDocument(true);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{
-          status: number;
-          message: string;
-        }>;
-        if (axiosError.response) {
-          console.log("Response Error", axiosError.response);
-          toast.error(axiosError.response.data.message);
-        } else if (axiosError.request) {
-          console.log("Request Error", axiosError.request);
-        } else {
-          console.log("Error", axiosError.message);
+    const [anyOneDocument, setAnyOneDocument] = useState(false);
+    const handleDocument = async (type: string) => {
+        // console.log('handleDocument function running')
+        const formData = new FormData();
+        formData.append('image', documentFormData[type] as Blob);
+        formData.append('type', type)
+        setLoading(true)
+        try {
+            const response = await form_http.post('api/v1/document', formData);
+            setLoading(false)
+            toast.success(response.data.message);
+            setDocumentUploadStatus(prevState => ({
+                ...prevState,
+                [type]: true,
+            }));
+            setAnyOneDocument(true);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as AxiosError<{
+                    status: number;
+                    message: string;
+                }>;
+                if (axiosError.response) {
+                    console.log("Response Error", axiosError.response);
+                    toast.error(axiosError.response.data.message);
+                } else if (axiosError.request) {
+                    console.log("Request Error", axiosError.request);
+                } else {
+                    console.log("Error", axiosError.message);
+                }
+            }
+        }finally{
+            setLoading(false)
         }
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+
+
+
 
   return (
     <>

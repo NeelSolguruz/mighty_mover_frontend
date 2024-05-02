@@ -155,7 +155,7 @@ export default function Navbar() {
               className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000] max-[324px]:w-[320px] "
             >
               <div className="flex flex-col w-full fixed top-0 left-0">
-                <div className="mt-6 ">
+                <div className="mt-6">
                   <div className="flex justify-between">
                     <div className="flex w-full justify-center items-center mb-6 py-2 text-xl pl-6">
                       <div className="w-[130px]">
@@ -274,7 +274,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            <div className="flex justify-center w-full ">
+            <div className="flex w-full">
               <Link href="/">
                 <div className="w-[130px]">
                   <NavLogo />
@@ -283,7 +283,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="flex gap-10 w-8/12 justify-center text-base max-lg:hidden">
+          <div className="flex mr-12 w-full gap-10 justify-center text-base max-lg:hidden">
             {NAVBAR.LAPTOP.map((item, index) => (
               <Link key={index} href={item.url} className={item.class}>
                 {item.text}
@@ -291,7 +291,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="w-2/12">
+          <div className="">
             {user.email || driver?.email ? (
               <div className="flex justify-end gap-2 items-center w-full px-2">
                 <div>
