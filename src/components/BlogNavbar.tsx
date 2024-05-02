@@ -14,7 +14,6 @@ import {
   Trending_post,
   Trending_post_data,
   blog_social_media,
-  post_data,
   slides,
   footer_data,
   searchtitle,
@@ -98,19 +97,16 @@ export default function BlogNavbar() {
       }
     }
   };
-  const handleChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     setsearch(searchTerm);
     console.log(searchTerm);
-    try{
-      const response=await search_api({"title":search12})
-      setfilter_data(response.data.data)
+    try {
+      const response = await search_api({ title: search12 });
+      setfilter_data(response.data.data);
+    } catch (error) {
+      message_error(error);
     }
-    catch(error){
-      message_error(error)
-    }
-
-
   };
   return (
     <>
@@ -223,8 +219,8 @@ export default function BlogNavbar() {
             </div>
           </motion.div>
           <motion.div
-            initial={{  opacity: 0 }}
-            whileInView={{  opacity: 1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
             className="w-11/12 flex justify-center items-center py-0.5 border-t-[1px] border-b-[1px] gap-4 sticky top-20 z-10 bg-white opacity-95 transition-all duration-300 max-[1081px]:w-full max-tablet:hidden"
           >
@@ -299,7 +295,7 @@ export default function BlogNavbar() {
                                       {item.title}
                                     </div>
                                     <div className="text-sm font-light">
-                                      {item.created_at.substring(0,10)}
+                                      {item.created_at.substring(0, 10)}
                                     </div>
                                     <div className="text-sm font-light">
                                       <div className="flex text-black font-semibold text-sx gap-2 w-full justify-start items-start ">
@@ -331,7 +327,7 @@ export default function BlogNavbar() {
                                             ></Image>
                                           </div>
                                           <div className="text-xs">
-                                            {item.comment}
+                                            {item.comments}
                                           </div>
                                         </div>
                                       </div>

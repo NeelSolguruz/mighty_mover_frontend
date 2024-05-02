@@ -95,6 +95,7 @@ const generateRequestToken = (config: any) => {
 // Create instance of axios
 const http = axios.create({
   baseURL: "http://192.168.68.95:3000",
+  baseURL: "http://192.168.68.89:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

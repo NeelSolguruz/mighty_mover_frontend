@@ -9,7 +9,7 @@ import truck from "./Truck.svg";
 import BetterEearning from "./BetterEarning.png";
 import regularTrip from "./regularTrip.png";
 import Delivery from "./delivery.jpg";
-import onTImePayment from "./onTImePayment.png";
+import onTImePayment from "./onTimePayment.png";
 import driverExperience from "./driver_experience.gif";
 import profilePic from "./profile_pic.png";
 import ownVehicles from "./own_vehicles.png";
@@ -102,12 +102,24 @@ import exchange from "./icons/exchange-alt.svg";
 import blue_marker from "./icons/blue-marker.svg";
 import map_pin from "./icons/map-pin-alt.svg";
 import discount from "./icons/discount.svg";
-import lock from "./icons/lock-alt.svg";
+import health_care from "./heatlh_care.png";
+import insurance from "./insurance.png";
+import fualcardsaving from "./fualcardsaving.png";
+import discountVehical from "./discountVehical.png";
 import check from "./icons/check.svg";
+import lock from "./icons/lock-alt.svg";
+import notifications_svg from "./icons/notifications_svg.svg";
+import info_svg from "./icons/info-circle.svg";
 export {
+  info_svg,
+  notifications_svg,
   check,
   lock,
   discount,
+  health_care,
+  insurance,
+  fualcardsaving,
+  discountVehical,
   map_pin,
   blue_marker,
   exchange,

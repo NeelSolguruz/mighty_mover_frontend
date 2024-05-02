@@ -17,12 +17,9 @@ import {
 import india_map from "../assets/Images/india_map.jpg";
 import { MdLocalCafe } from "react-icons/md";
 import { getToken } from "firebase/messaging";
-import { messaging } from "@/utils/firebase/firebase";
+// import { messaging } from "@/utils/firebase/firebase";
 
 export default function Home() {
-
-
-
   // const localData = localStorage.getItem('data') || null;
   // const localUser = localData && JSON.parse(localData)
 
@@ -35,8 +32,6 @@ export default function Home() {
   //     alert("Notification Denied!")
   //   }
   // }
-
-
 
   // const requestPermission = async () => {
   //   const permission = await Notification.requestPermission();
@@ -53,7 +48,6 @@ export default function Home() {
   //   }
   // };
 
-
   // useEffect(() => {
   //   if (localUser) {
   //     console.log("logged in")
@@ -62,8 +56,6 @@ export default function Home() {
   //     console.log("not logged in")
   //   }
   // }, [localUser])
-
-
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const toggleAccordion = (index: number) => {
@@ -144,7 +136,9 @@ export default function Home() {
                   <h3 className="title whitespace-nowrap mx-[auto] text-white w-60 text-md font-light">
                     {item.title}
                   </h3>
-                  <p className="text-white text-2xl font-bold mt-5">{item.description}</p>
+                  <p className="text-white text-2xl font-bold mt-5">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -288,8 +282,9 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
-                    }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -311,10 +306,11 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                  openIndex === index
                     ? "grid-rows-[1fr] opacity-100"
                     : "grid-rows-[0fr] opacity-0"
-                  }`}
+                }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>

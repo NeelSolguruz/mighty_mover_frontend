@@ -11,7 +11,7 @@ import { useState } from "react";
 import faq from "../assets/Images/faq.svg";
 import { FAQItem, FAQAccordionProps } from "@/constant/type/data.type";
 import { enterprise_register } from "@/http/staticTokenService";
-
+import indusstry_1 from "@/assets/Images/industries_1.webp";
 import axios, { AxiosError } from "axios";
 import { isFulfilled } from "@reduxjs/toolkit";
 import { toast } from "sonner";
@@ -20,14 +20,14 @@ import React from "react";
 export default function Enterprise() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    setFormData((prevFormData) => ({
+    setFormData((prevFormData: any) => ({
       ...prevFormData,
 
       [name]: value,
@@ -39,13 +39,12 @@ export default function Enterprise() {
     setLoading(true);
     try {
       const enterprise_details = await enterprise_register(formData);
-    toast.success(enterprise_details.data?.message);
+      toast.success(enterprise_details.data?.message);
 
       console.log(enterprise_details.data?.message);
 
       setLoading(false);
-      resetForm()
-      
+      resetForm();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{
@@ -113,7 +112,7 @@ export default function Enterprise() {
                 </div>
               ))}
             </div>
-            <div className="w-[342px]  h-auto flex justify-center items-center absolute right-10 top-40 max-breakpoint:top-24 max-[935px]:static max-[935px]:w-full">
+            <div className="w-[342px]  h-auto flex justify-center items-center absolute right-10 top-24  max-[935px]:static max-[935px]:w-full">
               <div className="w-full px-3 py-3 rounded-2xl shadow-gray-400 shadow-md bg-white">
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-center text-2xl font-semibold text-black text-center">
@@ -167,7 +166,7 @@ export default function Enterprise() {
                             placeholder={item}
                             value={formData[item] || ""}
                             type="text"
-                            className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:p-2 placeholder:w-full  placeholder:font-light placeholder:text-black placeholder:text-[10px]"
+                            className="w-full border-b rounded border-[1px] border-gray-400 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer placeholder:py-2 placeholder:w-full  placeholder:font-light placeholder:text-black placeholder:text-[10px] px-2 text-xs"
                           />
                         </div>
                       )}
@@ -286,11 +285,11 @@ export default function Enterprise() {
         </div>
         <div className="w-full flex justify-center items-center gap-20 max-[529px]:flex-col">
           <div className="flex justify-center">
-            {/* <Image
-              src={industry_1}
+            <Image
+              src={indusstry_1}
               alt="industires"
               className="w-11/12 h-11/12 max-[426px]:w-3/4 max-[426px]:h-3/4 "
-            ></Image> */}
+            ></Image>
           </div>
           <div className="flex flex-col gap-2">
             {ENTERPRISE_STRING.ALL_DATA_INDUSTIRES.map((item, index) => (

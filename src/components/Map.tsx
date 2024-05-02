@@ -6,18 +6,30 @@ import {
   Autocomplete,
   DirectionsRenderer,
   InfoWindow,
+  Circle,
+  TrafficLayer,
+  StreetViewPanorama,
 } from "@react-google-maps/api";
 import {
   Bike,
   arrow_right,
+  big_truck1,
+  big_truck2,
+  big_truck3,
+  bike_image,
   blue_marker,
   check,
+  cross,
   discount,
   exchange,
   green_marker,
+  info_svg,
   lock,
   map_pin,
   red_marker,
+  small_truck1,
+  small_truck2,
+  small_truck3,
 } from "@/assets/Images/imageassets";
 import Image from "next/image";
 import { SocketAddress } from "net";
@@ -27,8 +39,9 @@ import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { get_coupon_all } from "@/http/staticTokenService";
-import { coupon } from "@/constant/type/data.type";
+import { coupon, userSelectInterface } from "@/constant/type/data.type";
 import { User_select } from "@/constant/twoWheeler";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 export default function Map() {
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -49,14 +62,37 @@ export default function Map() {
   const destiantionRef = useRef<any>(null);
   const [editloaction, seteditloaction] = useState(false);
   const [address, setadrress] = useState("");
-  const [payment, setpayment] = useState(true);
+  const [payment, setpayment] = useState(false);
   const [card, setcard] = useState(true);
   const [distance, setdistance] = useState("");
-  const [couponData, setCouponData] = useState<coupon>([]);
+  const [couponData, setCouponData] = useState<coupon[]>([]);
   const [apply_coupon, setapply_coupon] = useState("");
   const [apply, setapply] = useState(false);
   const [couponid, setcouponid] = useState("");
-  const center_coordinates = { lat: 23.0225, lng: 72.5714 };
+  const [data_driverid, setDataDriverId] = useState("");
+  const [modal, setmodal] = useState(false);
+  const [proceed, setproceed] = useState(false);
+  const [continue_text, setcontinue] = useState("");
+  const [userSelect, setUserSelect] = useState<userSelectInterface[]>([]);
+  const [Estimation, setEstimationAmount] = useState("");
+  const [finalbill, setfinalbill] = useState("");
+  const [finalcoupon, setfinalcoupon] = useState("");
+  const [estimationid, setestimationid] = useState("");
+  const vehiclephoto = {
+    "2 wheeler": Bike,
+    "tata ace": small_truck2,
+    auto: small_truck3,
+    "3 wheeler": small_truck1,
+    "8 ft": big_truck1,
+    "14 ft": big_truck2,
+    bolero: big_truck3,
+    "tata 407 ": big_truck3,
+  };
+
+  const [center_coordinates, setcenter_coordinates] = useState({
+    lat: 23.0225,
+    lng: 72.5714,
+  });
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE",
     libraries: ["places"],
@@ -80,7 +116,10 @@ export default function Map() {
     });
     setfromlocation(originRef.current.value);
     settolocation(destiantionRef.current.value);
-
+    setcenter_coordinates({
+      lat: results.routes[0].legs[0].end_location.lat(),
+      lng: results.routes[0].legs[0].end_location.lng(),
+    });
     setDirectionsResponse(results);
     if (results && results.routes && results.routes.length > 0) {
       const route = results.routes[0];
@@ -127,7 +166,30 @@ export default function Map() {
           tlongitude: ToLng,
         },
       });
-      setpayment(!payment);
+
+      get_all_driver_data(response.data.data.pickup_address_id);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  const get_all_driver_data = async (id: string) => {
+    try {
+      const response = await http.get(
+        `/api/v1/estimation?pickup_address_id=${id}`
+      );
+      console.log(response.data.data);
+      setUserSelect(response.data.data);
+      setmodal(true);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+
+  const handleCheckCoupon = async () => {
+    try {
+      const response = await http.get(
+        `/api/v1/applycoupon/${finalcoupon}?estimation_id=${estimationid}`
+      );
     } catch (error) {
       message_error(error);
     }
@@ -147,6 +209,35 @@ export default function Map() {
       } else {
         console.log("Error", axiosError.message);
       }
+    }
+  };
+  const handleGetEstimation = async () => {
+    try {
+      const response = await http.get(`/api/v1/estimation/${data_driverid}`);
+      console.log(response);
+      setfinalbill(response.data.data.total_amount);
+      setestimationid(response.data.data.id);
+      setpayment(true);
+      setmodal(false);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  const handleAddData = async (item: any) => {
+    setproceed(true);
+    setcontinue(item.vehicle_type);
+    setDataDriverId(item.vehicle_id);
+    setEstimationAmount(item.total_amount);
+    try {
+      const response = await http.post(
+        `/api/v1/estimation/${item.vehicle_id}`,
+        {
+          vehicle_type: String(item.vehicle_type),
+          total_amount: String(item.total_amount),
+        }
+      );
+    } catch (error) {
+      message_error(error);
     }
   };
   const fetchDestinationarea = async (lat: string, lng: string) => {
@@ -200,9 +291,9 @@ export default function Map() {
           stiffness: 300,
           duration: 1,
         }}
-        className="flex gap-4 p-4 "
+        className="flex gap-4 p-4 max-[769px]:flex-col"
       >
-        <div className="flex flex-col w-1/4 justify-start items-center gap-4 rounded-2xl h-[80%]">
+        <div className="flex flex-col max-w-1/4 justify-start items-center gap-4 rounded-2xl h-[80%] max-[769px]:w-full">
           <div className={`flex w-full items-center`}>
             <form className="flex flex-col gap-2 w-[90%]">
               <div className="w-full flex gap-2 items-center">
@@ -214,7 +305,11 @@ export default function Map() {
                   ></Image>
                 </div>
                 <div className="w-full">
-                  <Autocomplete>
+                  <Autocomplete
+                    onLoad={(autocomplete) => {
+                      autocomplete.setComponentRestrictions({ country: "in" }); // Restrict to India
+                    }}
+                  >
                     <input
                       required
                       type="text"
@@ -239,7 +334,11 @@ export default function Map() {
                   ></Image>
                 </div>
                 <div className="w-full">
-                  <Autocomplete>
+                  <Autocomplete
+                    onLoad={(autocomplete) => {
+                      autocomplete.setComponentRestrictions({ country: "in" }); // Restrict to India
+                    }}
+                  >
                     <input
                       type="text"
                       placeholder="To"
@@ -382,15 +481,14 @@ export default function Map() {
             </>
           ) : (
             <>
-              <div className="flex flex-col text-[45px] font-extrabold text-[#2967ff] justify-start items-start mt-10 max-w-full">
-                <div>{"You think it "}</div>
-                <div>{"We'll"}</div>
-                <div>{"Deliver It"}</div>
+              <div className="flex flex-col text-[40px] font-extrabold text-[#2967ff] justify-start items-start max-w-full px-3 py-10 max-[1261px]:text-[35px] max-[1024px]:text-[30px] max-[769px]:hidden">
+                <div>{"Delivery  Hai?"}</div>
+                <div>{"HoJayega!"}</div>
               </div>
             </>
           )}
         </div>
-        <div className="w-3/4">
+        <div className="w-3/4 max-[769px]:w-full  max-[769px]:h-[700px]">
           <GoogleMap
             center={center_coordinates}
             zoom={15}
@@ -410,7 +508,7 @@ export default function Map() {
               <DirectionsRenderer
                 options={{
                   polylineOptions: {
-                    strokeColor: "#2967ff", // Red color
+                    strokeColor: "#2967ff",
                     strokeOpacity: 1,
                     strokeWeight: 6,
                   },
@@ -426,26 +524,89 @@ export default function Map() {
                 <div dangerouslySetInnerHTML={{ __html: infoWindowText }} />
               </InfoWindow>
             )}
+
+            <TrafficLayer
+              options={{
+                autoRefresh: true,
+              }}
+            />
           </GoogleMap>
         </div>
       </motion.div>
-      <div className="w-full flex gap-4 justify-center items-center">
-        {User_select.map((item, index) => (
-          <>
-            <div
-              key={index}
-              className="flex flex-col justify-center items-center"
-            >
-              <div>
-                <Image src={item.img} alt="img" className="h-20 w-20"></Image>
-              </div>
-              <div className=" pl-3 text-center text-sm font-semibold">
-                Rs {item.Price}
-              </div>
+
+      {modal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center "
+        >
+          <div className="scrollbarmap bg-white rounded-lg shadow-lg w-1/2   overflow-auto overflow-x-hidden  flex flex-col items-center max-h-[400px] ">
+            {userSelect.map((item, index) => (
+              <>
+                <button
+                  className="w-full flex justify-between items-center border-b p-4 hover:bg-gray-50  transition-all ease-in-out  duration-200 cursor-pointer rounded-lg focus:bg-gray-100 focus:scale-100 "
+                  key={index}
+                  onClick={() => handleAddData(item)}
+                >
+                  <div className="flex w-1/2">
+                    <div className="w-1/2">
+                      <Image
+                        src={vehiclephoto[String(item.vehicle_type)]}
+                        alt="image"
+                      ></Image>
+                    </div>
+                    <div className="flex flex-col justify-center items-start w-1/2">
+                      <div className=" text-xl font-bold">
+                        {item.vehicle_type}
+                      </div>
+                      <div className="text-xs flex gap-1 items-center">
+                        <div className="font-medium text-gray-400 ">
+                          {"Max Weigth:"}
+                        </div>
+                        <div className="text-xs font-light flex gap-1 items-center">
+                          {item.max_weight}
+                          <div>
+                            <Image
+                              src={info_svg}
+                              alt="info"
+                              className="h-3 w-3"
+                            ></Image>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center text-sm">
+                    <div>
+                      <FaIndianRupeeSign className="text-sm" />
+                    </div>
+                    <div className="font-semibold">{item.total_amount}</div>
+                  </div>
+                </button>
+              </>
+            ))}
+            <div className="sticky bottom-4  w-11/12">
+              <button
+                className={`w-full border-none ${
+                  proceed ? "bg-black" : "bg-gray-200"
+                } text-white p-2 font-semibold rounded-sm text-lg active:scale-95 transition-all ease-in`}
+                onClick={handleGetEstimation}
+              >
+                Proceed{" "}
+                {continue_text == "" ? (
+                  <>{""}</>
+                ) : (
+                  <>
+                    {"with"} {continue_text}
+                  </>
+                )}
+              </button>
             </div>
-          </>
-        ))}
-      </div>
+          </div>
+        </motion.div>
+      )}
       {payment && (
         <>
           <div className="w-full rounded-lg flex gap-2 p-4">
@@ -504,12 +665,16 @@ export default function Map() {
                         type="text"
                         placeholder="Apply Coupon Code"
                         className="p-2 w-3/4 border border-gray-400 text-sm rounded-md
-
+                        
                         
                     "
-                        style={{}}
+                        value={finalcoupon}
+                        onChange={(e) => setfinalcoupon(e.target.value)}
                       />
-                      <button className="p-2 w-1/4 bg-black rounded-md text-white">
+                      <button
+                        className="p-2 w-1/4 bg-black rounded-md text-white"
+                        onClick={handleCheckCoupon}
+                      >
                         Apply
                       </button>
                     </div>
@@ -582,7 +747,7 @@ export default function Map() {
                                 ))}
                               </div>
                             ) : (
-                              <div className="flex w-full items-center justify-center font-semibold">
+                              <div className="flex w-full items-center justify-center font-semibold text-gray-400">
                                 No Coupons Available
                               </div>
                             )}
@@ -616,18 +781,17 @@ export default function Map() {
               <div className="text-md text-black font-light">
                 Check your Payment Details
               </div>
-              <div className="flex w-full justify-between items-center border-b-2 border-black">
+              <div className="flex w-full justify-between items-start border-b-2 border-black">
                 <div className="flex flex-col gap-2 p-2">
                   <div className="text-2xl font-bold flex gap-2 items-center">
                     <Image src={green_marker} alt="green marker"></Image>
                     From:
                   </div>
-                  {/* <div>{originRef?.current?.value}</div> */}
                   <div className="text-start text-xs w-[170px]">
-                    Paldi, Ahmedabad, Gujarat, India
+                    <div>{originRef?.current?.value}</div>
                   </div>
                 </div>
-                <div>
+                <div className="flex items-center h-full">
                   <Image src={arrow_right} alt="arrow"></Image>
                 </div>
                 <div className="flex flex-col gap-2 p-2">
@@ -638,10 +802,8 @@ export default function Map() {
                     <Image src={red_marker} alt="red marker"></Image>
                     To:
                   </div>
-                  {/* <div>{destiantionRef?.current?.value}</div> */}
                   <div className="text-start text-xs w-[170px]">
-                    Sardar Kunj Society, Old City, Shahpur, Ahmedabad, Gujarat,
-                    India
+                    <div>{destiantionRef?.current?.value}</div>
                   </div>
                 </div>
               </div>
@@ -651,7 +813,9 @@ export default function Map() {
                   <div className="text-sm font-normal">
                     Trip Fare {"(incl.Toll)"}
                   </div>
-                  <div className="text-sm font-normal text-start">Rs 92.93</div>
+                  <div className="text-sm font-normal text-start">
+                    {finalbill}
+                  </div>
                 </div>
                 <div className="flex w-full justify-between items-center">
                   <div className="text-sm font-normal">
@@ -663,18 +827,20 @@ export default function Map() {
                 </div>
                 <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
                   <div className="text-sm font-normal">Net Fare</div>
-                  <div className="text-sm font-normal text-start">Rs 72.93</div>
+                  <div className="text-sm font-normal text-start">
+                    {finalbill}
+                  </div>
                 </div>
                 <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
                   <div className="text-sm font-semibold">Amount Payable</div>
                   <div className="text-sm font-semibold text-start">
-                    Rs 72.93
+                    {finalbill}
                   </div>
                 </div>
               </div>
               <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
                 <Image src={lock} alt="lock" className="h-4 w-4"></Image>
-                Payment are secured and encrypted
+                Payments are secured and encrypted
               </div>
             </div>
           </div>
