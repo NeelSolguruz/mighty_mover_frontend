@@ -49,8 +49,7 @@ export default function DriverLogin() {
             const user_details = await verify_driver_otp({ "email": email, "OTP": otp , "fcm_token":ftoken});
             toast.success(user_details.data.message);
             console.log(user_details.data);
-            // router.push("/delivery-partner", { scroll: false });
-            dispatch(driverAdd(user_details.data.data))
+            dispatch(driverAdd(user_details.data.data));
             localStorage.setItem(
                 "driver",
                 JSON.stringify({
@@ -225,9 +224,9 @@ export default function DriverLogin() {
                 max_weight: "",
                 length: "",
                 width: "",
-                per_km_charge: "",
-                vehicle_category: "",
-                order_type: "",
+                per_km_charge:"",
+                vehicle_category:"",
+                order_type:"",
             })
         }
     };
