@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -39,7 +39,11 @@ import http from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { get_coupon_all } from "@/http/staticTokenService";
-import { coupon, userSelectInterface } from "@/constant/type/data.type";
+import {
+  category_interface,
+  coupon,
+  userSelectInterface,
+} from "@/constant/type/data.type";
 import { User_select } from "@/constant/twoWheeler";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 export default function Map() {
@@ -62,12 +66,13 @@ export default function Map() {
   const destiantionRef = useRef<any>(null);
   const [editloaction, seteditloaction] = useState(false);
   const [address, setadrress] = useState("");
-  const [payment, setpayment] = useState(false);
+  const [payment, setpayment] = useState(true);
   const [card, setcard] = useState(true);
-  const [distance, setdistance] = useState("");
+  const [distance, setdistance] = useState(0);
   const [couponData, setCouponData] = useState<coupon[]>([]);
   const [apply_coupon, setapply_coupon] = useState("");
-  const [apply, setapply] = useState(false);
+  const [category, setCategory] = useState<category_interface[]>([]);
+
   const [couponid, setcouponid] = useState("");
   const [data_driverid, setDataDriverId] = useState("");
   const [modal, setmodal] = useState(false);
@@ -76,8 +81,14 @@ export default function Map() {
   const [userSelect, setUserSelect] = useState<userSelectInterface[]>([]);
   const [Estimation, setEstimationAmount] = useState("");
   const [finalbill, setfinalbill] = useState("");
+  const [netfare, setnefare] = useState("");
+  const [showCouponInBill, setShowCouponInBill] = useState(false);
   const [finalcoupon, setfinalcoupon] = useState("");
   const [estimationid, setestimationid] = useState("");
+  const [couponAmount, setCouponAmount] = useState("");
+  const [userSelectEstimationId, setUserSelectEstimationId] = useState("");
+  const [subCategory, setSubCategory] = useState([]);
+  const [removeCoupon, setremoveCoupon] = useState(false);
   const vehiclephoto = {
     "2 wheeler": Bike,
     "tata ace": small_truck2,
@@ -103,8 +114,8 @@ export default function Map() {
     const origin_data = originRef.current.value;
     originRef.current.value = destiantionRef.current.value;
     destiantionRef.current.value = origin_data;
-    const destLat = directionsResponse.routes[0].legs[0].end_location.lat();
-    const destLng = directionsResponse.routes[0].legs[0].end_location.lng();
+    const destLat = directionsResponse?.routes[0]?.legs[0]?.end_location?.lat();
+    const destLng = directionsResponse?.routes[0]?.legs[0]?.end_location?.lng();
     fetchDestinationarea(destLat, destLng);
   };
   async function calculateRoute() {
@@ -120,19 +131,23 @@ export default function Map() {
       lat: results.routes[0].legs[0].end_location.lat(),
       lng: results.routes[0].legs[0].end_location.lng(),
     });
+
     setDirectionsResponse(results);
+
     if (results && results.routes && results.routes.length > 0) {
       const route = results.routes[0];
-      const distance1 = route.legs[0].distance.text;
+      const distance1 = route?.legs[0]?.distance?.text;
       const distance2 = route.legs[0].distance;
 
-      const duration = route.legs[0].duration.text;
-      setdistance(distance2.value / 1000);
+      const duration = route?.legs[0]?.duration?.text;
+      if (distance2) {
+        setdistance(distance2?.value / 1000);
+      }
 
       setInfoWindowPosition(route.legs[0].end_location);
       setInfoWindowText(`Distance: ${distance1}<br>Duration: ${duration}`);
       fetchDestinationarea(
-        results.routes[0].legs[0].end_location.lat(),
+        results.routes[0]?.legs[0].end_location.lat(),
         results.routes[0].legs[0].end_location.lng()
       );
       seteditloaction(!editloaction);
@@ -186,12 +201,33 @@ export default function Map() {
   };
 
   const handleCheckCoupon = async () => {
-    try {
-      const response = await http.get(
-        `/api/v1/applycoupon/${finalcoupon}?estimation_id=${estimationid}`
-      );
-    } catch (error) {
-      message_error(error);
+    if (removeCoupon) {
+      try {
+        const response = await http.get(
+          `/api/v1/coupons/remove/${finalcoupon}?estimation_id=${estimationid}`
+        );
+        setfinalbill(response.data.data.total_amount);
+        setShowCouponInBill(false);
+        setfinalcoupon(response.data.data.coupon_code);
+        setCouponAmount(response.data.data.coupon_amount);
+        setremoveCoupon(false);
+        setfinalcoupon("");
+      } catch (error) {
+        message_error(error);
+      }
+    } else {
+      try {
+        const response = await http.get(
+          `/api/v1/coupons/apply/${finalcoupon}?estimation_id=${estimationid}`
+        );
+        setfinalbill(response.data.data.total_amount);
+        setShowCouponInBill(true);
+        setfinalcoupon(response.data.data.coupon_code);
+        setCouponAmount(response.data.data.coupon_amount);
+        setremoveCoupon(true);
+      } catch (error) {
+        message_error(error);
+      }
     }
   };
 
@@ -213,9 +249,12 @@ export default function Map() {
   };
   const handleGetEstimation = async () => {
     try {
-      const response = await http.get(`/api/v1/estimation/${data_driverid}`);
+      const response = await http.get(
+        `/api/v1/estimation/${userSelectEstimationId}`
+      );
       console.log(response);
       setfinalbill(response.data.data.total_amount);
+      setnefare(response.data.data.total_amount);
       setestimationid(response.data.data.id);
       setpayment(true);
       setmodal(false);
@@ -236,11 +275,12 @@ export default function Map() {
           total_amount: String(item.total_amount),
         }
       );
+      setUserSelectEstimationId(response.data.data.id);
     } catch (error) {
       message_error(error);
     }
   };
-  const fetchDestinationarea = async (lat: string, lng: string) => {
+  const fetchDestinationarea = async (lat: number, lng: number) => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE`
     );
@@ -272,12 +312,35 @@ export default function Map() {
       const response = await get_coupon_all();
       console.log(response.data.data);
       setCouponData(response.data.data);
+      setcoupon(!coupon);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  function formatNumberWithCommas(number: string) {
+    const formatter = new Intl.NumberFormat("en-IN");
+    return formatter.format(Number(number));
+  }
+  const fetchCategory = async () => {
+    try {
+      const response = await http.get("/api/v1/Categories");
+      setCategory(response.data.data);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  const handlesubcategory = async (id: string) => {
+    try {
+      const response = await http.get(
+        `/api/v1/subcategories/?category_id=${id}`
+      );
+      setSubCategory(response.data.data);
     } catch (error) {
       message_error(error);
     }
   };
   useEffect(() => {
-    fetchCouponData();
+    fetchCategory();
   }, []);
 
   return isLoaded ? (
@@ -295,8 +358,8 @@ export default function Map() {
       >
         <div className="flex flex-col max-w-1/4 justify-start items-center gap-4 rounded-2xl h-[80%] max-[769px]:w-full">
           <div className={`flex w-full items-center`}>
-            <form className="flex flex-col gap-2 w-[90%]">
-              <div className="w-full flex gap-2 items-center">
+            <form className="flex flex-col gap-2 w-[90%] max-[769px]:flex-row max-[769px]:gap-0">
+              <div className="w-full flex gap-2 items-center max-[769px]:w-1/2">
                 <div>
                   <Image
                     src={green_marker}
@@ -317,7 +380,9 @@ export default function Map() {
                       disabled={editloaction ? true : false}
                       ref={originRef}
                       value={fromlocation}
-                      onChange={(e) => setfromlocation(e.target.value)}
+                      onChange={(e) =>
+                        editloaction ? null : setfromlocation(e.target.value)
+                      }
                       className={`text-sm border border-black rounded-lg w-11/12 p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff] ${
                         editloaction ? "cursor-not-allowed" : ""
                       }`}
@@ -325,7 +390,7 @@ export default function Map() {
                   </Autocomplete>
                 </div>
               </div>
-              <div className="w-full  flex gap-2 items-center">
+              <div className="w-full  flex gap-2 items-center max-[769px]:w-1/2">
                 <div>
                   <Image
                     src={red_marker}
@@ -348,7 +413,9 @@ export default function Map() {
                         editloaction ? "cursor-not-allowed" : ""
                       }`}
                       value={tolocation}
-                      onChange={(e) => settolocation(e.target.value)}
+                      onChange={(e) =>
+                        editloaction ? null : settolocation(e.target.value)
+                      }
                       ref={destiantionRef}
                     ></input>
                   </Autocomplete>
@@ -436,47 +503,59 @@ export default function Map() {
                 ) : (
                   <></>
                 )}
-                <form className="w-full  flex flex-col gap-2 h-full items-center">
-                  <div className="w-11/12">
-                    <input
-                      type="text"
-                      value={recieverAdress}
-                      placeholder="House/Apartment (optional)"
-                      className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
-                      onChange={(e) => setRecieverAdress(e.target.value)}
-                    ></input>
-                  </div>
+                <div className="w-full flex gap-2">
+                  <form className="w-full  flex flex-col gap-2 h-full items-center max-[769px]:w-1/2">
+                    <div className="w-11/12">
+                      <input
+                        type="text"
+                        value={recieverAdress}
+                        placeholder="House/Apartment (optional)"
+                        className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
+                        onChange={(e) => setRecieverAdress(e.target.value)}
+                      ></input>
+                    </div>
 
-                  <div className="w-11/12">
-                    <input
-                      type="text"
-                      value={recieverName}
-                      placeholder="Receiver's Name"
-                      className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
-                      onChange={(e) => setRecieverName(e.target.value)}
-                    ></input>
+                    <div className="w-11/12">
+                      <input
+                        type="text"
+                        value={recieverName}
+                        placeholder="Receiver's Name"
+                        className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
+                        onChange={(e) => setRecieverName(e.target.value)}
+                      ></input>
+                    </div>
+                    <div className="w-11/12">
+                      <input
+                        type="text"
+                        value={recieverNo}
+                        placeholder="Receiver's Mobile Number"
+                        className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
+                        onChange={(e) => setRecieverNo(e.target.value)}
+                      ></input>
+                    </div>
+                    <div className="w-11/12">
+                      <button
+                        className={`flex  text-white bg-black border rounded-lg border-none p-2 w-full font-semibold text-lg justify-center items-center ${
+                          !editloaction
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
+                        }`}
+                        disabled={!editloaction ? true : false}
+                        onClick={(e) => handlepayment(e)}
+                      >
+                        <div>Confirm And Proceed</div>
+                      </button>
+                    </div>
+                  </form>
+                  <div className="max-[769px]:flex hidden w-1/2 justify-center items-center">
+                    <div className="flex flex-col text-[40px] font-extrabold text-[#2967ff] justify-center items-end max-w-full px-3 ">
+                      <div>{"Hai"}</div>
+
+                      <div>{"Delivery?"}</div>
+                      <div>{"HoJayega!"}</div>
+                    </div>
                   </div>
-                  <div className="w-11/12">
-                    <input
-                      type="text"
-                      value={recieverNo}
-                      placeholder="Receiver's Mobile Number"
-                      className="text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff]"
-                      onChange={(e) => setRecieverNo(e.target.value)}
-                    ></input>
-                  </div>
-                  <div className="w-11/12">
-                    <button
-                      className={`flex  text-white bg-black border rounded-lg border-none p-2 w-full font-semibold text-lg justify-center items-center ${
-                        !editloaction ? "cursor-not-allowed" : "cursor-pointer"
-                      }`}
-                      disabled={!editloaction ? true : false}
-                      onClick={(e) => handlepayment(e)}
-                    >
-                      <div>Confirm And Proceed</div>
-                    </button>
-                  </div>
-                </form>
+                </div>
               </motion.div>
             </>
           ) : (
@@ -488,7 +567,7 @@ export default function Map() {
             </>
           )}
         </div>
-        <div className="w-3/4 max-[769px]:w-full  max-[769px]:h-[700px]">
+        <div className="w-3/4 max-[769px]:w-full  max-[769px]:h-[450px]">
           <GoogleMap
             center={center_coordinates}
             zoom={15}
@@ -644,12 +723,13 @@ export default function Map() {
                     Cash on Delivery
                   </div>
                 </div>
+
                 <div className="flex flex-col gap-2 p-4">
                   <div className="flex flex-col gap-4 w-full">
                     <label
                       htmlFor="user"
                       className="font-bold text-sm flex gap-2 items-center"
-                      onClick={() => setcoupon(!coupon)}
+                      onClick={fetchCouponData}
                     >
                       <Image
                         src={discount}
@@ -668,28 +748,32 @@ export default function Map() {
                         
                         
                     "
+                        disabled={removeCoupon ? true : false}
                         value={finalcoupon}
-                        onChange={(e) => setfinalcoupon(e.target.value)}
+                        onChange={(e) =>
+                          removeCoupon ? null : setfinalcoupon(e.target.value)
+                        }
                       />
                       <button
                         className="p-2 w-1/4 bg-black rounded-md text-white"
                         onClick={handleCheckCoupon}
                       >
-                        Apply
+                        {removeCoupon ? <>{"remove"}</> : <>{"Apply"}</>}
                       </button>
                     </div>
+                    <div></div>
                     {coupon && (
                       <>
                         <div className="flex flex-col gap-4">
                           <div className="border-b border-gray-400 px-2 pt-2 font-semibold text-sm text-gray-400">
                             Available Coupons
                           </div>
-                          <div className="flex flex-col gap-2 px-2 pt-2 border rounded-md pb-2 shadow-sm shadow-gray-400">
+                          <div className="flex flex-col gap-2 px-2 pt-2 border rounded-md pb-2 shadow-sm shadow-gray-400 max-h-[200px] overflow-auto overflow-x-hidden">
                             {couponData.length !== 0 ? (
-                              <div>
+                              <div className="flex flex-col gap-2 ">
                                 {couponData.map((item, index) => (
                                   <div
-                                    className="flex flex-col gap-2"
+                                    className="flex flex-col gap-2 rounded-lg border-gray-400 hover:bg-gray-100 transition ease-in duration-300 p-2 border"
                                     key={index}
                                   >
                                     <div className="flex justify-between items-center">
@@ -704,7 +788,7 @@ export default function Map() {
                                       <div>
                                         <button
                                           className={`px-2 py-1 border border-[#2967ff] rounded-md text-[#2967ff] transition-all duration-100 active:scale-90 ${
-                                            apply && couponid == item.id
+                                            apply_coupon === item.coupon_code
                                               ? "border-green-500 text-green-500"
                                               : ""
                                           }`}
@@ -714,10 +798,9 @@ export default function Map() {
                                             );
                                             setapply_coupon(item.coupon_code);
                                             setcouponid(item.id);
-                                            setapply(!apply);
                                           }}
                                         >
-                                          {apply && couponid == item.id ? (
+                                          {apply_coupon === item.coupon_code ? (
                                             <div className="flex items-center gap-2">
                                               <Image
                                                 src={check}
@@ -740,9 +823,6 @@ export default function Map() {
                                     <div className="text-xs font-normal">
                                       valid till:{item.expiry_date}
                                     </div>
-                                    <div className="text-xs font-normal">
-                                      Max Usage:{item.max_usage_count}
-                                    </div>
                                   </div>
                                 ))}
                               </div>
@@ -755,6 +835,29 @@ export default function Map() {
                         </div>
                       </>
                     )}
+                    <div className="flex gap-2 w-full">
+                      <div className="w-1/2 ">
+                        <select
+                          className="p-2 border border-black rounded-sm w-full font-light text-black text-[10px] shadow-lg shadow-gray-400"
+                          onChange={(e) => handlesubcategory(e.target.value)}
+                        >
+                          {category.map((item, index) => (
+                            <option key={index} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="w-1/2">
+                        <select className="p-2 border border-black rounded-md w-full font-light text-black text-[10px] shadow-lg shadow-gray-400">
+                          {subCategory.map((item, index) => (
+                            <>
+                              <option key={index}>{item.name}</option>
+                            </>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                     <div className="flex w-full ">
                       {card ? (
                         <>
@@ -774,35 +877,39 @@ export default function Map() {
                 </div>
               </motion.div>
             </div>
-            <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4">
-              <div className="text-4xl text-black font-bold">
+            <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4 h-full">
+              <div className="text-4xl text-black font-bold max-[916px]:text-3xl">
                 Payment Details
               </div>
-              <div className="text-md text-black font-light">
+              <div className="text-md text-black font-light max-[916px]:text-sm">
                 Check your Payment Details
               </div>
-              <div className="flex w-full justify-between items-start border-b-2 border-black">
+              <div className=" border-b-2 border-black flex-row flex justify-between items-center">
                 <div className="flex flex-col gap-2 p-2">
-                  <div className="text-2xl font-bold flex gap-2 items-center">
+                  <div className="text-2xl font-bold flex gap-2 items-center max-[916px]:text-lg ">
                     <Image src={green_marker} alt="green marker"></Image>
                     From:
                   </div>
-                  <div className="text-start text-xs w-[170px]">
+                  <div className="text-start text-xs">
                     <div>{originRef?.current?.value}</div>
                   </div>
                 </div>
-                <div className="flex items-center h-full">
-                  <Image src={arrow_right} alt="arrow"></Image>
+                <div className="flex items-center justify-center  min-w-[24px]">
+                  <Image
+                    src={arrow_right}
+                    alt="arrow"
+                    className="min-w-[24px]"
+                  ></Image>
                 </div>
                 <div className="flex flex-col gap-2 p-2">
                   <div
-                    className="text-2xl font-bold flex gap-2 items-center
+                    className="text-2xl font-bold flex gap-2 items-end justify-end max-[916px]:text-lg
                   "
                   >
                     <Image src={red_marker} alt="red marker"></Image>
                     To:
                   </div>
-                  <div className="text-start text-xs w-[170px]">
+                  <div className="text-end text-xs">
                     <div>{destiantionRef?.current?.value}</div>
                   </div>
                 </div>
@@ -810,31 +917,41 @@ export default function Map() {
               <div className="px-2 font-bold">Fare Sumamary</div>
               <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
                 <div className="flex w-full justify-between items-center">
-                  <div className="text-sm font-normal">
+                  <div className="text-sm font-normal ">
                     Trip Fare {"(incl.Toll)"}
                   </div>
-                  <div className="text-sm font-normal text-start">
-                    {finalbill}
+                  <div className="text-sm font-normal text-start flex items-center">
+                    <FaIndianRupeeSign className="text-xs" />
+
+                    {formatNumberWithCommas(netfare)}
                   </div>
                 </div>
-                <div className="flex w-full justify-between items-center">
-                  <div className="text-sm font-normal">
-                    Coupon discount - AHMXS
+                {showCouponInBill && (
+                  <div className="flex w-full justify-between items-center">
+                    <div className="text-sm font-normal">
+                      Coupon discount - {finalcoupon}
+                    </div>
+                    <div className="text-sm font-normal text-green-500 text-start flex items-center">
+                      -
+                      <FaIndianRupeeSign className="text-xs" />
+                      {formatNumberWithCommas(couponAmount)}
+                    </div>
                   </div>
-                  <div className="text-sm font-normal text-green-500 text-start">
-                    - Rs 20
-                  </div>
-                </div>
+                )}
                 <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
                   <div className="text-sm font-normal">Net Fare</div>
-                  <div className="text-sm font-normal text-start">
-                    {finalbill}
+                  <div className="text-sm font-normal text-start flex items-center">
+                    <FaIndianRupeeSign className="text-xs" />
+
+                    {formatNumberWithCommas(netfare)}
                   </div>
                 </div>
                 <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
                   <div className="text-sm font-semibold">Amount Payable</div>
-                  <div className="text-sm font-semibold text-start">
-                    {finalbill}
+                  <div className="text-sm font-bold text-start flex items-center">
+                    <FaIndianRupeeSign className="text-xs" />
+
+                    {formatNumberWithCommas(finalbill)}
                   </div>
                 </div>
               </div>

@@ -49,7 +49,12 @@ interface userSelectInterface {
   length: string;
   height: string;
 }
+interface category_interface {
+  id: string;
+  name: string;
+}
 export type {
+  category_interface,
   userSelectInterface,
   notification_interface,
   FormData,

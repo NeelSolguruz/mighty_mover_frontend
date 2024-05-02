@@ -152,7 +152,7 @@ export default function Navbar() {
               variants={containerVariants}
               initial="close"
               animate={containerControls}
-              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000] max-[324px]:w-[320px]"
+              className="w-[300px] bg-white opacity-95 h-lvh absolute top-0 left-0 overflow-y-auto z-[100000000] max-[324px]:w-[320px] "
             >
               <div className="flex flex-col w-full fixed top-0 left-0">
                 <div className="mt-6 ">
