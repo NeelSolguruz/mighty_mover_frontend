@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { error } from "console";
+// import { error } from "console";
 const config = {
-  baseURL: "http://192.168.68.68:3000",
+  baseURL: "http://192.168.68.78:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
