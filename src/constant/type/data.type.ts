@@ -10,7 +10,7 @@ type documentData = {
   aadhar: File | null;
   licence: File | null;
   pancard: File | null;
-  image: File | null;
+  vehicle: File | null;
 };
 
 interface FAQItem {

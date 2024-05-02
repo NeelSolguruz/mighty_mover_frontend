@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
+import { Titillium_Web } from "next/font/google";
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
-import "@/app/globals.css";
-
+const TitilliumWeb = Titillium_Web({
+  weight: ["400", "600", "700", "900", "200", "300"],
+  subsets: ["latin"],
+  display: "swap",
+});
 export const metadata: Metadata = {
   title: "Mighty Movers",
   description: "Created by 3 fresh developers",
@@ -18,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={TitilliumWeb.className}>
         <Navbar />
 
         <Toaster

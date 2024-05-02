@@ -96,9 +96,9 @@ const ProductTableRow = () => {
             <th scope="col" className="px-6 py-3 ">
               amountCollected
             </th>
-            <th scope="col" className="px-6 py-3 ">
+            {/* <th scope="col" className="px-6 py-3 ">
               Action
-            </th>
+            </th> */}
           </tr>
         </thead>
         <tbody>
@@ -106,6 +106,7 @@ const ProductTableRow = () => {
             <tr
               key={item.id}
               className="  border-b  text-center  w-full hover:bg-gray-100 transition-all duration-300"
+              onClick={() => handleMapButtonClick(item)}
             >
               {/* <td className="w-4 p-4">
           <div className="flex items-center">
@@ -135,20 +136,19 @@ const ProductTableRow = () => {
               <td className="px-6 py-3 border">{item.status}</td>
               <td className="px-6 py-3 border">{item.paymentType}</td>
               <td className="px-6 py-3 border">{item.amountCollected}</td>
-              <td className="flex items-center px-6 py-3 text-center">
-                <button
+              {/* <td className="flex items-center px-6 py-3 text-center"> */}
+              {/* <button
                   className="font-medium text-blue-600 text-center px-6 py-5 "
-                  onClick={() => handleMapButtonClick(item)}
                 >
                   <InfoSvg />
-                </button>
-                {/* <button
+                </button> */}
+              {/* <button
                 className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                 onClick={() => handleRemoveButtonClick()}
               >
                 Remove
               </button> */}
-              </td>
+              {/* </td> */}
             </tr>
           ))}
         </tbody>
