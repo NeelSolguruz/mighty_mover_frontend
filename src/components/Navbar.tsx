@@ -157,7 +157,7 @@ export default function Navbar() {
               <div className="flex flex-col w-full fixed top-0 left-0">
                 <div className="mt-6">
                   <div className="flex justify-between">
-                    <div className="flex w-full justify-center items-center mb-6 py-2 text-xl pl-6">
+                      <div className="flex w-full justify-center items-center mb-6 py-2 text-xl pl-6">
                       <div className="w-[130px]">
                         <NavLogo />
                       </div>
@@ -283,7 +283,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="flex mr-12 w-full gap-10 justify-center text-base max-lg:hidden">
+          <div className="flex w-8/12 gap-10 justify-center text-base max-lg:hidden">
             {NAVBAR.LAPTOP.map((item, index) => (
               <Link key={index} href={item.url} className={item.class}>
                 {item.text}
@@ -291,7 +291,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="">
+          <div>
             {user.email || driver?.email ? (
               <div className="flex justify-end gap-2 items-center w-full px-2">
                 <div>
@@ -370,19 +370,20 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link
-                href="/login"
-                className="w-full flex items-end justify-end px-2"
-              >
-                <FaUserCircle className="size-10 hover:text-[#2967ff] hover:scale-125 transition-all" />
-              </Link>
+              <div className="max-lg:hidden w-full">
+                    <Link
+                      href="/register"
+                      className=""
+                    >
+                      <button className="bg-[#2967ff] p-2 text-lg rounded-lg text-white transition duration-100 hover:bg-blue-500 active:bg-blue-400">Get Started</button>
+                    </Link>
+              </div>
+
             )}
-            {/* <div>
+      {/* <div>
             <Link href='/register'><button className="bg-[#2967ff] p-3 rounded-lg text-white font-semibold transition duration-300 hover:bg-blue-500 hover:scale-105">Get Started</button></Link>
           </div> */}
           </div>
-
-          {/* side panel */}
         </div>
       )}
     </>

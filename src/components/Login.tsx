@@ -228,8 +228,8 @@ export default function Login() {
                               <input
                                 key={index}
                                 ref={(el) =>
-                                  (inputs.current[index] =
-                                    el as HTMLInputElement)
+                                (inputs.current[index] =
+                                  el as HTMLInputElement)
                                 }
                                 type="text"
                                 id={`otp${index + 1}`}
@@ -298,9 +298,8 @@ export default function Login() {
                         onChange={handleEmailChange}
                       />
                       <p
-                        className={`text-red-500 transition-all ${
-                          emailError ? "opacity-100" : "opacity-0"
-                        }`}
+                        className={`text-red-500 transition-all ${emailError ? "opacity-100" : "opacity-0"
+                          }`}
                       >
                         {emailError}
                       </p>
@@ -330,9 +329,8 @@ export default function Login() {
                         onChange={handlePasswordChange}
                       />
                       <p
-                        className={`text-red-500 transition-all ${
-                          passwordError ? "opacity-100" : "opacity-0"
-                        }`}
+                        className={`text-red-500 transition-all ${passwordError ? "opacity-100" : "opacity-0"
+                          }`}
                       >
                         {passwordError}
                       </p>

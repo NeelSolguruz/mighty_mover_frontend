@@ -71,7 +71,7 @@ export default function Home() {
             <Image
               src={backgroud_image}
               alt="background image"
-              className="opacity-75 w-full h-96 max-lg:h-auto"
+              className="opacity-75 w-full h-96 max-lg:h-auto object-cover"
             />
           </div>
           <div className="w-full flex justify-center">
@@ -282,9 +282,8 @@ export default function Home() {
                   {item.question}
                 </span>
                 <svg
-                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
+                  className={`fill-amber-500 shrink-0 ml-8 transition-transform duration-200 ${openIndex === index ? "rotate-180" : ""
+                    }`}
                   width="16"
                   height="16"
                   xmlns="http://www.w3.org/2000/svg"
@@ -306,11 +305,10 @@ export default function Home() {
                 </svg>
               </button>
               <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
-                  openIndex === index
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                }`}
+                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${openIndex === index
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+                  }`}
               >
                 <div className="overflow-hidden">
                   <span className="text-sm text-black">{item.answer}</span>
