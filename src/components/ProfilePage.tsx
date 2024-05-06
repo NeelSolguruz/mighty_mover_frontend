@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { update_name } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
 
-
 export default function ProfilePage() {
   const [user_data, setuserdata] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -17,39 +16,38 @@ export default function ProfilePage() {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-  const router=useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await http.get("/api/v1/user/profile");
-        setuserdata(response.data.data);
-        setName(response.data.data.first_name);
-        setLastName(response.data.data.last_name);
-        setEmail(response.data.data.email);
-        setContact(response.data.data.contact);
-
-        setLoading(false);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          const axiosError = error as AxiosError<{
-            status: number;
-            message: string;
-          }>;
-          if (axiosError.response) {
-            console.log("Response Error", axiosError.response);
-            toast.error(axiosError.response.data.message);
-          } else if (axiosError.request) {
-            console.log("Request Error", axiosError.request);
-          } else {
-            console.log("Error", axiosError.message);
-          }
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await http.get("/api/v1/user/profile");
+      setuserdata(response.data.data);
+      setName(response.data.data.first_name);
+      setLastName(response.data.data.last_name);
+      setEmail(response.data.data.email);
+      setContact(response.data.data.contact);
+      setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
         }
-      } finally {
-        setLoading(false);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -57,14 +55,13 @@ export default function ProfilePage() {
     e.preventDefault();
     try {
       const patch_data = await http.patch("/api/v1/user/profile", {
-        "first_name":firstname,
-        "last_name":lastname,
-        "contact":contact,
+        first_name: firstname,
+        last_name: lastname,
+        contact: contact,
       });
-      dispatch(update_name(firstname))
+      dispatch(update_name(firstname));
       toast.success(patch_data.data.message);
-      router.push('/', { scroll: false })
-
+      router.push("/", { scroll: false });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{

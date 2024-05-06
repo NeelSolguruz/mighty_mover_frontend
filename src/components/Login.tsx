@@ -52,14 +52,6 @@ export default function Login() {
       });
       toast.success(user_details.data.message);
       dispatch(useradd(user_details.data.data));
-      localStorage.setItem(
-        "data",
-        JSON.stringify({
-          user: user_details.data.data.first_name,
-          token: user_details.data.data.token,
-          email: user_details.data.data.email,
-        })
-      );
 
       router.push("/Booking", { scroll: false });
       setLoading(false);

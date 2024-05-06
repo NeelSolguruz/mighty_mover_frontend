@@ -45,24 +45,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     useradd: (state, action) => {
+      console.log(action.payload);
       state.token = action.payload.token;
-      state.user = action.payload.user;
+      state.user = action.payload.first_name;
       state.email = action.payload.email;
     },
     update_name: (state, action) => {
       state.user = action.payload;
-      console.log("update", action.payload);
-      const data = localStorage.getItem("data") || null;
-      const token = data && JSON.parse(data || "");
-
-      localStorage.setItem(
-        "data",
-        JSON.stringify({ ...token, user: action.payload })
-      );
     },
     userlogout: (state) => {
       (state.user = null), (state.email = null), (state.token = null);
-      localStorage.removeItem("data");
     },
   },
 });

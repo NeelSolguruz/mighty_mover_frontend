@@ -64,14 +64,14 @@ export default function Home() {
 
   return (
     <>
-      <div>
+      <div className="w-full">
         {/* STARTING IMAGE*/}
-        <div className="relative">
-          <div className="bg-black">
+        <div className="relative w-full">
+          <div className="bg-black w-full">
             <Image
               src={backgroud_image}
               alt="background image"
-              className="opacity-75 w-full h-96 max-lg:h-auto"
+              className="opacity-50 w-full h-[350px] max-lg:h-auto object-cover"
             />
           </div>
           <div className="w-full flex justify-center">
