@@ -4,6 +4,7 @@ import Image from "next/image";
 // import InfoSvg from "@/assets/Images/icons/infoSvg";
 import { documentData } from "@/constant/type/data.type";
 import form_http from "@/http/formHttp";
+import { MdOutlineImageNotSupported } from "react-icons/md";
 
 interface Document {
   id: string;
@@ -23,7 +24,7 @@ function DriverDocument() {
   // const [selectOptions, setSelectOptions] = useState("");
   const [selectOptions, setSelectOptions] = useState<Set<string>>(new Set());
   // const [updatePrivewUrl, setUpdatePrivewUrl] = useState<string | undefined>(undefined);
-
+  const [uploadButtonLoading, setUploadButtonLoading] = useState(false);
   const [selectedDocumentType, setSelectedDocumentType] =
     useState<keyof documentData>("aadhar");
 
@@ -87,6 +88,7 @@ function DriverDocument() {
 
   const handleUpload = async () => {
     try {
+      setUploadButtonLoading(true);
       const formData = new FormData();
       console.log(documentFormData[selectedDocumentType]);
 
@@ -104,6 +106,8 @@ function DriverDocument() {
       fetchDocuments();
     } catch (error) {
       console.log(error);
+    } finally {
+      setUploadButtonLoading(false);
     }
   };
 
@@ -139,100 +143,153 @@ function DriverDocument() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full h-auto">
-        <div>
+      <div className="flex flex-row gap-4 w-full h-full">
+        <div className="w-1/2 h-[400px] max-h-[600px] overflow-auto ">
           {!selectOptions.has("Adharcard") ||
           !selectOptions.has("Licence") ||
           !selectOptions.has("Image") ||
           !selectOptions.has("Pancard") ? (
             <>
-              <table className="table-auto w-full text-sm text-left">
-                <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto ">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 ">
-                      Index
-                    </th>
-
-                    <th scope="col" className="px-6 py-3 ">
-                      Document Type
-                    </th>
-
-                    <th scope="col" className="px-6 py-3 ">
-                      Upload Documnet
-                    </th>
-                    <th scope="col" className="px-6 py-3 ">
-                      Document Preview
-                    </th>
-                    <th scope="col" className="px-6 py-3 ">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="text-center border">1</td>
+              <div className="w-full h-full max-h-[400px] overflow-auto  flex justify-center items-center p-3">
+                <div className=" w-[90%] h-full border rounded shadow-md">
+                  <div className="flex flex-col w-full h-full gap-4 p-2">
+                    <div className="flex-1 text-center text-lg font-semibold">
+                      Upload Your Document Here
+                    </div>
                     {!selectOptions.has("Adharcard") ||
                     !selectOptions.has("Licence") ||
                     !selectOptions.has("Vehicle") ||
                     !selectOptions.has("Pancard") ? (
-                      <td className="text-center border">
-                        <select
-                          name="documentType"
-                          id="documentType"
-                          value={selectedDocumentType}
-                          onChange={(e) =>
-                            setSelectedDocumentType(
-                              e.target.value as keyof documentData
-                            )
-                          }
-                        >
-                          {/* <option selected>select your document</option> */}
-                          {!selectOptions.has("Adharcard") && (
-                            <option value="aadhar">Aadhar Card</option>
-                          )}
-                          {!selectOptions.has("Licence") && (
-                            <option value="licence">Driving licence</option>
-                          )}
-                          {!selectOptions.has("Pancard") && (
-                            <option value="pancard">Pancard</option>
-                          )}
-                          {!selectOptions.has("Vehicle") && (
-                            <option value="vehicle">Vehicle</option>
-                          )}
-                        </select>
-                      </td>
+                      <div className="flex flex-row gap-3  w-full">
+                        <div className="w-1/2 flex justify-start p-1 text-center">
+                          <label htmlFor="Document Type">
+                            Select your Document
+                          </label>
+                        </div>
+                        <div className="w-1/2 flex justify-end p-1 border border-purple-500">
+                          <select
+                            name="documentType"
+                            id="documentType"
+                            value={selectedDocumentType}
+                            onChange={(e) =>
+                              setSelectedDocumentType(
+                                e.target.value as keyof documentData
+                              )
+                            }
+                            className="w-full"
+                          >
+                            {!selectOptions.has("Adharcard") && (
+                              <option value="aadhar">Aadhar Card</option>
+                            )}
+                            {!selectOptions.has("Licence") && (
+                              <option value="licence">Driving Licence</option>
+                            )}
+                            {!selectOptions.has("Pancard") && (
+                              <option value="pancard">Pancard</option>
+                            )}
+                            {!selectOptions.has("Vehicle") && (
+                              <option value="vehicle">Vehicle</option>
+                            )}
+                          </select>
+                        </div>
+                      </div>
                     ) : null}
-                    <td className="text-center border">
-                      <input
-                        type="file"
-                        id="documentFile"
-                        name="documentFile"
-                        onChange={handleDocumentChange(selectedDocumentType)}
-                      />
-                    </td>
-                    <td className=" border whitespace-nowrap p-3 flex justify-center content-center">
-                      {documentFormData[selectedDocumentType] && (
-                        <Image
-                          src={selectedDocumentPreview || ""}
-                          width={500}
-                          height={500}
-                          alt="Document Preview"
-                          className="w-44 h-44"
+                    <div className="flex flex-row gap-3  w-full ">
+                      <div className="w-1/2 flex justify-start  text-center">
+                        <label
+                          htmlFor="Document Type"
+                          // className="text-sm font-medium text-gray-900 "
+                        >
+                          upload your Document
+                        </label>
+                      </div>
+                      <div className="w-1/2 flex justify-end ">
+                        <input
+                          type="file"
+                          id="documentFile"
+                          className="w-full text-gray-500 text-sm bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-2  file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded"
+                          name="documentFile"
+                          onChange={handleDocumentChange(selectedDocumentType)}
                         />
+
+                        {/* <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+<input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"> */}
+                      </div>
+                    </div>
+                    {/* for image preview */}
+                    <div className=" w-full h-full">
+                      {documentFormData[selectedDocumentType] ? (
+                        <>
+                          <div className="w-full h-full">
+                            <div className="flex flex-row w-full">
+                              <div className="flex-1 border text-center flex justify-center p-3 items-center">
+                                <Image
+                                  src={selectedDocumentPreview || ""}
+                                  width={350}
+                                  height={300}
+                                  alt="Document Preview"
+                                  className="max-h-[150px] max-w-[200px] rounded shadow-md border object-contain"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex-1 border text-center">
+                              <button
+                                type="button"
+                                className="inline-block rounded bg-blue-500 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-blue-600 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-blue-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+                                onClick={handleUpload}
+                              >
+                                {uploadButtonLoading ? (
+                                  <svg
+                                    className="animate-spin h-5 w-5 absolute top-1/2 left-1/2 -mt-2 -ml-2"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <circle
+                                      className="opacity-25"
+                                      cx="12"
+                                      cy="12"
+                                      r="10"
+                                      stroke="currentColor"
+                                      strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                      className="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.001 8.001 0 0120.042 11H12V4.958c-1.073 0-2.117.215-3.1.635m1.129 14.284A8.003 8.003 0 014.5 16.042M4.958 12H12V20.042a8.003 8.003 0 01-3.1-.635m13.196 1.774a8 8 0 11-11.313 0"
+                                    ></path>
+                                  </svg>
+                                ) : null}
+                                Click me
+                              </button>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <hr />
+                          <div className=" w-full h-full flex  flex-col justify-center items-center">
+                            <figure className="max-w-lg max-h-full flex flex-col">
+                              <div className="h-auto max-w-full rounded-lg flex justify-center">
+                                <MdOutlineImageNotSupported size={64} />
+                              </div>
+                              <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
+                                Not Uploaded Yet
+                              </figcaption>
+                            </figure>
+                          </div>
+                        </>
                       )}
-                    </td>
-                    <td className="text-center border">
-                      <button onClick={handleUpload}>Upload</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </>
           ) : (
             <></>
           )}
         </div>
-        <div className="max-w-full max-h-[200px] overflow-auto ">
+        <div className="w-full h-full max-h-[600px] overflow-auto border border-green-500">
           <table className="table-auto w-full text-sm text-left ">
             <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto sticky">
               <tr>

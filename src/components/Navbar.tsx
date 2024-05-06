@@ -130,7 +130,7 @@ export default function Navbar() {
     } else {
       containerControls.start("close");
     }
-  }, [clicked]);
+  }, [clicked, containerControls]);
 
   return (
     <>
@@ -232,7 +232,7 @@ export default function Navbar() {
                         </>
                       )}
 
-                      {(user.email && show) || (driver?.email && show) ? (
+                      {/* {user.email && show ? (
                         <>
                           <motion.div
                             initial={{ height: "0px" }}
@@ -243,11 +243,42 @@ export default function Navbar() {
                             }}
                             className="overflow-hidden"
                           >
-                            <Link href="/driver-profile">
-                              <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                              <Link href="/driver-profile">
+                                <div className="px-4">Profile</div>{" "}
+                              </Link>
+                            </div>
+
+                            <div
+                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
+                              onClick={clearstorage}
+                            >
+                              <div className="px-4">logout</div>
+                            </div>
+                          </motion.div>
+                        </>
+                      ) : null} */}
+                      {driver?.email && show ? (
+                        <>
+                          <motion.div
+                            initial={{ height: "0px" }}
+                            whileInView={{ height: "auto" }}
+                            transition={{
+                              type: "tween",
+                              duration: 0.5,
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                              <Link href="/driver-profile">
+                                <div className="px-4">Address</div>
+                              </Link>
+                            </div>
+                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
+                              <Link href="/driver-profile">
                                 <div className="px-4">Profile</div>
-                              </div>
-                            </Link>
+                              </Link>
+                            </div>
 
                             <div
                               className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
