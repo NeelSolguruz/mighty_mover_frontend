@@ -375,7 +375,7 @@ export default function Navbar() {
                       href="/register"
                       className=""
                     >
-                      <button className="bg-[#2967ff] p-2 text-lg rounded-lg text-white transition duration-100 hover:bg-blue-500 active:bg-blue-400">Get Started</button>
+                      <button className="border border-[#2967ff] p-2 text-lg rounded-lg text-[#2967ff] font-semibold transition duration-100 hover:bg-[#2867ff] hover:text-white active:bg-blue-500">Get Started</button>
                     </Link>
               </div>
 
