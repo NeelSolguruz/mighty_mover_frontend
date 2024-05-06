@@ -76,6 +76,8 @@
 // };
 
 // export default form_http;
+import { useAppSelector } from "@/redux/hooks";
+import makeStore, { RootState } from "@/redux/store";
 import axios, { AxiosError } from "axios";
 
 export interface ApiErrorData {
@@ -95,7 +97,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const form_http = axios.create({
-  baseURL: "http://192.168.68.78:3000",
+  baseURL: "http://192.168.68.79:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "multipart/form-data",
@@ -112,21 +114,17 @@ form_http.interceptors.request.use(
     config.signal = abortController.signal;
 
     // Set Authorization header based on user type (driver or regular user)
-    const userData = localStorage.getItem("data") || null;
-    const driverData = localStorage.getItem("driver") || null;
+    const state = makeStore.getState() as RootState;
+    const user = state.user;
+    const driver = state.driver;
+
     let token = null;
-
-    if (userData) {
-      const user = JSON.parse(userData);
-      token = user.token;
-    } else if (driverData) {
-      const driver = JSON.parse(driverData);
-      token = driver.token;
+    if (user) {
+      token = user?.user?.token;
+    } else {
+      token = driver?.driver?.token;
     }
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    config.headers.Authorization = `Bearer ${token}`;
 
     return config;
   },

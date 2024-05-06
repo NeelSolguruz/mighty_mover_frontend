@@ -53,7 +53,12 @@ interface category_interface {
   id: string;
   name: string;
 }
+interface paymnet_type_interface {
+  payment_type: string;
+  id: string;
+}
 export type {
+  paymnet_type_interface,
   category_interface,
   userSelectInterface,
   notification_interface,

@@ -6,7 +6,11 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube, FaTwitter } from "react-icons/fa";
-import { google_play, app_store, porter_white } from "../assets/Images/imageassets";
+import {
+  google_play,
+  app_store,
+  porter_white,
+} from "../assets/Images/imageassets";
 
 export default function Footer() {
   return (
@@ -44,8 +48,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-            <div
-              className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2">
+            <div className="w-max max-md:mt-3.5 max-sm:mt-2 mb-2">
               <h1 className="text-xl font-semibold">Support</h1>
               <ul className="flex flex-col gap-2 mt-4">
                 {SUPPORT.map((item, index) => (
@@ -55,8 +58,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-            <div
-              className="flex flex-col gap-3 max-sm:justify-center">
+            <div className="flex flex-col gap-3 max-sm:justify-center">
               <div>
                 <Image
                   src={google_play}
@@ -73,7 +75,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-3 w-11/12">
+          {/* <div className="flex flex-col gap-3 w-11/12">
             <div className="text-lg mt-10 font-semibold flex justify-start"><p>We are here</p></div>
             <div
               className="text-sm grid grid-cols-5 gap-5 max-lg:grid-cols-4 max-xs:text-[12px]">
@@ -93,7 +95,7 @@ export default function Footer() {
                 </>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col items-center pb-10">
           <div className="w-11/12 flex justify-between mt-8 mb-2 items-center max-md:flex-col max-md:gap-5">
@@ -105,7 +107,7 @@ export default function Footer() {
               <FaTwitter size={30} />
             </div>
             <div className="text-gray-300 text-center text-sm">
-              &copy;@2024 SolGuruz LLP Pvt. Ltd.  | CIN:1234567890123456789
+              &copy;@2024 SolGuruz LLP Pvt. Ltd. | CIN:1234567890123456789
             </div>
           </div>
         </div>

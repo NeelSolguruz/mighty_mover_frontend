@@ -18,21 +18,14 @@ const driverSlice = createSlice({
   reducers: {
     driverAdd: (state, action) => {
       state.token = action.payload.token;
-      state.driver = action.payload.driver;
+      state.driver = action.payload.name;
       state.email = action.payload.email;
     },
     driverUpdate: (state, action) => {
       state.driver = action.payload;
-      const data = localStorage.getItem("driver") || null;
-      const token = data && JSON.parse(data || "");
-      localStorage.setItem(
-        "driver",
-        JSON.stringify({ ...token, driver: action.payload })
-      );
     },
     driverLogout: (state) => {
       (state.token = null), (state.driver = null), (state.email = null);
-      localStorage.removeItem("driver");
     },
   },
 });

@@ -32,23 +32,14 @@ export default function Navbar() {
 
   const [clicked, setClicked] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
-  const localData = localStorage.getItem("data") || null;
-  const driverData = localStorage.getItem("driver") || null;
+
   const [profile, setprofile] = useState(false);
-  const localUser = localData && JSON.parse(localData);
-  const localDriver = driverData && JSON.parse(driverData);
+
   const [loading, setLoading] = useState(false);
   const [show, setshow] = useState(false);
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const driver = useAppSelector((state) => state.driver);
-  useEffect(() => {
-    if (localUser) {
-      dispatch(useradd(localUser));
-    } else if (localDriver) {
-      dispatch(driverAdd(localDriver));
-    }
-  }, [dispatch, localUser, user, localDriver, driver]);
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -83,10 +74,14 @@ export default function Navbar() {
   };
 
   const clearstorage = async () => {
+    console.log("click");
+    console.log("click", user);
     try {
-      if (localUser) {
+      console.log(user.user.user === "prit");
+      if (true) {
         const logout_data = await http.get("/api/v1/user/logout");
         toast.success(logout_data.data.message);
+        console.log("api hit");
         dispatch(userlogout());
       } else {
         const logout_data = await http.get("/api/v1/driver/logout");
@@ -114,7 +109,7 @@ export default function Navbar() {
     setClicked(false);
   };
   const openprofile = () => {
-    if (localUser) {
+    if (user) {
       console.log("user is logged in");
       router.push("/profile", { scroll: false });
     } else {
@@ -190,13 +185,13 @@ export default function Navbar() {
                         </div>
                       </Link>
 
-                      {user.email || driver?.email ? (
+                      {user.user.email || driver?.driver?.email ? (
                         <div className="w-full justify-between items-center flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
                           <div className="px-4">
                             <div className=" flex justify-start items-center gap-3">
-                              {localUser ? (
+                              {user ? (
                                 <div className="bg-[#2967ff] text-white rounded-full py-2 px-4">
-                                  {user?.user?.split("")[0].toUpperCase()}
+                                  {user?.user?.user?.split("")[0].toUpperCase()}
                                 </div>
                               ) : (
                                 <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
@@ -204,10 +199,10 @@ export default function Navbar() {
                                 </div>
                               )}
                               <div>
-                                {localUser ? (
-                                  <>{user?.user?.toUpperCase()}</>
+                                {user ? (
+                                  <>{user?.user?.user?.toUpperCase()}</>
                                 ) : (
-                                  <>{driver?.driver?.toUpperCase()}</>
+                                  <>{driver?.driver?.driver?.toUpperCase()}</>
                                 )}
                               </div>
                             </div>
@@ -232,7 +227,8 @@ export default function Navbar() {
                         </>
                       )}
 
-                      {/* {user.email && show ? (
+                      {(user?.user?.email && show) ||
+                      (driver?.driver?.email && show) ? (
                         <>
                           <motion.div
                             initial={{ height: "0px" }}
@@ -243,45 +239,15 @@ export default function Navbar() {
                             }}
                             className="overflow-hidden"
                           >
-                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
-                              <Link href="/driver-profile">
-                                <div className="px-4">Profile</div>{" "}
-                              </Link>
-                            </div>
-
                             <div
-                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
-                              onClick={clearstorage}
+                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]"
+                              onClick={openprofile}
                             >
-                              <div className="px-4">logout</div>
-                            </div>
-                          </motion.div>
-                        </>
-                      ) : null} */}
-                      {driver?.email && show ? (
-                        <>
-                          <motion.div
-                            initial={{ height: "0px" }}
-                            whileInView={{ height: "auto" }}
-                            transition={{
-                              type: "tween",
-                              duration: 0.5,
-                            }}
-                            className="overflow-hidden"
-                          >
-                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
-                              <Link href="/driver-profile">
-                                <div className="px-4">Address</div>
-                              </Link>
-                            </div>
-                            <div className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
-                              <Link href="/driver-profile">
-                                <div className="px-4">Profile</div>
-                              </Link>
+                              <div className="px-4">Profile</div>
                             </div>
 
                             <div
-                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
+                              className="w-full justify-start flex text-xl font-normal border-red-600 border-2 p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
                               onClick={clearstorage}
                             >
                               <div className="px-4">logout</div>
@@ -323,7 +289,7 @@ export default function Navbar() {
           </div>
 
           <div className="">
-            {user.email || driver?.email ? (
+            {user?.user?.email || driver?.driver?.email ? (
               <div className="flex justify-end gap-2 items-center w-full px-2">
                 <div>
                   <button
@@ -355,8 +321,8 @@ export default function Navbar() {
                 </div>
                 <div className="flex items-center max-lg:hidden">
                   <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                    {localUser ? (
-                      user?.user?.split("")[0].toUpperCase()
+                    {user ? (
+                      user?.user?.user?.split("")[0].toUpperCase()
                     ) : (
                       <FaTruck />
                     )}
