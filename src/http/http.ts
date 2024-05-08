@@ -96,7 +96,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const http = axios.create({
-  baseURL: "http://192.168.68.79:3000",
+  baseURL: "http://192.168.68.103:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const http = axios.create({
 // Create a request interceptor for the instance and get accessToken
 http.interceptors.request.use(
   async (config) => {
-    console.log("dfdf");
+    // console.log("dfdf");
 
     // Attach an AbortController to the request
     const requestToken = generateRequestToken(config);
@@ -118,10 +118,12 @@ http.interceptors.request.use(
     const state = makeStore.getState() as RootState;
     const user = state.user;
     const driver = state.driver;
+    console.log(driver.driver.token);
 
     let token = null;
-    if (user) {
-      token = user?.user?.token;
+    if (user?.user?.user) {
+      console.log(user.user);
+      token = user?.user?.token; 
     } else {
       token = driver?.driver?.token;
     }

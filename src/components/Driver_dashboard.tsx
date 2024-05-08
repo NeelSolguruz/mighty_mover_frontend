@@ -4,7 +4,7 @@ import { tableData } from "@/constant/driverOrderData";
 import { useJsApiLoader } from "@react-google-maps/api";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import ProductTableRow from "./DriverMapTableRow";
 import DriverDocument from "./DriverDocument";
@@ -17,6 +17,19 @@ export default function Driver_dashboard() {
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowText, setInfoWindowText] = useState("");
   const [showMap, setShowMap] = useState(false);
+  const [showTabs, setShowTabs] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setShowTabs(window.innerWidth <= 768);
+    };
+
+    handleResize(); 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const router = useRouter();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE",
@@ -26,16 +39,17 @@ export default function Driver_dashboard() {
     <div className="w-full bg-gray-100 flex flex-col  ">
       <div className="flex max-md:flex-col w-full h-full gap-2 p-4 ">
         {/* other details model */}
-        <div className="grid grid-rows-3 gap-2 w-[30%] p-4  max-md:w-full max-md:overflow-x-scroll max-md:hide-scroll-bar max-md:flex max-md:flex-row max-md:flex-grow max-md:p-0 max-md:m-auto">
-          <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col items-center max-md:w-[250px]">
-            <div className="text-2xl font-bold w-11/12 text-start text-white px-1 pt-2 flex flex-col max-md:text-xl">
+
+        <div className="grid grid-rows-3 gap-2 w-[30%]  max-md:w-full max-md:p-0 max-md:m-auto max-md:grid-cols-2 max-md:grid-rows-1 ">
+          <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col items-center max-md:w-full">
+            <div className="text-2xl font-bold w- 11/12 text-start text-white px-1 pt-2 flex flex-col max-md:text-xl">
               Revenue
             </div>
-            <div className="text-sm font-semibold w-11/12 text-start text-white px-1.5 max-md:text-xs">
+            <div className="text-sm font-semibold w-11/12 text-start text-white px-1.5 max-md:text-xs max-md:text-center">
               Current Month
             </div>
 
-            <div className=" w-full h-full flex items-center justify-center pb-6 max-md:flex max-md:flex-row max-md:w-[250px]">
+            <div className=" w-full h-full flex items-center justify-center pb-6 max-md:flex max-md:flex-row ">
               <div className="text-white text-6xl font-bold  max-md:text-2xl">
                 {/* <CountUp end={Revenue} duration={1} /> */}
                 {Revenue >= 10000 ? (
@@ -52,8 +66,8 @@ export default function Driver_dashboard() {
               </div>
             </div>
           </div>
-          <div className="grid grid-rows-2 grid-cols-2 gap-2 w-full max-md:flex max-md:flex-row  ">
-            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto max-md:w-[250px]">
+          <div className="grid grid-rows-2 grid-cols-2 gap-2 w-full  max-md:w-full">
+            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
               <div className="text-md font-semibold w-full text-start  text-white italic max-md:text-sm ">
                 In Progress
               </div>
@@ -61,7 +75,7 @@ export default function Driver_dashboard() {
                 <CountUp end={Order} duration={1} />
               </div>
             </div>
-            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto max-md:w-[250px]">
+            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
               <div className="text-md font-semibold w-full text-start  text-white italic">
                 Delivered
               </div>
@@ -69,7 +83,7 @@ export default function Driver_dashboard() {
                 <CountUp end={Order} duration={1} />
               </div>
             </div>
-            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto max-md:w-[250px]">
+            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
               <div className="text-md font-semibold w-full text-start  text-white italic">
                 Accepted
               </div>
@@ -77,7 +91,7 @@ export default function Driver_dashboard() {
                 <CountUp end={Order} duration={1} />
               </div>
             </div>
-            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto max-md:w-[250px]">
+            <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
               <div className="text-md font-semibold w-full text-start  text-white italic">
                 Rejected
               </div>
@@ -86,7 +100,7 @@ export default function Driver_dashboard() {
               </div>
             </div>
           </div>
-          <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col gap-2 items-center  max-md:flex-row-2 max-md:hidden">
+          <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col gap-2 items-center  max-md:hidden">
             <div className="w-11/12 text-start text-2xl font-bold px-1 pt-1.5 text-white  ">
               Your Goal
             </div>
@@ -106,11 +120,12 @@ export default function Driver_dashboard() {
             </div>
           </div>
         </div>
-        <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col gap-2 items-center max-md:flex max-md:flex-row-2 max-md:visible lg:hidden">
-          <div className="w-11/12 text-start text-2xl font-bold px-1 pt-1.5 text-white  ">
+        {/* you goal component for responsive */}
+        <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col gap-2 items-center w-full h-auto p-3 max-md:visible lg:hidden">
+          <div className="w-11/12 text-center text-2xl font-bold px-1 pt-1.5 text-white  ">
             Your Goal
           </div>
-          <div className="w-11/12 text-center text-4xl font-bold  text-white  flex gap-4 justify-center items-center">
+          <div className="w-11/12 text-center text-3xl font-bold  text-white flex gap-2 justify-center items-center">
             <div>
               <CountUp end={Order} duration={1} />/
               <CountUp end={goal} duration={1} />
@@ -120,13 +135,13 @@ export default function Driver_dashboard() {
             </div>
           </div>
           <div className="w-11/12 ">
-            <button className="w-full rounded-lg bg-white font-bold text-[#2967ff] text-2xl p-1 hover:scale-[1.03] transition-all duration-300">
+            <button className="w-full rounded-lg bg-white font-bold text-[#2967ff] text-xl p-1 hover:scale-[1.03] transition-all duration-300">
               Set a New Goal
             </button>
           </div>
         </div>
         {/* oderlist of driver */}
-        <div className="rounded-lg shadow-lg shadow-gray-400 bg-white w-full overflow-x-auto  ">
+        <div className="rounded-lg shadow-lg shadow-gray-400 bg-white w-full overflow-x-auto ">
           <div className="w-full">
             <ProductTableRow />
           </div>

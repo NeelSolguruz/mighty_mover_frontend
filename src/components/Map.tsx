@@ -1,5 +1,11 @@
 "use client";
-import React, { SetStateAction, useEffect, useRef, useState } from "react";
+import React, {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -52,6 +58,20 @@ import AnimationGif from "./Animation";
 import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { useAppSelector } from "@/redux/hooks";
+import Payment_complete from "./Payment_complete";
+// import Razorpay from "razorpay";
+// Extend the Window interface to include Razorpay
+// interface CustomWindow extends Window {
+// Razorpay?: any; // Adjust the type according to your usage
+// }
+
+// Declare Razorpay on window
+// declare const window: CustomWindow;
+
+// Now you can use window.Razorpay without TypeScript errors
+// window.Razorpay?.(options);
+
 export default function Map() {
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -104,6 +124,8 @@ export default function Map() {
   const [finalSubCategoryId, setFinalSubCategoryId] = useState("");
   const [finalConfirmationModal, setFinalConfirmationModal] = useState(false);
   const [animationGif, setanimationGif] = useState(false);
+  const [paymentVehicle, setPaymentTypeVehicle] = useState("");
+  const [user, setUserName] = useState("");
 
   const router = useRouter();
   const vehiclephoto = {
@@ -285,6 +307,7 @@ export default function Map() {
     setcontinue(item.vehicle_type);
     setDataDriverId(item.vehicle_id);
     setEstimationAmount(item.total_amount);
+    setPaymentTypeVehicle(item.vehicle_type);
     try {
       const response = await http.post(
         `/api/v1/estimation/${item.vehicle_id}`,
@@ -339,14 +362,14 @@ export default function Map() {
     const formatter = new Intl.NumberFormat("en-IN");
     return formatter.format(Number(number));
   }
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     try {
       const response = await http.get("/api/v1/Categories");
       setCategory(response.data.data);
     } catch (error) {
       message_error(error);
     }
-  };
+  }, []);
   const handlesubcategory = async (id: string) => {
     try {
       const response = await http.get(
@@ -357,21 +380,51 @@ export default function Map() {
       message_error(error);
     }
   };
-  const payment_type = async () => {
+  const payment_type = useCallback(async () => {
     try {
       const response = await http.get("/api/v1/payment-method");
       setPaymentType(response.data.data);
+      console.log(response.data.data);
       const payment_type_map = response.data.data;
 
       payment_type_map.map((item: any) => {
         item.name == "cash" && <>{setFinalPaymentTypeId(item.id)}</>;
+        item.name == "stripe" && <>{setFinalPaymentTypeId(item.id)}</>;
+        item.name == "razorpay" && <>{setFinalPaymentTypeId(item.id)}</>;
+        console.log("hit against");
       });
     } catch (error) {
       message_error(error);
     }
-  };
-
+  }, []);
+  // const userName = localStorage.getItem("persist:root");
+  // console.log(userName.user);
   const final_Book = async () => {
+    try {
+      const response = await http.post(
+        `/api/v1/bookings/?pickup_address_id=${pickUpAddressId}&delivery_address_id=${destinationAddressId}&estimation_id=${estimationid}&payment_method_id=${finalPaymentTypeId}&subcategory_id=${finalSubCategoryId}`
+      );
+      console.log("final_book_response : ", response);
+      // setanimationGif(true);
+      // toast.success(response.data.message);
+      // console.log("total price:", response.data.data[0].total_price);
+      setfinalbill(response.data.data.total_price);
+      setFinalConfirmationModal(true);
+    } catch (error) {
+      message_error(error);
+    }
+  };
+  const handleBook = async () => {
+    // <Payment_complete
+    //   pickUpAddressId={pickUpAddressId}
+    //   destinationAddressId={destinationAddressId}
+    //   estimationid={estimationid}
+    //   finalTransactionId={finalTransactionId}
+    //   finalPaymentTypeId={finalPaymentTypeId}
+    //   finalSubCategoryId={finalSubCategoryId}
+    // />;
+    console.log("finalbill: ", finalbill);
+
     if (paymentTypeName == "cash") {
       try {
         const response = await http.post("/api/v1/payments", {
@@ -380,8 +433,76 @@ export default function Map() {
           payment_type: 0,
         });
 
+        setanimationGif(true);
+        toast.success(response.data.message);
+        setTimeout(() => {
+          router.push("/Booking");
+        }, 2000);
+        // setFinalTransactionId(response.data.data.id);
+      } catch (error) {
+        message_error(error);
+      }
+    } else if (paymentTypeName == "razorpay") {
+      console.log("razorpay finalbill ", finalbill);
+
+      try {
+        const response = await http.post("/api/v1/process-payment/razorpay", {
+          amount: finalbill,
+          vehicle_type: paymentVehicle,
+          user_name: user,
+        });
+        const razorpayDetails = {
+          pickUpAddressId: pickUpAddressId,
+          destinationAddressId: destinationAddressId,
+          estimationid: estimationid,
+          // finalTransactionId: finalTransactionId,
+          finalPaymentTypeId: finalPaymentTypeId,
+          finalSubCategoryId: finalSubCategoryId,
+        };
+        localStorage.setItem(
+          "razorpayDetails",
+          JSON.stringify(razorpayDetails)
+        );
+        const razorpayPaymentURL = response.data.data;
+        // const payment = new window.Razorpay(razorpayPaymentURL);
+        // const paymentWindow = window.Razorpay(razorpayPaymentURL, "");
+        console.log(response.data.data);
         setFinalTransactionId(response.data.data.id);
-        setFinalConfirmationModal(true);
+        setFinalConfirmationModal(false);
+
+        router.push(razorpayPaymentURL);
+      } catch (error) {
+        message_error(error);
+      }
+    }  else if (paymentTypeName == "stripe") {
+      console.log("stripe finalbill ", finalbill);
+
+      try {
+        const response = await http.post("/api/v1/process-payment/stripe", {
+          amount: finalbill,
+          vehicle_type: paymentVehicle,
+          user_name: user,
+        });
+        // const razorpayDetails = {
+        //   pickUpAddressId: pickUpAddressId,
+        //   destinationAddressId: destinationAddressId,
+        //   estimationid: estimationid,
+        //   // finalTransactionId: finalTransactionId,
+        //   finalPaymentTypeId: finalPaymentTypeId,
+        //   finalSubCategoryId: finalSubCategoryId,
+        // };
+        // localStorage.setItem(
+        //   "razorpayDetails",
+        //   JSON.stringify(razorpayDetails)
+        // );
+        const razorpayPaymentURL = response.data.data;
+        // const payment = new window.Razorpay(razorpayPaymentURL);
+        // const paymentWindow = window.Razorpay(razorpayPaymentURL, "");
+        console.log("stripe response",response.data.data);
+        setFinalTransactionId(response.data.data.id);
+        setFinalConfirmationModal(false);
+
+        router.push(razorpayPaymentURL);
       } catch (error) {
         message_error(error);
       }
@@ -389,97 +510,87 @@ export default function Map() {
       toast.error("Tommorow");
     }
   };
-  const handleBook = async () => {
-    try {
-      const response = await http.post(
-        `/api/v1/bookings/?pickup_address_id=${pickUpAddressId}&delivery_address_id=${destinationAddressId}&estimation_id=${estimationid}&payment_id=${finalTransactionId}&payment_method_id=${finalPaymentTypeId}&subcategory_id=${finalSubCategoryId}`
-      );
-      setanimationGif(true);
-      setTimeout(() => {
-        router.push("/Booking");
-      }, 2000);
-    } catch (error) {
-      message_error(error);
-    }
-  };
-  const downloadPdf = () => {
-    const doc = new jsPDF("p", "mm", "a4");
 
-    // Add a title
-    doc.setTextColor(0, 0, 255); // Set text color to blue
-    doc.setFontSize(20);
-    doc.text("Receipt", 10, 10);
+  // const downloadPdf = () => {
+  //   const doc = new jsPDF("p", "mm", "a4");
 
-    doc.setFontSize(15);
-    doc.setTextColor(0);
-    doc.setFont("helvetica", "bold");
-    doc.text("Mighty Movers", 80, 10);
+  //   // Add a title
+  //   doc.setTextColor(0, 0, 255); // Set text color to blue
+  //   doc.setFontSize(20);
+  //   doc.text("Receipt", 10, 10);
 
-    doc.setFontSize(8);
-    doc.setTextColor(0);
-    doc.setFont("helvetica", "normal");
-    doc.text("Mighty Movers Head Office, 10, Sundarvan", 80, 15);
-    doc.text("Society, Besides Hyatt Regency, Ashram Rd,", 80, 19);
-    doc.text("Usmanpura, Ahmedabad, Gujarat 380014", 80, 23);
+  //   doc.setFontSize(15);
+  //   doc.setTextColor(0);
+  //   doc.setFont("helvetica", "bold");
+  //   doc.text("Mighty Movers", 80, 10);
 
-    doc.setFontSize(10);
-    doc.setTextColor(0);
-    doc.setFont("helvetica", "bold");
-    doc.text("Order ID:", 170, 8);
+  //   doc.setFontSize(8);
+  //   doc.setTextColor(0);
+  //   doc.setFont("helvetica", "normal");
+  //   doc.text("Mighty Movers Head Office, 10, Sundarvan", 80, 15);
+  //   doc.text("Society, Besides Hyatt Regency, Ashram Rd,", 80, 19);
+  //   doc.text("Usmanpura, Ahmedabad, Gujarat 380014", 80, 23);
 
-    doc.setFontSize(7);
-    doc.setTextColor(0);
-    doc.setFont("helvetica", "normal");
-    doc.text("123WSDSKJ231298Y98Y", 170, 12);
+  //   doc.setFontSize(10);
+  //   doc.setTextColor(0);
+  //   doc.setFont("helvetica", "bold");
+  //   doc.text("Order ID:", 170, 8);
 
-    doc.setTextColor(0); // Reset text color to black
-    doc.setFontSize(12);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 20);
+  //   doc.setFontSize(7);
+  //   doc.setTextColor(0);
+  //   doc.setFont("helvetica", "normal");
+  //   doc.text("123WSDSKJ231298Y98Y", 170, 12);
 
-    // Add bill details
-    const billData = [
-      { item: "Item 1", quantity: 2, price: 10 },
-      { item: "Item 2", quantity: 1, price: 20 },
-      { item: "Item 3", quantity: 3, price: 15 },
-    ];
+  //   doc.setTextColor(0); // Reset text color to black
+  //   doc.setFontSize(12);
+  //   doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 20);
 
-    const startY = 30;
-    const lineHeight = 10;
-    const startX = 10;
-    const cellWidth = 50;
-    const cellPadding = 5;
+  //   // Add bill details
+  //   const billData = [
+  //     { item: "Item 1", quantity: 2, price: 10 },
+  //     { item: "Item 2", quantity: 1, price: 20 },
+  //     { item: "Item 3", quantity: 3, price: 15 },
+  //   ];
 
-    doc.setFontSize(12);
-    doc.setTextColor(0); // Reset text color to black
-    doc.text("Item", startX, startY);
-    doc.text("Quantity", startX + cellWidth, startY);
-    doc.text("Price", startX + cellWidth * 2, startY);
+  //   const startY = 30;
+  //   const lineHeight = 10;
+  //   const startX = 10;
+  //   const cellWidth = 50;
+  //   const cellPadding = 5;
 
-    billData.forEach((item, index) => {
-      const y = startY + (index + 1) * lineHeight;
-      doc.text(item.item, startX, y);
-      doc.text(item.quantity.toString(), startX + cellWidth, y);
-      doc.text(item.price.toString(), startX + cellWidth * 2, y);
-    });
+  //   doc.setFontSize(12);
+  //   doc.setTextColor(0); // Reset text color to black
+  //   doc.text("Item", startX, startY);
+  //   doc.text("Quantity", startX + cellWidth, startY);
+  //   doc.text("Price", startX + cellWidth * 2, startY);
 
-    // Add total
-    const total = billData.reduce(
-      (acc, item) => acc + item.quantity * item.price,
-      0
-    );
-    doc.text(
-      `Total: ${total}`,
-      startX + cellWidth * 2,
-      startY + (billData.length + 1) * lineHeight
-    );
+  //   billData.forEach((item, index) => {
+  //     const y = startY + (index + 1) * lineHeight;
+  //     doc.text(item.item, startX, y);
+  //     doc.text(item.quantity.toString(), startX + cellWidth, y);
+  //     doc.text(item.price.toString(), startX + cellWidth * 2, y);
+  //   });
 
-    doc.save("receipt.pdf");
-  };
+  //   // Add total
+  //   const total = billData.reduce(
+  //     (acc, item) => acc + item.quantity * item.price,
+  //     0
+  //   );
+  //   doc.text(
+  //     `Total: ${total}`,
+  //     startX + cellWidth * 2,
+  //     startY + (billData.length + 1) * lineHeight
+  //   );
+
+  //   doc.save("receipt.pdf");
+  // };
+  const userName = useAppSelector((state) => state.user.user.user);
 
   useEffect(() => {
-    fetchCategory();
-    payment_type();
-  }, []);
+    void fetchCategory();
+    setUserName(userName || ""); // Provide a default value for the setUserName function
+    void payment_type();
+  }, [payment_type]);
 
   return isLoaded ? (
     <>
@@ -876,26 +987,29 @@ export default function Map() {
                       stiffness: 300,
                       duration: 1,
                     }}
-                    className="flex flex-col gap-2 border rounded-lg"
+                    className="flex flex-col gap-1 border rounded-lg"
                   >
                     <div className="flex">
                       {paymentType.map((item) => (
-                        <>
-                          <div
-                            className={`border-r border-gray-400 p-2 rounded-t-lg  ${
-                              !card
-                                ? "border-b "
-                                : "shadow-[8px_0px_10px_rgba(239,239,240,1)]"
-                            }`}
-                            onClick={() => {
-                              setcard(!card);
-                              setPaymentTypeName(item.payment_type);
-                              setFinalPaymentTypeId(item.id);
-                            }}
-                          >
-                            {item.payment_type}
-                          </div>
-                        </>
+                        <div
+                          key={item.id}
+                          className={`border-b p-2 m-1 cursor-pointer ${
+                            card
+                              ? ""
+                              : "shadow-[8px_0px_10px_rgba(239,239,240,1)]"
+                          } ${
+                            paymentTypeName === item.payment_type
+                              ? "bg-blue-200"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            setcard(!card);
+                            setPaymentTypeName(item.payment_type);
+                            setFinalPaymentTypeId(item.id);
+                          }}
+                        >
+                          {item.payment_type}
+                        </div>
                       ))}
                     </div>
 
@@ -1049,25 +1163,12 @@ export default function Map() {
                           </div>
                         </div>
                         <div className="flex w-full ">
-                          {card ? (
-                            <>
-                              <button
-                                className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center"
-                                onClick={final_Book}
-                              >
-                                Proceed with Card
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center"
-                                onClick={final_Book}
-                              >
-                                Proceed with Cash
-                              </button>
-                            </>
-                          )}
+                          <button
+                            className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center"
+                            onClick={final_Book}
+                          >
+                            Proceed
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1174,103 +1275,104 @@ export default function Map() {
           )}
         </div>
       )}
-      {true && (
-        <>
-          <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4 h-full pdfdownload">
-            <div className="text-4xl text-black font-bold max-[916px]:text-3xl">
-              Payment Details
-            </div>
-            <div className="text-md text-black font-light max-[916px]:text-sm">
-              Check your Payment Details
-            </div>
-            <div className=" border-b-2 border-black flex-row flex justify-between items-center">
-              <div className="flex flex-col gap-2 p-2">
-                <div className="text-2xl font-bold flex gap-2 items-center max-[916px]:text-lg ">
-                  <Image src={green_marker} alt="green marker"></Image>
-                  From:
-                </div>
-                <div className="text-start text-xs">
-                  <div>{originRef?.current?.value}</div>
-                </div>
-              </div>
-              <div className="flex items-center justify-center  min-w-[24px]">
-                <Image
-                  src={arrow_right}
-                  alt="arrow"
-                  className="min-w-[24px]"
-                ></Image>
-              </div>
-              <div className="flex flex-col gap-2 p-2">
-                <div
-                  className="text-2xl font-bold flex gap-2 items-end justify-end max-[916px]:text-lg
-                  "
-                >
-                  <Image src={red_marker} alt="red marker"></Image>
-                  To:
-                </div>
-                <div className="text-end text-xs">
-                  <div>{destiantionRef?.current?.value}</div>
-                </div>
-              </div>
-            </div>
-            <div className="px-2 font-bold">Fare Sumamary</div>
-            <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
-              <div className="flex w-full justify-between items-center">
-                <div className="text-sm font-normal ">
-                  Trip Fare {"(incl.Toll)"}
-                </div>
-                <div className="text-sm font-normal text-start flex items-center">
-                  <FaIndianRupeeSign className="text-xs" />
-
-                  {formatNumberWithCommas(netfare)}
-                </div>
-              </div>
-              <div className="flex w-full justify-between items-center">
-                <div className="text-sm font-normal cursor-pointer flex gap-2 items-center ">
-                  {continue_text}
-                </div>
-              </div>
-              {showCouponInBill && (
-                <div className="flex w-full justify-between items-center">
-                  <div className="text-sm font-normal">
-                    Coupon discount - {finalcoupon}
-                  </div>
-                  <div className="text-sm font-normal text-green-500 text-start flex items-center">
-                    -
-                    <FaIndianRupeeSign className="text-xs" />
-                    {formatNumberWithCommas(couponAmount)}
-                  </div>
-                </div>
-              )}
-              <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
-                <div className="text-sm font-normal">Net Fare</div>
-                <div className="text-sm font-normal text-start flex items-center">
-                  <FaIndianRupeeSign className="text-xs" />
-
-                  {formatNumberWithCommas(netfare)}
-                </div>
-              </div>
-              <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
-                <div className="text-sm font-semibold">Amount Payable</div>
-                <div className="text-sm font-bold text-start flex items-center">
-                  <FaIndianRupeeSign className="text-xs" />
-
-                  {formatNumberWithCommas(finalbill)}
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
-              <Image src={lock} alt="lock" className="h-4 w-4"></Image>
-              Payments are secured and encrypted
-            </div>
-          </div>
-          <div>
-            <button onClick={downloadPdf}>Download</button>
-          </div>
-        </>
-      )}
     </>
   ) : (
     <></>
   );
 }
+
+// {true && (
+//   <>
+//     <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4 h-full pdfdownload">
+//       <div className="text-4xl text-black font-bold max-[916px]:text-3xl">
+//         Payment Details
+//       </div>
+//       <div className="text-md text-black font-light max-[916px]:text-sm">
+//         Check your Payment Details
+//       </div>
+//       <div className=" border-b-2 border-black flex-row flex justify-between items-center">
+//         <div className="flex flex-col gap-2 p-2">
+//           <div className="text-2xl font-bold flex gap-2 items-center max-[916px]:text-lg ">
+//             <Image src={green_marker} alt="green marker"></Image>
+//             From:
+//           </div>
+//           <div className="text-start text-xs">
+//             <div>{originRef?.current?.value}</div>
+//           </div>
+//         </div>
+//         <div className="flex items-center justify-center  min-w-[24px]">
+//           <Image
+//             src={arrow_right}
+//             alt="arrow"
+//             className="min-w-[24px]"
+//           ></Image>
+//         </div>
+//         <div className="flex flex-col gap-2 p-2">
+//           <div
+//             className="text-2xl font-bold flex gap-2 items-end justify-end max-[916px]:text-lg
+//             "
+//           >
+//             <Image src={red_marker} alt="red marker"></Image>
+//             To:
+//           </div>
+//           <div className="text-end text-xs">
+//             <div>{destiantionRef?.current?.value}</div>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="px-2 font-bold">Fare Sumamary</div>
+//       <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
+//         <div className="flex w-full justify-between items-center">
+//           <div className="text-sm font-normal ">
+//             Trip Fare {"(incl.Toll)"}
+//           </div>
+//           <div className="text-sm font-normal text-start flex items-center">
+//             <FaIndianRupeeSign className="text-xs" />
+
+//             {formatNumberWithCommas(netfare)}
+//           </div>
+//         </div>
+//         <div className="flex w-full justify-between items-center">
+//           <div className="text-sm font-normal cursor-pointer flex gap-2 items-center ">
+//             {continue_text}
+//           </div>
+//         </div>
+//         {showCouponInBill && (
+//           <div className="flex w-full justify-between items-center">
+//             <div className="text-sm font-normal">
+//               Coupon discount - {finalcoupon}
+//             </div>
+//             <div className="text-sm font-normal text-green-500 text-start flex items-center">
+//               -
+//               <FaIndianRupeeSign className="text-xs" />
+//               {formatNumberWithCommas(couponAmount)}
+//             </div>
+//           </div>
+//         )}
+//         <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+//           <div className="text-sm font-normal">Net Fare</div>
+//           <div className="text-sm font-normal text-start flex items-center">
+//             <FaIndianRupeeSign className="text-xs" />
+
+//             {formatNumberWithCommas(netfare)}
+//           </div>
+//         </div>
+//         <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+//           <div className="text-sm font-semibold">Amount Payable</div>
+//           <div className="text-sm font-bold text-start flex items-center">
+//             <FaIndianRupeeSign className="text-xs" />
+
+//             {formatNumberWithCommas(finalbill)}
+//           </div>
+//         </div>
+//       </div>
+//       <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
+//         <Image src={lock} alt="lock" className="h-4 w-4"></Image>
+//         Payments are secured and encrypted
+//       </div>
+//     </div>
+//     {/* <div>
+//       <button onClick={downloadPdf}>Download</button>
+//     </div> */}
+//   </>
+// )}

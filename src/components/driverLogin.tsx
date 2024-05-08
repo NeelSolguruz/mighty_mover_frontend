@@ -6,10 +6,10 @@ import { DRIVER_LOGIN } from "@/constant/driverLogin";
 import Link from "next/link";
 import http from "@/http/http";
 import {
-  authLogin,
+  // authLogin,
   driver_login,
   verify_driver_otp,
-  verifyotp_api,
+  // verifyotp_api,
 } from "@/http/staticTokenService";
 import axios, { AxiosError } from "axios";
 import Loader from "react-js-loader";
@@ -58,7 +58,7 @@ export default function DriverLogin() {
       });
       toast.success(user_details.data.message);
       console.log(user_details.data);
-      dispatch(driverAdd(user_details.data.data));
+      console.log(user_details.data.data.token);
       localStorage.setItem(
         "driver",
         JSON.stringify({
@@ -67,6 +67,8 @@ export default function DriverLogin() {
           email: user_details.data.data.email,
         })
       );
+      dispatch(driverAdd(user_details.data.data));
+
       setLoading(false);
       resetForm();
       setModal(true);
@@ -127,6 +129,7 @@ export default function DriverLogin() {
     try {
       const response = await driver_login({ email, password });
       console.log(response.data.message);
+      console.log(response.data.token);
       toast.success(response.data.message);
       setotppage(true);
       // setModal(true);
@@ -579,7 +582,7 @@ export default function DriverLogin() {
                       id="order_type"
                       className="p-2 border border-gray-400 rounded-lg hover:border-black focus:outline-[#2967ff] text-gray-400"
                       onChange={handleVehicleChange}
-                      value={vehicleFormData.take_order_type}
+                      value={vehicleFormData.order_type}
                     >
                       <option value="">Select Order Type</option>
                       <option value="local">Local</option>

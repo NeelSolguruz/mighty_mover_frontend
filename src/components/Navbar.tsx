@@ -1,18 +1,18 @@
 "use client";
 import Image from "next/image";
-import { FaTruck } from "react-icons/fa";
+import { FaRegAddressCard, FaTruck } from "react-icons/fa";
 import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { use, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import NavLogo from "@/assets/Images/icons/NavLogo";
 import { NAVBAR } from "@/constant/constant";
 import { BiLogOut } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useradd, userlogout } from "@/redux/userSlice";
 import { useAppSelector } from "@/redux/hooks";
-import http from "@/http/http";
+import http, { ApiErrorData } from "@/http/http";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import Loader from "react-js-loader";
@@ -27,19 +27,35 @@ import { useRouter } from "next/navigation";
 import { driverAdd, driverLogout } from "@/redux/driverSlice";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import DisplayNotifications from "./DisplayNotifications";
+import { json } from "stream/consumers";
+
+interface Address {
+  id: string;
+  state: string;
+  district: string;
+  area: string;
+}
 export default function Navbar() {
   const router = useRouter();
 
   const [clicked, setClicked] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState(null);
+  const [state, setState] = useState("");
+  const [district, setDistrict] = useState("");
+  const [area, setArea] = useState("");
 
   const [profile, setprofile] = useState(false);
-
+  const [addressesModel, setOpenAddressesModel] = useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setshow] = useState(false);
+  const [addressData, setAddressData] = useState<Address>();
+  const [displayAdressData, setDisplayAddressData] = useState<Address[]>([]);
+
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const driver = useAppSelector((state) => state.driver);
+  // console.log("user", user);
+  // console.log("driver", driver);
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -77,16 +93,20 @@ export default function Navbar() {
     console.log("click");
     console.log("click", user);
     try {
-      console.log(user.user.user === "prit");
-      if (true) {
+      // console.log(user.user.user === "prit" || driver.driver.driver);
+      const localUser = localStorage.getItem("user");
+      const driverData = localStorage.getItem("driver");
+      if (localUser) {
         const logout_data = await http.get("/api/v1/user/logout");
         toast.success(logout_data.data.message);
         console.log("api hit");
         dispatch(userlogout());
-      } else {
+      } else if (driverData) {
         const logout_data = await http.get("/api/v1/driver/logout");
         toast.success(logout_data.data.message);
         dispatch(driverLogout());
+      } else {
+        console.log("tryagain");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -119,13 +139,170 @@ export default function Navbar() {
   };
   const [sidecomment, setsidecomment] = useState(false);
 
+  // useEffect(() => {
+  //   if (addressData) {
+  //     const fetchAddressaData = async () => {
+  //       try {
+  //         const response = await http.get(
+  //           `/api/v1/driver/address/${addressData}`
+  //         );
+  //         console.log(response.data.data);
+  //         setAddressData(response.data.data.id);
+  //         setState(response.data.data.state);
+  //         setDistrict(response.data.data.district);
+  //         setArea(response.data.data.area);
+  //       } catch (error) {
+  //         if (axios.isAxiosError(error)) {
+  //           const axiosError = error as AxiosError<ApiErrorData>;
+  //           if (axiosError.response) {
+  //             console.log("Response Error", axiosError.response);
+  //             toast.error(axiosError.response.data.message);
+  //           } else if (axiosError.request) {
+  //             console.log("Request Error", axiosError.request);
+  //           } else {
+  //             console.log("Error", axiosError.message);
+  //           }
+  //         }
+  //       }
+  //     };
+  //     fetchAddressaData();
+  //   }
+  // }, [addressData]);
+  //  const fetchAddressaData = async () => {
+  //         try {
+  //           const response = await http.get(
+  //             `/api/v1/driver/address/${addressData}`
+  //           );
+  //           console.log(response.data.data);
+  //           setAddressData(response.data.data.id);
+  //           setState(response.data.data.state);
+  //           setDistrict(response.data.data.district);
+  //           setArea(response.data.data.area);
+  //         } catch (error) {
+  //           if (axios.isAxiosError(error)) {
+  //             const axiosError = error as AxiosError<ApiErrorData>;
+  //             if (axiosError.response) {
+  //               console.log("Response Error", axiosError.response);
+  //               toast.error(axiosError.response.data.message);
+  //             } else if (axiosError.request) {
+  //               console.log("Request Error", axiosError.request);
+  //             } else {
+  //               console.log("Error", axiosError.message);
+  //             }
+  //           }
+  //         }
+  //       };
+
+  const fetchDriverData = useCallback(async () => {
+    try {
+      const response = await http.get("/api/v1/driver/address");
+      console.log(response.data.data);
+      setDisplayAddressData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   fetchDriverData;
+  // }, [fetchDriverData]);
+
   useEffect(() => {
     if (clicked) {
       containerControls.start("open");
     } else {
       containerControls.start("close");
     }
-  }, [clicked, containerControls]);
+    // fetchAddressaData();
+
+    fetchDriverData;
+  }, [clicked, containerControls, fetchDriverData]);
+
+  const openAddressModel = () => {
+    setOpenAddressesModel(true);
+    fetchDriverData();
+  };
+  const handleCloseAddress = () => {
+    setOpenAddressesModel(false);
+    setState("");
+    setDistrict("");
+    setArea("");
+  };
+  const handleSaveAddress = async () => {
+    // setLoading(true);
+    try {
+      const address_data = await http.post("/api/v1/driver/address", {
+        state: state,
+        district: district,
+        area: area,
+      });
+      console.log(address_data.data.data.id);
+      console.log(address_data);
+      // setLoading(false);
+      // setAddressData(address_data.data.data.id);
+      toast.success(address_data.data.message);
+      setOpenAddressesModel(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          status: number;
+          message: string;
+        }>;
+        if (axiosError.response) {
+          console.log("Response Error", axiosError.response);
+          toast.error(axiosError.response.data.message);
+        } else if (axiosError.request) {
+          console.log("Request Error", axiosError.request);
+        } else {
+          console.log("Error", axiosError.message);
+        }
+      }
+    }
+  };
+  const handleUpdate = async () => {
+    console.log(addressData);
+    try {
+      const response = await http.patch(
+        `/api/v1/driver/address/${addressData}`,
+        {
+          state,
+          district,
+          area,
+        }
+      );
+      console.log(response.data.data);
+      toast.success(response.data.message);
+      fetchDriverData();
+    } catch (error) {
+      console.error("Error updating data:", error);
+      toast.error("Failed to update data. Please try again.");
+    }
+  };
+
+  const handleUpdateAdress = (address) => {
+    console.log(address);
+    console.log(address.id);
+
+    setState(address.state);
+    setDistrict(address.district);
+    setArea(address.area);
+    setAddressData(address.id);
+    setOpenAddressesModel(true);
+  };
+
+  const handleDeleteAdress = async (address) => {
+    try {
+      const response = await http.delete(
+        `/api/v1/driver/address/${address.id}`
+      );
+      toast.success(response.data.message);
+      // Assuming you want to refresh the address list after deletion
+      fetchDriverData();
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      toast.error("Failed to delete address. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -245,6 +422,20 @@ export default function Navbar() {
                             >
                               <div className="px-4">Profile</div>
                             </div>
+                            {user.user.user == null &&
+                              driver.driver.driver !== null && (
+                                <>
+                                  <div
+                                    className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
+                                    onClick={() => openAddressModel()}
+                                  >
+                                    <div>
+                                      <FaRegAddressCard className="h-[20px] w-[20px] text-bold" />
+                                    </div>
+                                    <div>address</div>
+                                  </div>
+                                </>
+                              )}
 
                             <div
                               className="w-full justify-start flex text-xl font-normal border-red-600 border-2 p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
@@ -360,6 +551,169 @@ export default function Navbar() {
                         </div>
                         <div>logout</div>
                       </div>
+                      {user.user.user == null &&
+                        driver.driver.driver !== null && (
+                          <>
+                            <div
+                              className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
+                              onClick={() => openAddressModel()}
+                            >
+                              <div>
+                                <FaRegAddressCard className="h-[20px] w-[20px] text-bold" />
+                              </div>
+                              <div>address</div>
+                            </div>
+                          </>
+                        )}
+                      {addressesModel && (
+                        <>
+                          <div className="flex flex-row gap-4 w-full h-96 overflow-hidden">
+                            <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center">
+                              <div className="w-1/2 flex flex-row bg-white p-4 rounded-md">
+                                <div className="w-1/3 overflow-auto p-4 ">
+                                  <h2 className="text-lg font-semibold mb-2">
+                                    {addressData
+                                      ? "Update Address"
+                                      : "Add Address"}
+                                  </h2>
+                                  <div className="mb-2">
+                                    <label
+                                      htmlFor="state"
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
+                                      State
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="state"
+                                      name="state"
+                                      value={state}
+                                      onChange={(e) => setState(e.target.value)}
+                                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                  </div>
+                                  <div className="mb-2">
+                                    <label
+                                      htmlFor="district"
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
+                                      District
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="district"
+                                      name="district"
+                                      value={district}
+                                      onChange={(e) =>
+                                        setDistrict(e.target.value)
+                                      }
+                                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                  </div>
+                                  <div className="mb-4">
+                                    <label
+                                      htmlFor="city"
+                                      className="block text-sm font-medium text-gray-700"
+                                    >
+                                      area
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="area"
+                                      name="area"
+                                      value={area}
+                                      onChange={(e) => setArea(e.target.value)}
+                                      className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                    />
+                                  </div>
+                                  <div className="w-full flex gap-2">
+                                    <button
+                                      onClick={
+                                        addressData
+                                          ? handleUpdate
+                                          : handleSaveAddress
+                                      }
+                                      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                    >
+                                      {addressData ? "Update" : "Save"}
+                                    </button>
+                                    <button
+                                      onClick={() => handleCloseAddress()}
+                                      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                    >
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="w-full h-96 overflow-auto border border-green-500 overflow-y-scroll">
+                                  <table className="table-auto w-full text-sm text-left ">
+                                    <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto sticky">
+                                      <tr>
+                                        <th scope="col" className="px-6 py-3 ">
+                                          Index
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 ">
+                                          State
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 ">
+                                          district
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 ">
+                                          area
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 ">
+                                          Action
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {displayAdressData.map((item, index) => (
+                                        <tr
+                                          key={item.id}
+                                          className="border-b text-center w-auto hover:bg-gray-100 transition-all duration-300"
+                                        >
+                                          <td className=" border  whitespace-nowrap text-center">
+                                            {index + 1}
+                                          </td>
+                                          <td className=" border text-center p-2">
+                                            {item.state}
+                                          </td>
+                                          <td className="border text-center p-2">
+                                            {item.district}
+                                          </td>
+                                          <td className=" border whitespace-nowrap text-center">
+                                            {item.area}
+                                          </td>
+                                          <td className="text-center ">
+                                            <button
+                                              className="font-medium text-blue-600 text-center "
+                                              onClick={() =>
+                                                handleUpdateAdress(item)
+                                              }
+                                            >
+                                              edit
+                                            </button>
+                                          </td>
+                                          <td className="text-center ">
+                                            <button
+                                              className="font-medium text-blue-600 text-center "
+                                              onClick={() =>
+                                                handleDeleteAdress(item)
+                                              }
+                                            >
+                                              Delete
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </motion.div>
                   </>
                 ) : (

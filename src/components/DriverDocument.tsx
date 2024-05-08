@@ -25,6 +25,8 @@ function DriverDocument() {
   const [selectOptions, setSelectOptions] = useState<Set<string>>(new Set());
   // const [updatePrivewUrl, setUpdatePrivewUrl] = useState<string | undefined>(undefined);
   const [uploadButtonLoading, setUploadButtonLoading] = useState(false);
+  const [noTableData, setNoTableData] = useState(true);
+
   const [selectedDocumentType, setSelectedDocumentType] =
     useState<keyof documentData>("aadhar");
 
@@ -40,16 +42,22 @@ function DriverDocument() {
   }, []);
 
   const fetchDocuments = async () => {
+    setNoTableData(true);
     try {
       const response = await http.get("api/v1/document");
+      console.log(response);
       setDocuments(response.data.data);
+      setNoTableData(false);
+
       // setSelectOptions(response.data.data.internal_path.split("/")[0]);
-      const documentTypes = new Set(
-        response.data.data.map(
-          (doc: Document) => doc.internal_path.split("/")[0]
-        )
-      );
-      setSelectOptions(documentTypes);
+      if (response.data.message === 200) {
+        const documentTypes: Set<string> = new Set(
+          response.data.data.map(
+            (doc: Document) => doc.internal_path.split("/")[0]
+          )
+        );
+        setSelectOptions(documentTypes);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -95,19 +103,21 @@ function DriverDocument() {
       formData.append("image", documentFormData[selectedDocumentType] as Blob);
 
       formData.append("type", selectedDocumentType);
-      // const response = await http.post("api/v1/document", formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
-      const response = form_http.post("/api/v1/document", formData);
-      console.log(formData);
+      const response = await http.post("api/v1/document", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // const response = form_http.post("/api/v1/document", formData);
+      // console.log(formData);
       // console.log("Upload response:", response.data);
       fetchDocuments();
     } catch (error) {
       console.log(error);
     } finally {
-      setUploadButtonLoading(false);
+      setTimeout(() => {
+        setUploadButtonLoading(false);
+      }, 2000);
     }
   };
 
@@ -143,15 +153,15 @@ function DriverDocument() {
 
   return (
     <>
-      <div className="flex flex-row gap-4 w-full h-full">
-        <div className="w-1/2 h-[400px] max-h-[600px] overflow-auto ">
+      <div className="flex flex-row max-md:flex-col max-md:gap-2 w-full h-full max-md:w-full max-md:h-full">
+        <div className="w-1/2 h-[400px] max-h-[600px] overflow-auto p-2 max-md:w-full max-md:h-full">
           {!selectOptions.has("Adharcard") ||
           !selectOptions.has("Licence") ||
           !selectOptions.has("Image") ||
           !selectOptions.has("Pancard") ? (
             <>
-              <div className="w-full h-full max-h-[400px] overflow-auto  flex justify-center items-center p-3">
-                <div className=" w-[90%] h-full border rounded shadow-md">
+              <div className="w-full h-full max-h-[400px] max-md:w-full max-md:max-h-full overflow-auto flex justify-center items-center p-3">
+                <div className=" w-full h-full border rounded shadow-md">
                   <div className="flex flex-col w-full h-full gap-4 p-2">
                     <div className="flex-1 text-center text-lg font-semibold">
                       Upload Your Document Here
@@ -162,7 +172,7 @@ function DriverDocument() {
                     !selectOptions.has("Pancard") ? (
                       <div className="flex flex-row gap-3  w-full">
                         <div className="w-1/2 flex justify-start p-1 text-center">
-                          <label htmlFor="Document Type">
+                          <label htmlFor="Document Type ">
                             Select your Document
                           </label>
                         </div>
@@ -195,7 +205,7 @@ function DriverDocument() {
                       </div>
                     ) : null}
                     <div className="flex flex-row gap-3  w-full ">
-                      <div className="w-1/2 flex justify-start  text-center">
+                      <div className="w-1/2 flex justify-start p-1 text-center">
                         <label
                           htmlFor="Document Type"
                           // className="text-sm font-medium text-gray-900 "
@@ -211,17 +221,14 @@ function DriverDocument() {
                           name="documentFile"
                           onChange={handleDocumentChange(selectedDocumentType)}
                         />
-
-                        {/* <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-<input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"> */}
                       </div>
                     </div>
                     {/* for image preview */}
-                    <div className=" w-full h-full">
+                    <div className=" w-full h-full max-md:w-full max-md:h-full">
                       {documentFormData[selectedDocumentType] ? (
                         <>
-                          <div className="w-full h-full">
-                            <div className="flex flex-row w-full">
+                          <div className="w-full h-full m-1">
+                            <div className="flex flex-row w-full ">
                               <div className="flex-1 border text-center flex justify-center p-3 items-center">
                                 <Image
                                   src={selectedDocumentPreview || ""}
@@ -232,7 +239,7 @@ function DriverDocument() {
                                 />
                               </div>
                             </div>
-                            <div className="flex-1 border text-center">
+                            <div className="flex-1 text-center">
                               <button
                                 type="button"
                                 className="inline-block rounded bg-blue-500 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-blue-600 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-blue-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
@@ -289,57 +296,92 @@ function DriverDocument() {
             <></>
           )}
         </div>
-        <div className="w-full h-full max-h-[600px] overflow-auto border border-green-500">
-          <table className="table-auto w-full text-sm text-left ">
-            <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto sticky">
-              <tr>
-                <th scope="col" className="px-6 py-3 ">
-                  Index
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Document Preview
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Document Type
-                </th>
-                <th scope="col" className="px-6 py-3 ">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {documents.map((item, index) => (
-                <tr
-                  key={item.id}
-                  className="border-b text-center w-auto hover:bg-gray-100 transition-all duration-300"
-                >
-                  <td className=" border  whitespace-nowrap text-center">
-                    {index + 1}
-                  </td>
-                  <td className=" whitespace-nowrap p-2 flex justify-center content-center">
-                    <Image
-                      src={item.document}
-                      width={500}
-                      height={500}
-                      alt="Document Preview"
-                      className="w-44 h-44"
-                    />
-                  </td>
-                  <td className=" border whitespace-nowrap text-center">
-                    {item.internal_path.split("/")[0]}
-                  </td>
-                  <td className="text-center ">
-                    <button
-                      className="font-medium text-blue-600 text-center "
-                      onClick={() => handleModelOpen(item)}
-                    >
-                      edit
-                    </button>
-                  </td>
+        <div className="w-full h-full max-h-[600px]  ">
+          <div className="p-3 max-h-[600px] overflow-x-auto">
+            <table className="table-auto w-full text-sm text-left rounded-lg shadow">
+              <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto sticky">
+                <tr>
+                  <th scope="col" className="px-6 py-3 ">
+                    Index
+                  </th>
+                  <th scope="col" className="px-6 py-3 ">
+                    Document Preview
+                  </th>
+                  <th scope="col" className="px-6 py-3 ">
+                    Document Type
+                  </th>
+                  <th scope="col" className="px-6 py-3 ">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="rounded w-full ">
+                {noTableData ? (
+                  <>
+                    <tr>
+                      <td colSpan={4} className="text-center ">
+                        <div className="text-gray-500 h-96 flex flex-col justify-center items-center">
+                          <svg
+                            className="w-12 h-12 text-gray-400 mb-4 mx-auto"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                            />
+                          </svg>
+                          <p className="w-auto h-12 text-gray-400 text-center mx-auto">
+                            No files found
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <>
+                    {documents.map((item, index) => (
+                      // setNoTableData(false);
+                      <>
+                        <tr
+                          key={item.id}
+                          className="border-b text-center w-auto hover:bg-gray-100 transition-all duration-300"
+                        >
+                          <td className=" border  whitespace-nowrap text-center">
+                            {index + 1}
+                          </td>
+                          <td className=" whitespace-nowrap p-2 flex justify-center content-center">
+                            <Image
+                              src={item.document}
+                              width={500}
+                              height={500}
+                              alt="Document Preview"
+                              className="w-44 h-44"
+                            />
+                          </td>
+                          <td className=" border whitespace-nowrap text-center">
+                            {item.internal_path.split("/")[0]}
+                          </td>
+                          <td className="text-center ">
+                            <button
+                              className="font-medium text-blue-600 text-center "
+                              onClick={() => handleModelOpen(item)}
+                            >
+                              edit
+                            </button>
+                          </td>
+                        </tr>
+                      </>
+                    ))}
+                  </>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
         {isModelopen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
