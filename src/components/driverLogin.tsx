@@ -59,14 +59,14 @@ export default function DriverLogin() {
       toast.success(user_details.data.message);
       console.log(user_details.data);
       console.log(user_details.data.data.token);
-      localStorage.setItem(
-        "driver",
-        JSON.stringify({
-          token: user_details.data.data.token,
-          driver: user_details.data.data.name,
-          email: user_details.data.data.email,
-        })
-      );
+      // localStorage.setItem(
+      //   "driver",
+      //   JSON.stringify({
+      //     token: user_details.data.data.token,
+      //     driver: user_details.data.data.name,
+      //     email: user_details.data.data.email,
+      //   })
+      // );
       dispatch(driverAdd(user_details.data.data));
 
       setLoading(false);
@@ -253,7 +253,7 @@ export default function DriverLogin() {
     aadhar: null,
     licence: null,
     pancard: null,
-    image: null,
+    vehicle: null,
   });
   const handleFileChange = (
     e: ChangeEvent<HTMLInputElement> | null,

@@ -126,16 +126,16 @@ export default function Map() {
   const [animationGif, setanimationGif] = useState(false);
   const [paymentVehicle, setPaymentTypeVehicle] = useState("");
   const [user, setUserName] = useState("");
-
+  const [bookingID, setBookingID] = useState("");
   const router = useRouter();
   const vehiclephoto = {
     "2 wheeler": Bike,
-    "tata ace": small_truck2,
+    "Tata ace": small_truck2,
     auto: small_truck3,
     "3 wheeler": small_truck1,
     "8 ft": big_truck1,
     "14 ft": big_truck2,
-    bolero: big_truck3,
+    "1.7 ton": big_truck3,
     "tata 407 ": big_truck3,
   };
 
@@ -147,23 +147,28 @@ export default function Map() {
     googleMapsApiKey: "AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE",
     libraries: ["places"],
   });
-  const handleexchange = () => {
-    console.log(originRef);
 
+  const handleexchange = () => {
     const origin_data = originRef.current.value;
     originRef.current.value = destiantionRef.current.value;
     destiantionRef.current.value = origin_data;
     const destLat = directionsResponse?.routes[0]?.legs[0]?.end_location?.lat();
+    console.log("hello there : ", destLat);
+
     const destLng = directionsResponse?.routes[0]?.legs[0]?.end_location?.lng();
     fetchDestinationarea(destLat, destLng);
   };
   async function calculateRoute() {
+    console.log(originRef.current.value);
+
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: originRef.current.value,
       destination: destiantionRef.current.value,
       travelMode: google.maps.TravelMode.DRIVING,
     });
+    console.log(results);
+
     setfromlocation(originRef.current.value);
     settolocation(destiantionRef.current.value);
     setcenter_coordinates({
@@ -409,6 +414,7 @@ export default function Map() {
       // toast.success(response.data.message);
       // console.log("total price:", response.data.data[0].total_price);
       setfinalbill(response.data.data.total_price);
+      setBookingID(response.data.data.id);
       setFinalConfirmationModal(true);
     } catch (error) {
       message_error(error);
@@ -427,7 +433,7 @@ export default function Map() {
 
     if (paymentTypeName == "cash") {
       try {
-        const response = await http.post("/api/v1/payments", {
+        const response = await http.post(`/api/v1/payments/${bookingID}`, {
           amount: finalbill,
           status: 0,
           payment_type: 0,
@@ -446,11 +452,9 @@ export default function Map() {
       console.log("razorpay finalbill ", finalbill);
 
       try {
-        const response = await http.post("/api/v1/process-payment/razorpay", {
-          amount: finalbill,
-          vehicle_type: paymentVehicle,
-          user_name: user,
-        });
+        const response = await http.post(
+          `/api/v1/process-payment/razorpay?booking_id=${bookingID}`
+        );
         const razorpayDetails = {
           pickUpAddressId: pickUpAddressId,
           destinationAddressId: destinationAddressId,
@@ -474,15 +478,18 @@ export default function Map() {
       } catch (error) {
         message_error(error);
       }
-    }  else if (paymentTypeName == "stripe") {
+    } else if (paymentTypeName == "stripe") {
       console.log("stripe finalbill ", finalbill);
 
       try {
-        const response = await http.post("/api/v1/process-payment/stripe", {
-          amount: finalbill,
-          vehicle_type: paymentVehicle,
-          user_name: user,
-        });
+        const response = await http.post(
+          `/api/v1/process-payment/stripe?booking_id=${bookingID}`,
+          {
+            amount: finalbill,
+            vehicle_type: paymentVehicle,
+            user_name: user,
+          }
+        );
         // const razorpayDetails = {
         //   pickUpAddressId: pickUpAddressId,
         //   destinationAddressId: destinationAddressId,
@@ -498,7 +505,7 @@ export default function Map() {
         const razorpayPaymentURL = response.data.data;
         // const payment = new window.Razorpay(razorpayPaymentURL);
         // const paymentWindow = window.Razorpay(razorpayPaymentURL, "");
-        console.log("stripe response",response.data.data);
+        console.log("stripe response", response.data.data);
         setFinalTransactionId(response.data.data.id);
         setFinalConfirmationModal(false);
 
@@ -615,82 +622,90 @@ export default function Map() {
             }}
             className="flex gap-4 p-4 max-[769px]:flex-col"
           >
-            <div className="flex flex-col max-w-1/4 justify-start items-center gap-4 rounded-2xl h-[80%] max-[769px]:w-full">
-              <div className={`flex w-full items-center`}>
-                <form className="flex flex-col gap-2 w-[90%] max-[769px]:flex-row max-[769px]:gap-0 max-[426px]:flex-col max-[426px]:gap-2">
+            <div className="flex flex-col max-w-1/4 justify-start items-center gap-4 rounded-2xl h-[80%] max-md:w-full">
+              <div
+                className={`flex w-auto gap-5 items-center border border-green-500`}
+              >
+                <form className="flex flex-col gap-2 w-auto max-[769px]:flex-row max-[769px]:gap-0 max-[426px]:flex-col max-[426px]:gap-2 ">
                   <div className="w-full flex gap-2 items-center max-[769px]:w-1/2 max-[426px]:w-full">
-                    <div>
-                      <Image
-                        src={green_marker}
-                        alt="green marker"
-                        className="w-8 h-8"
-                      ></Image>
-                    </div>
-                    <div className="w-full">
-                      <Autocomplete
-                        onLoad={(autocomplete) => {
-                          autocomplete.setComponentRestrictions({
-                            country: "in",
-                          }); // Restrict to India
-                        }}
-                      >
-                        <input
-                          required
-                          type="text"
-                          placeholder="From"
-                          disabled={editloaction ? true : false}
-                          ref={originRef}
-                          value={fromlocation}
-                          onChange={(e) =>
-                            editloaction
-                              ? null
-                              : setfromlocation(e.target.value)
-                          }
-                          className={`text-sm border border-black rounded-lg w-11/12 p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff] ${
-                            editloaction ? "cursor-not-allowed" : ""
-                          }`}
-                        ></input>
-                      </Autocomplete>
+                    <div className="relative">
+                      <div className="w-full">
+                        <Autocomplete
+                          onLoad={(autocomplete) => {
+                            autocomplete.setComponentRestrictions({
+                              country: "in",
+                            }); // Restrict to India
+                          }}
+                        >
+                          <input
+                            required
+                            type="text"
+                            placeholder="From"
+                            disabled={editloaction ? true : false}
+                            ref={originRef}
+                            value={fromlocation}
+                            onChange={(e) =>
+                              editloaction
+                                ? null
+                                : setfromlocation(e.target.value)
+                            }
+                            className={`pl-10 pr-4 py-2 text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff] ${
+                              editloaction ? "cursor-not-allowed" : ""
+                            }`}
+                          ></input>
+                        </Autocomplete>
+                      </div>
+                      <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none">
+                        <Image
+                          src={green_marker}
+                          alt="green marker"
+                          className="w-8 h-8"
+                        ></Image>
+                      </div>
                     </div>
                   </div>
                   <div className="w-full  flex gap-2 items-center max-[769px]:w-1/2 max-[426px]:w-full">
-                    <div>
-                      <Image
-                        src={red_marker}
-                        alt="green marker"
-                        className="w-8 h-8"
-                      ></Image>
-                    </div>
-                    <div className="w-full">
-                      <Autocomplete
-                        onLoad={(autocomplete) => {
-                          autocomplete.setComponentRestrictions({
-                            country: "in",
-                          }); // Restrict to India
-                        }}
-                      >
-                        <input
-                          type="text"
-                          placeholder="To"
-                          required
-                          disabled={editloaction ? true : false}
-                          className={`text-sm border border-black rounded-lg w-11/12 p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff] ${
-                            editloaction ? "cursor-not-allowed" : ""
-                          }`}
-                          value={tolocation}
-                          onChange={(e) =>
-                            editloaction ? null : settolocation(e.target.value)
-                          }
-                          ref={destiantionRef}
-                        ></input>
-                      </Autocomplete>
+                    <div className="relative">
+                      <div className="w-full">
+                        <Autocomplete
+                          onLoad={(autocomplete) => {
+                            autocomplete.setComponentRestrictions({
+                              country: "in",
+                            }); // Restrict to India
+                          }}
+                        >
+                          <input
+                            type="text"
+                            placeholder="To"
+                            required
+                            disabled={editloaction ? true : false}
+                            className={`pl-10 pr-4 py-2 text-sm border border-black rounded-lg w-full p-2 placeholder:text-gray placeholder:text-sm focus:outline-[#2967ff] ${
+                              editloaction ? "cursor-not-allowed" : ""
+                            }`}
+                            value={tolocation}
+                            onChange={(e) =>
+                              editloaction
+                                ? null
+                                : settolocation(e.target.value)
+                            }
+                            ref={destiantionRef}
+                          ></input>
+                        </Autocomplete>
+                      </div>
+                      <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none">
+                        <Image
+                          src={red_marker}
+                          alt="green marker"
+                          className="w-8 h-8"
+                        ></Image>
+                      </div>
                     </div>
                   </div>
                 </form>
                 <div
                   className={`${
                     editloaction ? "cursor-not-allowed" : ""
-                  } rounded-full h-10 w-10 border-none bg-[#2967ff] flex justify-center items-center hover:scale-[1.1] transition-all duration-200 `}
+                  } rounded-full h-8 w-8 border-none bg-[#2967ff] flex justify-center items-center hover:scale-[1.1] transition-all duration-200 `}
                 >
                   <button
                     onClick={handleexchange}
@@ -700,16 +715,16 @@ export default function Map() {
                     <Image
                       src={exchange}
                       alt="exchange"
-                      className="w-8 h-8"
+                      className="w-6 h-6"
                     ></Image>
                   </button>
                 </div>
               </div>
-              <div className="w-full flex gap-2 items-center px-4">
+              <div className="w-full flex gap-2 items-center ">
                 {!editloaction == true ? (
                   <div className="w-full">
                     <button
-                      className={`flex gap-2 text-white bg-black border rounded-lg border-none p-2 w-full font-semibold text-lg justify-center items-center${
+                      className={`flex gap-2 text-white bg-[#2967ff] border rounded-lg border-none p-2 w-full font-semibold text-lg justify-center items-center${
                         editloaction ? "cursor-not-allowed" : ""
                       }`}
                       onClick={calculateRoute}
@@ -832,7 +847,7 @@ export default function Map() {
                 </>
               )}
             </div>
-            <div className="w-3/4 max-[769px]:w-full  max-[769px]:h-[450px] max-[426px]:h-[230px]">
+            <div className="w-3/4 max-w-1/4 border border-green-500 max-[769px]:w-full  max-[769px]:h-[450px] max-[426px]:h-[230px]">
               <GoogleMap
                 center={center_coordinates}
                 zoom={15}
@@ -973,7 +988,7 @@ export default function Map() {
               </div>
             </motion.div>
           )}
-          {}
+         
           {payment && (
             <>
               <div className="w-full rounded-lg flex gap-2 p-4">
@@ -993,19 +1008,20 @@ export default function Map() {
                       {paymentType.map((item) => (
                         <div
                           key={item.id}
-                          className={`border-b p-2 m-1 cursor-pointer ${
-                            card
-                              ? ""
-                              : "shadow-[8px_0px_10px_rgba(239,239,240,1)]"
-                          } ${
+                          className={`border p-2 m-1 cursor-pointer rounded-t-lg focus:outline-none focus:bg-blue-200 ${
                             paymentTypeName === item.payment_type
-                              ? "bg-blue-200"
-                              : ""
+                              ? "bg-blue-200 border-blue-400 text-blue-800"
+                              : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
                           }`}
                           onClick={() => {
-                            setcard(!card);
+                            // setcard(!card);
                             setPaymentTypeName(item.payment_type);
                             setFinalPaymentTypeId(item.id);
+                            console.log(
+                              "setPaymentTypeName is :",
+                              item.payment_type
+                            );
+                            console.log("setFinalPaymentTypeId is :", item.id);
                           }}
                         >
                           {item.payment_type}
@@ -1033,10 +1049,7 @@ export default function Map() {
                           <input
                             type="text"
                             placeholder="Apply Coupon Code"
-                            className="p-2 w-3/4 border border-gray-400 text-sm rounded-md
-                        
-                        
-                    "
+                            className="p-2 w-3/4 border border-gray-400 text-sm rounded-md"
                             disabled={removeCoupon ? true : false}
                             value={finalcoupon}
                             onChange={(e) =>
@@ -1138,6 +1151,12 @@ export default function Map() {
                                 handlesubcategory(e.target.value)
                               }
                             >
+                              <option
+                                value="select your option"
+                                // defaultValue={"select value"}
+                              >
+                                select your option
+                              </option>
                               {category.map((item, index) => (
                                 <option key={index} value={item.id}>
                                   {item.name}
@@ -1152,6 +1171,12 @@ export default function Map() {
                                 setFinalSubCategoryId(e.target.value)
                               }
                             >
+                              <option
+                                value="select your option"
+                                // defaultValue={"select value"}
+                              >
+                                select your option
+                              </option>
                               {subCategory.map((item, index) => (
                                 <>
                                   <option key={index} value={item.id}>
@@ -1175,100 +1200,112 @@ export default function Map() {
                   </motion.div>
                 </div>
                 <div className="bg-gray-100 w-1/2 rounded-lg flex flex-col gap-2 p-4 h-full">
-                  <div className="text-4xl text-black font-bold max-[916px]:text-3xl">
-                    Payment Details
-                  </div>
-                  <div className="text-md text-black font-light max-[916px]:text-sm">
-                    Check your Payment Details
-                  </div>
-                  <div className=" border-b-2 border-black flex-row flex justify-between items-center">
-                    <div className="flex flex-col gap-2 p-2">
-                      <div className="text-2xl font-bold flex gap-2 items-center max-[916px]:text-lg ">
-                        <Image src={green_marker} alt="green marker"></Image>
-                        From:
-                      </div>
-                      <div className="text-start text-xs">
-                        <div>{originRef?.current?.value}</div>
-                      </div>
+                  <motion.div
+                    initial={{ translateY: 40, opacity: 0 }}
+                    whileInView={{ translateY: 0, opacity: 1 }}
+                    transition={{
+                      type: "spring",
+                      damping: 15,
+                      stiffness: 300,
+                      duration: 1,
+                    }}
+                    className="flex flex-col gap-1 border rounded-lg"
+                  >
+                    <div className="text-4xl text-black font-bold max-[916px]:text-3xl">
+                      Payment Details
                     </div>
-                    <div className="flex items-center justify-center  min-w-[24px]">
-                      <Image
-                        src={arrow_right}
-                        alt="arrow"
-                        className="min-w-[24px]"
-                      ></Image>
+                    <div className="text-md text-black font-light max-[916px]:text-sm">
+                      Check your Payment Details
                     </div>
-                    <div className="flex flex-col gap-2 p-2">
-                      <div
-                        className="text-2xl font-bold flex gap-2 items-end justify-end max-[916px]:text-lg
-                  "
-                      >
-                        <Image src={red_marker} alt="red marker"></Image>
-                        To:
+                    <div className=" border-b-2 border-black flex-row flex justify-between items-center">
+                      <div className="flex flex-col gap-2 p-2">
+                        <div className="text-2xl font-bold flex gap-2 items-center max-[916px]:text-lg ">
+                          <Image src={green_marker} alt="green marker"></Image>
+                          From:
+                        </div>
+                        <div className="text-start text-xs">
+                          <div>{originRef?.current?.value}</div>
+                        </div>
                       </div>
-                      <div className="text-end text-xs">
-                        <div>{destiantionRef?.current?.value}</div>
+                      <div className="flex items-center justify-center  min-w-[24px]">
+                        <Image
+                          src={arrow_right}
+                          alt="arrow"
+                          className="min-w-[24px]"
+                        ></Image>
                       </div>
-                    </div>
-                  </div>
-                  <div className="px-2 font-bold">Fare Sumamary</div>
-                  <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
-                    <div className="flex w-full justify-between items-center">
-                      <div className="text-sm font-normal ">
-                        Trip Fare {"(incl.Toll)"}
-                      </div>
-                      <div className="text-sm font-normal text-start flex items-center">
-                        <FaIndianRupeeSign className="text-xs" />
-
-                        {formatNumberWithCommas(netfare)}
-                      </div>
-                    </div>
-                    <div className="flex w-full justify-between items-center">
-                      <div className="text-sm font-normal cursor-pointer flex gap-2 items-center ">
+                      <div className="flex flex-col gap-2 p-2">
                         <div
-                          className="border border-black py-0 px-1 rounded-sm"
-                          onClick={() => setmodal(true)}
+                          className="text-2xl font-bold flex gap-2 items-end justify-end max-[916px]:text-lg
+                  "
                         >
-                          Change
+                          <Image src={red_marker} alt="red marker"></Image>
+                          To:
                         </div>
-                        -{continue_text}
+                        <div className="text-end text-xs">
+                          <div>{destiantionRef?.current?.value}</div>
+                        </div>
                       </div>
                     </div>
-                    {showCouponInBill && (
+                    <div className="px-2 font-bold">Fare Sumamary</div>
+                    <div className="border border-dashed border-black rounded-md flex flex-col p-2 gap-2">
                       <div className="flex w-full justify-between items-center">
-                        <div className="text-sm font-normal">
-                          Coupon discount - {finalcoupon}
+                        <div className="text-sm font-normal ">
+                          Trip Fare {"(incl.Toll)"}
                         </div>
-                        <div className="text-sm font-normal text-green-500 text-start flex items-center">
-                          -
+                        <div className="text-sm font-normal text-start flex items-center">
                           <FaIndianRupeeSign className="text-xs" />
-                          {formatNumberWithCommas(couponAmount)}
+
+                          {formatNumberWithCommas(netfare)}
                         </div>
                       </div>
-                    )}
-                    <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
-                      <div className="text-sm font-normal">Net Fare</div>
-                      <div className="text-sm font-normal text-start flex items-center">
-                        <FaIndianRupeeSign className="text-xs" />
+                      <div className="flex w-full justify-between items-center">
+                        <div className="text-sm font-normal cursor-pointer flex gap-2 items-center ">
+                          <div
+                            className="border border-black py-0 px-1 rounded-sm"
+                            onClick={() => setmodal(true)}
+                          >
+                            Change
+                          </div>
+                          -{continue_text}
+                        </div>
+                      </div>
+                      {showCouponInBill && (
+                        <div className="flex w-full justify-between items-center">
+                          <div className="text-sm font-normal">
+                            Coupon discount - {finalcoupon}
+                          </div>
+                          <div className="text-sm font-normal text-green-500 text-start flex items-center">
+                            -
+                            <FaIndianRupeeSign className="text-xs" />
+                            {formatNumberWithCommas(couponAmount)}
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+                        <div className="text-sm font-normal">Net Fare</div>
+                        <div className="text-sm font-normal text-start flex items-center">
+                          <FaIndianRupeeSign className="text-xs" />
 
-                        {formatNumberWithCommas(netfare)}
+                          {formatNumberWithCommas(netfare)}
+                        </div>
+                      </div>
+                      <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
+                        <div className="text-sm font-semibold">
+                          Amount Payable
+                        </div>
+                        <div className="text-sm font-bold text-start flex items-center">
+                          <FaIndianRupeeSign className="text-xs" />
+
+                          {formatNumberWithCommas(finalbill)}
+                        </div>
                       </div>
                     </div>
-                    <div className="flex w-full justify-between border-t border-gray-400 py-2 items-center">
-                      <div className="text-sm font-semibold">
-                        Amount Payable
-                      </div>
-                      <div className="text-sm font-bold text-start flex items-center">
-                        <FaIndianRupeeSign className="text-xs" />
-
-                        {formatNumberWithCommas(finalbill)}
-                      </div>
+                    <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
+                      <Image src={lock} alt="lock" className="h-4 w-4"></Image>
+                      Payments are secured and encrypted
                     </div>
-                  </div>
-                  <div className="flex w-full text-gray-400 justify-center items-center text-xs gap-1">
-                    <Image src={lock} alt="lock" className="h-4 w-4"></Image>
-                    Payments are secured and encrypted
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </>

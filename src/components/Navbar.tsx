@@ -28,6 +28,7 @@ import { driverAdd, driverLogout } from "@/redux/driverSlice";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import DisplayNotifications from "./DisplayNotifications";
 import { json } from "stream/consumers";
+import { FaReceipt } from "react-icons/fa6";
 
 interface Address {
   id: string;
@@ -94,8 +95,8 @@ export default function Navbar() {
     console.log("click", user);
     try {
       // console.log(user.user.user === "prit" || driver.driver.driver);
-      const localUser = localStorage.getItem("user");
-      const driverData = localStorage.getItem("driver");
+      const localUser = localStorage.getItem("persist:root");
+      const driverData = localStorage.getItem("persist:DriverRoot");
       if (localUser) {
         const logout_data = await http.get("/api/v1/user/logout");
         toast.success(logout_data.data.message);
@@ -129,12 +130,14 @@ export default function Navbar() {
     setClicked(false);
   };
   const openprofile = () => {
-    if (user) {
+    if (driver) {
+      console.log("driver is logged in");
+      router.push("/driver-profile", { scroll: false });
+    } else if (user) {
       console.log("user is logged in");
       router.push("/profile", { scroll: false });
     } else {
-      console.log("driver is logged in");
-      router.push("/driver-profile", { scroll: false });
+      console.log("user is not logged in");
     }
   };
   const [sidecomment, setsidecomment] = useState(false);
@@ -316,6 +319,7 @@ export default function Navbar() {
           />
         </div>
       ) : (
+        // this is header code 
         <div
           className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 px-2`}
         >
@@ -335,8 +339,9 @@ export default function Navbar() {
                       </div>
                     </div>
                     <div>
+                      {/* cross in mobile view */}
                       <button
-                        className="text-3xl font-bold pr-4 py-2"
+                        className="text-3xl font-bold pr-4 py-2 "
                         onClick={handleClick}
                       >
                         <Image src={cross} alt="cross"></Image>
@@ -361,27 +366,17 @@ export default function Navbar() {
                           <div className="px-4">Support</div>
                         </div>
                       </Link>
-
+                      {/* if user exists then so this is profile code for mobile view */}
                       {user.user.email || driver?.driver?.email ? (
                         <div className="w-full justify-between items-center flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]">
                           <div className="px-4">
                             <div className=" flex justify-start items-center gap-3">
-                              {user ? (
+                              {user.user.user != null && (
                                 <div className="bg-[#2967ff] text-white rounded-full py-2 px-4">
                                   {user?.user?.user?.split("")[0].toUpperCase()}
                                 </div>
-                              ) : (
-                                <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                                  <FaTruck />
-                                </div>
                               )}
-                              <div>
-                                {user ? (
-                                  <>{user?.user?.user?.toUpperCase()}</>
-                                ) : (
-                                  <>{driver?.driver?.driver?.toUpperCase()}</>
-                                )}
-                              </div>
+                              <div>{user?.user?.user?.toUpperCase()}</div>
                             </div>
                           </div>
 
@@ -404,6 +399,8 @@ export default function Navbar() {
                         </>
                       )}
 
+                      {/* this code is for mobile (responsive) view */}
+
                       {(user?.user?.email && show) ||
                       (driver?.driver?.email && show) ? (
                         <>
@@ -414,15 +411,20 @@ export default function Navbar() {
                               type: "tween",
                               duration: 0.5,
                             }}
-                            className="overflow-hidden"
+                            className="overflow-hidden "
                           >
                             <div
-                              className="w-full justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]"
+                              className="w-auto justify-start flex text-xl font-normal p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px]"
                               onClick={openprofile}
                             >
+                              <Image
+                                src={user_circle}
+                                alt="user"
+                                className="h-[24px] w-[24px] text-bold"
+                              ></Image>
                               <div className="px-4">Profile</div>
                             </div>
-                            {user.user.user == null &&
+                            {/* {user.user.user == null &&
                               driver.driver.driver !== null && (
                                 <>
                                   <div
@@ -435,23 +437,33 @@ export default function Navbar() {
                                     <div>address</div>
                                   </div>
                                 </>
-                              )}
-
+                              )} */}
+                            <div className="w-full justify-start flex text-xl font-normal  p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer">
+                              <div>
+                                <FaReceipt className="h-[20px] w-[20px] text-bold" />
+                              </div>
+                              <div className="px-4">
+                                <Link href="/order-history">order history</Link>
+                              </div>
+                            </div>
                             <div
-                              className="w-full justify-start flex text-xl font-normal border-red-600 border-2 p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
+                              className="w-full justify-start flex text-xl font-normal  p-4 hover:shadow-md hover:shadow-gray-200 transition-all duration-300 hover:scale-100 hover:text-[22px] cursor-pointer"
                               onClick={clearstorage}
                             >
+                              <BiLogOut className="h-[20px] w-[20px] text-bold" />
                               <div className="px-4">logout</div>
                             </div>
                           </motion.div>
                         </>
                       ) : null}
                     </div>
+                    {/* here is done mobile view */}
                   </div>
                 </div>
               </div>
             </motion.div>
           )}
+          {/* this is nav code for navLogo */}
           <div className="pl-2 flex gap-2 ">
             <div className="max-lg:flex items-center hidden w-16 text-center justify-center">
               <button
@@ -478,7 +490,7 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-
+          {/* this is for profile logo and notification code */}
           <div className="">
             {user?.user?.email || driver?.driver?.email ? (
               <div className="flex justify-end gap-2 items-center w-full px-2">
@@ -512,7 +524,7 @@ export default function Navbar() {
                 </div>
                 <div className="flex items-center max-lg:hidden">
                   <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
-                    {user ? (
+                    {user.user.user != null ? (
                       user?.user?.user?.split("")[0].toUpperCase()
                     ) : (
                       <FaTruck />
@@ -527,7 +539,7 @@ export default function Navbar() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
-                      className="fixed top-[60px] right-5 w-[100px] bg-white z-[1000000] rounded-lg "
+                      className="fixed top-[60px] right-5 w-auto bg-white z-[1000000] rounded-lg "
                     >
                       <div
                         className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 cursor-pointer"
@@ -542,6 +554,15 @@ export default function Navbar() {
                         </div>
                         <div>Profile</div>
                       </div>
+                      <div className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer">
+                        <div>
+                          <FaReceipt className="h-[20px] w-[20px] text-bold" />
+                        </div>
+                        <div>
+                          <Link href="/order-history">order history</Link>
+                        </div>
+                      </div>
+
                       <div
                         className="p-2 w-full h-[30px] flex gap-4 justify-start items-center  border border-b-gray-300 rounded-b-lg cursor-pointer"
                         onClick={clearstorage}
@@ -551,7 +572,7 @@ export default function Navbar() {
                         </div>
                         <div>logout</div>
                       </div>
-                      {user.user.user == null &&
+                      {/* {user.user.user == null &&
                         driver.driver.driver !== null && (
                           <>
                             <div
@@ -563,9 +584,10 @@ export default function Navbar() {
                               </div>
                               <div>address</div>
                             </div>
+                            
                           </>
-                        )}
-                      {addressesModel && (
+                        )} */}
+                      {/* {addressesModel && (
                         <>
                           <div className="flex flex-row gap-4 w-full h-96 overflow-hidden">
                             <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center">
@@ -645,7 +667,7 @@ export default function Navbar() {
                                     </button>
                                   </div>
                                 </div>
-                                <div className="w-full h-96 overflow-auto border border-green-500 overflow-y-scroll">
+                                <div className="w-full h-96 overflow-auto overflow-y-scroll">
                                   <table className="table-auto w-full text-sm text-left ">
                                     <thead className="text-xs text-white text-center uppercase bg-[#2967ff] border w-auto sticky">
                                       <tr>
@@ -713,7 +735,7 @@ export default function Navbar() {
                             </div>
                           </div>
                         </>
-                      )}
+                      )} */}
                     </motion.div>
                   </>
                 ) : (

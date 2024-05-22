@@ -2,32 +2,40 @@
 import InfoSvg from "@/assets/Images/icons/infoSvg";
 import { cross } from "@/assets/Images/imageassets";
 import { tableData } from "@/constant/driverOrderData";
+import http from "@/http/http";
 import {
   DirectionsRenderer,
+  DirectionsService,
   GoogleMap,
   InfoWindow,
   useJsApiLoader,
 } from "@react-google-maps/api";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ProductTableRowProps {
-  id: number;
-  orderId: string;
-  customerName: string;
-  pickupLocation: string;
-  deliveryLocation: string;
-  pickupTime: string;
-  deliveryTime: string;
-  status: string;
-  paymentType: string;
-  amountCollected: number;
+  orderId: number;
+  firstName: string;
+  lastName: string;
+  contact: string;
+  Pickup: string;
+  Delivery: string;
+  // pickupTime: string;
+  // deliveryTime: string;
+  Payment_status: string;
+  Payment_type: string;
+  Amount_collect: number;
+  pickup_longitude: string;
+  pickup_latitude: string;
+  delivery_longitude: string;
+  delivery_latitude: string;
   //   weight: string;
 }
 const ProductTableRow = () => {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowText, setInfoWindowText] = useState("");
+  const [DisplayData, setDisplayData] = useState<ProductTableRowProps[]>([]);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAVZWRn7jpEjdxVeIDNo5s6Tz3xJNB_PVE",
     libraries: ["places"],
@@ -37,8 +45,26 @@ const ProductTableRow = () => {
   const [selectedOrder, setSelectedOrder] =
     useState<ProductTableRowProps | null>(null);
 
-  const handleMapButtonClick = (item: ProductTableRowProps) => {
+  const handleMapButtonClick = async (item: ProductTableRowProps) => {
+    console.log(item.pickup_latitude);
     setSelectedOrder(item);
+     const directionsService = new google.maps.DirectionsService();
+    // const pickupLocation = {
+    //   lat: parseFloat(item.pickup_latitude),
+    //   lng: parseFloat(item.pickup_longitude),
+    // };
+    // const deliveryLocation = {
+    //   lat: parseFloat(item.delivery_latitude),
+    //   lng: parseFloat(item.delivery_longitude),
+    // };
+    const results = await directionsService.route({
+      origin: item.Pickup,
+      destination: item.Delivery,
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+    console.log(results);
+    setDirectionsResponse(results);
+
     setDetailModel(true);
   };
 
@@ -46,6 +72,21 @@ const ProductTableRow = () => {
     setDetailModel(false);
     setSelectedOrder(null);
   };
+
+  const fetchdata = async () => {
+    try {
+      const response = await http.get("/api/v1/driver-order/history");
+      console.log(response);
+      setDisplayData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
   return (
     <>
       <table className="table-auto w-full text-sm text-left">
@@ -66,35 +107,30 @@ const ProductTableRow = () => {
           </label>
         </div>
       </th> */}
-            <th scope="col" className="px-6 py-3 ">
+            <th scope="col" className="px-3 py-3 ">
               Index
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              orderId
+
+            <th scope="col" className="px-3 py-3 ">
+              customer Name
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              customerName
+            <th scope="col" className="px-3 py-3 ">
+              Contact Number
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              pickupLocation
+            <th scope="col" className="px-3 py-3 ">
+              pickup Location
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              deliveryLocation
+            <th scope="col" className="px-3 py-3 ">
+              delivery Location
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              pickupTime
+            <th scope="col" className="px-3 py-3 ">
+              Payment Type
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              deliveryTime
+            <th scope="col" className="px-3 py-3 ">
+              Payment Status
             </th>
-            <th scope="col" className="px-6 py-3 ">
-              status
-            </th>
-            <th scope="col" className="px-6 py-3 ">
-              paymentType
-            </th>
-            <th scope="col" className="px-6 py-3 ">
-              amountCollected
+            <th scope="col" className="px-3 py-3 ">
+              Amount Collect
             </th>
             {/* <th scope="col" className="px-6 py-3 ">
               Action
@@ -102,9 +138,9 @@ const ProductTableRow = () => {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((item) => (
+          {DisplayData.map((item, index) => (
             <tr
-              key={item.id}
+              key={item.orderId}
               className="  border-b  text-center  w-full hover:bg-gray-100 transition-all duration-300"
               onClick={() => handleMapButtonClick(item)}
             >
@@ -121,34 +157,19 @@ const ProductTableRow = () => {
           </div>
         </td> */}
               <td className="px-6 py-3 border  whitespace-nowrap ">
-                {item.id}
+                {index + 1}
               </td>
               <td className="px-6 py-3 border  whitespace-nowrap ">
-                {item.orderId}
+                {item.firstName + " " + item.lastName}
               </td>
-              <td className="px-6 py-3 border">{item.customerName}</td>
-              <td className="px-6 py-3 border">{item.pickupLocation}</td>
-              <td className="px-6 py-3 border">{item.deliveryLocation}</td>
-              <td className="px-6 py-3 border">{item.pickupTime}</td>
-              <td className="px-6 py-3 border">{item.deliveryTime}</td>
-              {/* <td className="px-6 py-3 border">{price}</td> */}
-              {/* <td className="px-6 py-3 border">{weight}</td> */}
-              <td className="px-6 py-3 border">{item.status}</td>
-              <td className="px-6 py-3 border">{item.paymentType}</td>
-              <td className="px-6 py-3 border">{item.amountCollected}</td>
-              {/* <td className="flex items-center px-6 py-3 text-center"> */}
-              {/* <button
-                  className="font-medium text-blue-600 text-center px-6 py-5 "
-                >
-                  <InfoSvg />
-                </button> */}
-              {/* <button
-                className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
-                onClick={() => handleRemoveButtonClick()}
-              >
-                Remove
-              </button> */}
-              {/* </td> */}
+              <td className="px-6 py-3 border  whitespace-nowrap ">
+                {item.contact}
+              </td>
+              <td className="px-6 py-3 border">{item.Pickup}</td>
+              <td className="px-6 py-3 border">{item.Delivery}</td>
+              <td className="px-6 py-3 border">{item.Payment_type}</td>
+              <td className="px-6 py-3 border">{item.Payment_status}</td>
+              <td className="px-6 py-3 border">{item.Amount_collect}</td>
             </tr>
           ))}
         </tbody>
@@ -169,9 +190,15 @@ const ProductTableRow = () => {
             <div className="flex flex-row flex-grow w-full gap-4 p-4 ">
               <div className="w-auto h-auto">
                 <p>Order ID: {selectedOrder.orderId}</p>
-                <p>Customer Name: {selectedOrder.customerName}</p>
-                <p>Pickup Location: {selectedOrder.pickupLocation}</p>
-                <p>Delivery Location: {selectedOrder.deliveryLocation}</p>
+                <p>
+                  Customer Name:{" "}
+                  {selectedOrder.firstName + " " + selectedOrder.lastName}
+                </p>
+                <p>Pickup Location: {selectedOrder.Pickup}</p>
+                <p>Delivery Location: {selectedOrder.Delivery}</p>
+                <p>Payment Type: {selectedOrder.Payment_type}</p>
+                <p>Payment Status: {selectedOrder.Payment_status}</p>
+                <p>Amount Collect: {selectedOrder.Amount_collect}</p>
               </div>
 
               {isLoaded ? (
@@ -195,7 +222,7 @@ const ProductTableRow = () => {
                       <DirectionsRenderer
                         options={{
                           polylineOptions: {
-                            strokeColor: "#2967ff", // Red color
+                            strokeColor: "#2967ff", 
                             strokeOpacity: 1,
                             strokeWeight: 6,
                           },

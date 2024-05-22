@@ -15,8 +15,8 @@ import {
   BACKGROUND_TEXT,
 } from "../constant/constant";
 import india_map from "../assets/Images/india_map.jpg";
-import { MdLocalCafe } from "react-icons/md";
-import { getToken } from "firebase/messaging";
+// import { MdLocalCafe } from "react-icons/md";
+// import { getToken } from "firebase/messaging";
 // import { messaging } from "@/utils/firebase/firebase";
 
 export default function Home() {

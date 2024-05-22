@@ -1,10 +1,8 @@
 "use client";
-import LoginLogo from "@/assets/Images/icons/LoginLogo";
 import NavLogo from "@/assets/Images/icons/NavLogo";
-import { FORGOT_PASSWORD } from "@/constant/constant";
 import {
   driver_forgotpassword,
-  forgotpassword_api,
+  // forgotpassword_api,
 } from "@/http/staticTokenService";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";

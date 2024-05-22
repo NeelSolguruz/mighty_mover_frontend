@@ -8,27 +8,61 @@ import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import ProductTableRow from "./DriverMapTableRow";
 import DriverDocument from "./DriverDocument";
+import http from "@/http/http";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 export default function Driver_dashboard() {
   const [Revenue, setRevenue] = useState(12345);
-  const [Order, setOrder] = useState(123);
+  const [Order, setOrder] = useState(0);
+  const [Deliverd, setDeliverd] = useState(0);
+  const [Accepted, setAccepted] = useState(0);
+  const [Rejected, setRejected] = useState(0);
   const [goal, setgoal] = useState(1000);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowText, setInfoWindowText] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [showTabs, setShowTabs] = useState(false);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setShowTabs(window.innerWidth <= 768);
+  //   };
+
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
+  const TotalEarning = async () => {
+    try {
+      const response = await http.get("/api/v1/driver-order/earning");
+      console.log(response.data.data);
+      setRevenue(response.data.data.total_earning);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const driverOrder = async () => {
+    try {
+      const response = await http.get("/api/v1/driver-order");
+      console.log(response.data.data);
+      setOrder(response.data.data.InProgress);
+      setDeliverd(response.data.data.Delivered);
+      setAccepted(response.data.data.Accepted);
+      setRejected(response.data.data.Cancel);
+      setgoal(response.data.data.Total);
+      // setRevenue(response.data.data.total_earning);
+      // setRevenue(response.data.data.total_earnings);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(Deliverd);
   useEffect(() => {
-    const handleResize = () => {
-      setShowTabs(window.innerWidth <= 768);
-    };
-
-    handleResize(); 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    TotalEarning();
+    driverOrder();
   }, []);
   const router = useRouter();
   const { isLoaded } = useJsApiLoader({
@@ -43,25 +77,53 @@ export default function Driver_dashboard() {
         <div className="grid grid-rows-3 gap-2 w-[30%]  max-md:w-full max-md:p-0 max-md:m-auto max-md:grid-cols-2 max-md:grid-rows-1 ">
           <div className="rounded-lg shadow-lg shadow-gray-400 bg-[#2967ff] flex flex-col items-center max-md:w-full">
             <div className="text-2xl font-bold w- 11/12 text-start text-white px-1 pt-2 flex flex-col max-md:text-xl">
-              Revenue
+              Total Earning
             </div>
-            <div className="text-sm font-semibold w-11/12 text-start text-white px-1.5 max-md:text-xs max-md:text-center">
+            {/* <div className="text-sm font-semibold w-11/12 text-start text-white px-1.5 max-md:text-xs max-md:text-center">
               Current Month
-            </div>
+            </div> */}
 
             <div className=" w-full h-full flex items-center justify-center pb-6 max-md:flex max-md:flex-row ">
-              <div className="text-white text-6xl font-bold  max-md:text-2xl">
+              <div className="text-white text-5xl font-bold  max-md:text-2xl">
                 {/* <CountUp end={Revenue} duration={1} /> */}
                 {Revenue >= 10000 ? (
                   <>
                     {Revenue >= 100000 ? (
-                      <>{(Revenue / 100000).toFixed(2)}L</>
+                      <>
+                        <div className="w-full h-full flex items-center">
+                          {<LiaRupeeSignSolid />}
+                          {(Revenue / 100000).toFixed(2)}L
+                        </div>
+                      </>
                     ) : (
-                      <>{(Revenue / 1000).toFixed(2)}K</>
+                      <>
+                        <div className="w-full h-full flex items-center">
+                          {<LiaRupeeSignSolid />}
+                          {(Revenue / 1000).toFixed(2)}K
+                        </div>
+                      </>
                     )}
                   </>
                 ) : (
-                  <>{Revenue}</>
+                  <>
+                    <div className="w-full h-full flex items-center">
+                      {Revenue == null ? (
+                        <>
+                          <LiaRupeeSignSolid />
+                          <span className="ml-1">12.35K</span>
+                        </>
+                      ) : (
+                        <>
+                          <LiaRupeeSignSolid />
+                          <span className="ml-1">{Revenue}</span>
+                        </>
+                      )}
+                    </div>
+                    {/* <div className="w-full h-full flex items-center">
+                      {<LiaRupeeSignSolid />}
+                      {Revenue}
+                    </div> */}
+                  </>
                 )}
               </div>
             </div>
@@ -80,7 +142,7 @@ export default function Driver_dashboard() {
                 Delivered
               </div>
               <div className="text-white flex justify-center items-center text-3xl font-bold px-2 pb-2">
-                <CountUp end={Order} duration={1} />
+                <CountUp end={Deliverd} duration={1} />
               </div>
             </div>
             <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
@@ -88,7 +150,7 @@ export default function Driver_dashboard() {
                 Accepted
               </div>
               <div className="text-white flex justify-center items-center text-3xl font-bold px-2 pb-2">
-                <CountUp end={Order} duration={1} />
+                <CountUp end={Accepted} duration={1} />
               </div>
             </div>
             <div className="rounded-lg shadow-lg items-center justify-center shadow-gray-400 bg-[#2967ff] flex flex-col px-2 h-auto ">
@@ -96,7 +158,7 @@ export default function Driver_dashboard() {
                 Rejected
               </div>
               <div className="text-white flex justify-center items-center text-3xl font-bold px-2 pb-2">
-                <CountUp end={Order} duration={1} />
+                <CountUp end={Rejected} duration={1} />
               </div>
             </div>
           </div>
@@ -107,7 +169,7 @@ export default function Driver_dashboard() {
             <div className="w-11/12 text-center text-4xl font-bold  text-white  flex gap-4 justify-center items-center">
               <div>
                 <CountUp end={Order} duration={1} />/
-                <CountUp end={goal} duration={1} />
+                <CountUp end={200} duration={1} />
               </div>
               <div>
                 <Image src={smile} alt="squint" className="h-8 w-8"></Image>

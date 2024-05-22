@@ -96,7 +96,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const http = axios.create({
-  baseURL: "http://192.168.68.103:3000",
+  baseURL: "http://192.168.5.137:3000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -123,7 +123,7 @@ http.interceptors.request.use(
     let token = null;
     if (user?.user?.user) {
       console.log(user.user);
-      token = user?.user?.token; 
+      token = user?.user?.token;
     } else {
       token = driver?.driver?.token;
     }

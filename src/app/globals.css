@@ -54,7 +54,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .scrollbarmap::-webkit-scrollbar-track {
-  background: var(--primary);
+  background: var(--secondary);
   border-radius: 8px;
   border: 1px solid #cacaca;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

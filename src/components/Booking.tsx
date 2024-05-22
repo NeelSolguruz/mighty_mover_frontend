@@ -111,11 +111,11 @@ export default function Booking() {
                   src={
                     item?.service_type == "2 wheeler"
                       ? bike_image
-                      : item?.service_type == "Truck"
+                      : item?.service_type == "trucks"
                       ? truck_image
-                      : item?.service_type == "All India Parcel"
+                      : item?.service_type == "all india parcel"
                       ? all_india
-                      : item?.service_type == "Packers and Movers"
+                      : item?.service_type == "packers and movers"
                       ? packers_image
                       : ""
                   }
