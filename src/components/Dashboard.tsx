@@ -28,6 +28,7 @@ import {
   bike_image,
   blue_marker,
   check,
+  confirmPayment,
   cross,
   discount,
   exchange,
@@ -47,9 +48,10 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoIosArrowForward, IoIosArrowRoundForward } from "react-icons/io";
+import { set } from "date-fns";
+import { toast } from "sonner";
 
 function Dashboard() {
-  const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowText, setInfoWindowText] = useState("");
@@ -69,52 +71,55 @@ function Dashboard() {
   const [editloaction, seteditloaction] = useState(false);
   const [address, setadrress] = useState("");
   const [payment, setpayment] = useState(false);
-  const [card, setcard] = useState(true);
+  // const [card, setcard] = useState(true);
   const [distance, setdistance] = useState(0);
   const [couponData, setCouponData] = useState<coupon[]>([]);
   const [apply_coupon, setapply_coupon] = useState("");
   const [category, setCategory] = useState<category_interface[]>([]);
   const [couponid, setcouponid] = useState("");
-  const [data_driverid, setDataDriverId] = useState("");
+  // const [data_driverid, setDataDriverId] = useState("");
   const [modal, setmodal] = useState(false);
   const [proceed, setproceed] = useState(false);
   const [continue_text, setcontinue] = useState("");
   const [userSelect, setUserSelect] = useState<userSelectInterface[]>([]);
-  const [Estimation, setEstimationAmount] = useState("");
+  // const [Estimation, setEstimationAmount] = useState("");
   const [finalbill, setfinalbill] = useState("");
   const [netfare, setnefare] = useState("");
-  const [showCouponInBill, setShowCouponInBill] = useState(false);
+  const [showCouponInBill, setShowCouponInBill] = useState<boolean>(false);
   const [finalcoupon, setfinalcoupon] = useState("");
   const [estimationid, setestimationid] = useState("");
   const [couponAmount, setCouponAmount] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [userSelectEstimationId, setUserSelectEstimationId] = useState("");
   const [subCategory, setSubCategory] = useState<category_interface[]>([]);
-  const [removeCoupon, setremoveCoupon] = useState(false);
+  const [removeCoupon, setremoveCoupon] = useState<boolean>(false);
   const [paymentType, setPaymentType] = useState<paymnet_type_interface[]>([]);
-  const [paymentTypeName, setPaymentTypeName] = useState("cash");
-  const [confirmPayModal, setConfirmPayModal] = useState(false);
+  const [paymentTypeName, setPaymentTypeName] = useState("Cash");
+  // const [confirmPayModal, setConfirmPayModal] = useState<boolean>(false);
   const [pickUpAddressId, setPickUpAddressId] = useState("");
   const [destinationAddressId, setDestinationAddressId] = useState("");
-  const [finalTransactionId, setFinalTransactionId] = useState("");
+  // const [finalTransactionId, setFinalTransactionId] = useState("");
   const [finalPaymentTypeId, setFinalPaymentTypeId] = useState("");
   const [finalSubCategoryId, setFinalSubCategoryId] = useState("");
-  const [finalConfirmationModal, setFinalConfirmationModal] = useState(false);
-  const [animationGif, setanimationGif] = useState(false);
+  const [finalConfirmationModal, setFinalConfirmationModal] =
+    useState<boolean>(false);
+  // const [animationGif, setanimationGif] = useState<boolean>(false);
   const [paymentVehicle, setPaymentTypeVehicle] = useState("");
   const [user, setUserName] = useState("");
-  const [mainmodel, setmainmodel] = useState(true);
+  const [mainmodel, setmainmodel] = useState<boolean>(true);
   const [bookingID, setBookingID] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [confirm, setConfirm] = useState<boolean>(false);
   const router = useRouter();
   const vehiclephoto = {
     "2 wheeler": Bike,
     "Tata ace": small_truck2,
-    auto: small_truck3,
+    "E loader": small_truck3,
     "3 wheeler": small_truck1,
     "8 ft": big_truck1,
-    "14 ft": big_truck2,
+    "Canter 14 ft": big_truck2,
     "1.7 ton": big_truck3,
-    "tata 407 ": big_truck3,
+    "tata 407": big_truck3,
   };
 
   const [center_coordinates, setcenter_coordinates] = useState({
@@ -131,13 +136,14 @@ function Dashboard() {
     originRef.current.value = destiantionRef.current.value;
     destiantionRef.current.value = origin_data;
     const destLat = directionsResponse?.routes[0]?.legs[0]?.end_location?.lat();
-    console.log("hello there : ", destLat);
+    // console.log("hello there : ", destLat);
 
     const destLng = directionsResponse?.routes[0]?.legs[0]?.end_location?.lng();
     fetchDestinationarea(destLat, destLng);
   };
   async function calculateRoute() {
-    console.log(originRef.current.value);
+    // console.log(originRef.current.value);
+    setmodal(false);
 
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
@@ -172,7 +178,7 @@ function Dashboard() {
         results.routes[0]?.legs[0].end_location.lat(),
         results.routes[0].legs[0].end_location.lng()
       );
-      seteditloaction(!editloaction);
+      seteditloaction(true);
     }
     setFromLats(String(results.routes[0].legs[0].start_location.lat()));
     setFromLng(String(results.routes[0].legs[0].start_location.lng()));
@@ -206,19 +212,22 @@ function Dashboard() {
       setPickUpAddressId(response.data.data.pickup_address_id);
       setDestinationAddressId(response.data.data.delivery_address_id);
       get_all_driver_data(response.data.data.pickup_address_id);
+      setmodal(true);
+      setIsLoading(true);
       setpayment(false);
     } catch (error) {
       message_error(error);
     }
   };
   const get_all_driver_data = async (id: string) => {
+    // setIsLoading(true);
     try {
       const response = await http.get(
         `/api/v1/estimation?pickup_address_id=${id}`
       );
       console.log(response.data.data);
       setUserSelect(response.data.data);
-      setmodal(true);
+      setIsLoading(false);
     } catch (error) {
       message_error(error);
     }
@@ -288,10 +297,11 @@ function Dashboard() {
     }
   };
   const handleAddData = async (item: any) => {
+    // setIsLoading(true);
     setproceed(true);
     setcontinue(item.vehicle_type);
-    setDataDriverId(item.vehicle_id);
-    setEstimationAmount(item.total_amount);
+    // setDataDriverId(item.vehicle_id);
+    // setEstimationAmount(item.total_amount);
     setPaymentTypeVehicle(item.vehicle_type);
     try {
       const response = await http.post(
@@ -302,6 +312,7 @@ function Dashboard() {
         }
       );
       setUserSelectEstimationId(response.data.data.id);
+      // setIsLoading(false);
     } catch (error) {
       message_error(error);
     }
@@ -386,22 +397,36 @@ function Dashboard() {
   // const userName = localStorage.getItem("persist:root");
   // console.log(userName.user);
   const final_Book = async () => {
-    try {
-      const response = await http.post(
-        `/api/v1/bookings/?pickup_address_id=${pickUpAddressId}&delivery_address_id=${destinationAddressId}&estimation_id=${estimationid}&payment_method_id=${finalPaymentTypeId}&subcategory_id=${finalSubCategoryId}`
-      );
-      console.log("final_book_response : ", response);
+    if (paymentTypeName == "cash") {
+      setFinalConfirmationModal(true);
+      // try {
+      //   const response = await http.post(`/api/v1/payments/`);
       // setanimationGif(true);
       // toast.success(response.data.message);
-      // console.log("total price:", response.data.data[0].total_price);
-      setfinalbill(response.data.data.total_price);
-      setBookingID(response.data.data.id);
-      setFinalConfirmationModal(true);
-    } catch (error) {
-      message_error(error);
+
+      // setFinalTransactionId(response.data.data.id);
+      // } catch (error) {
+      //   message_error(error);
+      // }
+    } else {
+      try {
+        const response = await http.post(
+          `/api/v1/bookings/?pickup_address_id=${pickUpAddressId}&delivery_address_id=${destinationAddressId}&estimation_id=${estimationid}&payment_method_id=${finalPaymentTypeId}&subcategory_id=${finalSubCategoryId}`
+        );
+        console.log("final_book_response : ", response);
+        // setanimationGif(true);
+        // toast.success(response.data.message);
+        // console.log("total price:", response.data.data[0].total_price);
+        setfinalbill(response.data.data.total_price);
+        setBookingID(response.data.data.id);
+        setFinalConfirmationModal(true);
+      } catch (error) {
+        message_error(error);
+      }
     }
   };
   const handleBook = async () => {
+    setIsLoading(true);
     // <Payment_complete
     //   pickUpAddressId={pickUpAddressId}
     //   destinationAddressId={destinationAddressId}
@@ -410,26 +435,60 @@ function Dashboard() {
     //   finalPaymentTypeId={finalPaymentTypeId}
     //   finalSubCategoryId={finalSubCategoryId}
     // />;
+
     console.log("finalbill: ", finalbill);
 
     if (paymentTypeName == "cash") {
       try {
-        const response = await http.post(`/api/v1/payments/${bookingID}`, {
-          amount: finalbill,
-          status: 0,
-          payment_type: 0,
-        });
+        const response = await http.post(
+          `/api/v1/bookings/?pickup_address_id=${pickUpAddressId}&delivery_address_id=${destinationAddressId}&estimation_id=${estimationid}&subcategory_id=${finalSubCategoryId}&payment_method_id=${finalPaymentTypeId}`
+        );
+        setConfirm(true);
+        setIsLoading(false);
+        setFinalConfirmationModal(false);
+        // toast.success(
+        //   <div className="flex items-center justify-center p-4 z-[10000] rounded-md">
+        //     <div className="mr-4">
+        //       <svg
+        //         className="w-6 h-6 text-green-500 animate-bounce"
+        //         viewBox="0 0 24 24"
+        //         fill="none"
+        //         stroke="currentColor"
+        //       >
+        //         <path
+        //           strokeLinecap="round"
+        //           strokeLinejoin="round"
+        //           strokeWidth={2}
+        //           d="M5 13l4 4L19 7"
+        //         />
+        //       </svg>
+        //     </div>
+        //     <div>
+        //       <h3 className="text-lg font-semibold text-gray-800">
+        //         Congratulations!
+        //       </h3>
+        //       <p className="text-gray-600">Your order has been created.</p>
+        //     </div>
+        //   </div>,
+        //   // {
+        //   //   position: "top",
+        //   //   pauseOnHover: true,
+        //   //   autoClose: false,
+        //   // }
+        //   { duration: 3000 }
+        // );
 
-        setanimationGif(true);
-        // toast.success(response.data.message);
         setTimeout(() => {
-          router.push("/Booking");
-        }, 2000);
-        // setFinalTransactionId(response.data.data.id);
+          router.push("/orderSummary");
+        }, 3000);
       } catch (error) {
         message_error(error);
+      } finally {
+        setIsLoading(false);
+        // setConfirm(false);
       }
-    } else if (paymentTypeName == "razorpay") {
+    }
+    if (paymentTypeName == "razorpay") {
       console.log("razorpay finalbill ", finalbill);
 
       try {
@@ -452,7 +511,7 @@ function Dashboard() {
         // const payment = new window.Razorpay(razorpayPaymentURL);
         // const paymentWindow = window.Razorpay(razorpayPaymentURL, "");
         console.log(response.data.data);
-        setFinalTransactionId(response.data.data.id);
+        // setFinalTransactionId(response.data.data.id);
         setFinalConfirmationModal(false);
 
         router.push(razorpayPaymentURL);
@@ -487,7 +546,7 @@ function Dashboard() {
         // const payment = new window.Razorpay(razorpayPaymentURL);
         // const paymentWindow = window.Razorpay(razorpayPaymentURL, "");
         console.log("stripe response", response.data.data);
-        setFinalTransactionId(response.data.data.id);
+        // setFinalTransactionId(response.data.data.id);
         setFinalConfirmationModal(false);
 
         router.push(razorpayPaymentURL);
@@ -495,6 +554,7 @@ function Dashboard() {
         message_error(error);
       }
     } else {
+      setFinalPaymentTypeId("");
       // toast.error("Tommorow");
     }
   };
@@ -508,7 +568,7 @@ function Dashboard() {
 
   return isLoaded ? (
     <>
-      <div className={`flex h-+ flex-col gap-4 p-4 w-full overflow-auto `}>
+      <div className={`flex h-full  flex-col gap-4 p-4 w-full overflow-auto `}>
         <motion.div
           initial={{ translateY: 40, opacity: 0 }}
           whileInView={{ translateY: 0, opacity: 1 }}
@@ -522,7 +582,7 @@ function Dashboard() {
         >
           {mainmodel && (
             <>
-              <div className="flex flex-col w-[30%] max-md:w-auto">
+              <div className="flex flex-col w-[30%] max-md:w-auto ">
                 <div className=" w-full p-4 border shadow rounded flex flex-col gap-4">
                   <form className=" w-auto flex flex-col gap-2 ">
                     <div>
@@ -641,7 +701,10 @@ function Dashboard() {
                           className={`flex text-[#2967ff] bg-white rounded-lg  p-2 w-full font-semibold text-lg border border-[#2967ff] justify-center items-center 
                 
                 `}
-                          onClick={() => seteditloaction(false)}
+                          onClick={() => {
+                            seteditloaction(false);
+                            setmodal(false);
+                          }}
                         >
                           <div>Edit</div>
                           <div>
@@ -747,7 +810,7 @@ function Dashboard() {
                 </div>
               </div>
               {modal && (
-                <div className="w-[50%] max-md:w-auto">
+                <div className="w-[50%] max-md:w-auto h-[500px]">
                   <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -755,139 +818,87 @@ function Dashboard() {
                     className="w-full h-full"
                   >
                     <div className="h-full scrollbarmap bg-white rounded-lg shadow overflow-auto flex flex-col items-center  ">
-                      {userSelect.map((item, index) => (
+                      {isLoading ? (
+                        <div className="flex justify-center items-center h-full">
+                          <div className="loader ease-linear rounded-full border-8 border-t-8 border-[#2967ff] h-20 w-20"></div>
+                        </div>
+                      ) : (
                         <>
-                          <button
-                            className="w-full flex justify-between items-center border-b p-4 hover:bg-gray-50  transition-all ease-in-out  duration-200 cursor-pointer focus:bg-gray-100 focus:scale-100 "
-                            key={index}
-                            onClick={() => handleAddData(item)}
-                          >
-                            <div className="flex w-auto p-1 gap-4">
-                              <div className="w-1/2">
-                                <Image
-                                  src={vehiclephoto[String(item.vehicle_type)]}
-                                  alt="image"
-                                ></Image>
-                              </div>
-                              <div className="flex flex-col justify-center items-start w-1/2">
-                                <div className=" text-xl font-bold">
-                                  {item.vehicle_type}
-                                </div>
-                                <div className="text-xs flex gap-1 items-center">
-                                  <div className="font-medium text-gray-400 ">
-                                    {"Max Weigth:"}
+                          {userSelect.map((item, index) => (
+                            <>
+                              <button
+                                className="w-full flex justify-between items-center border-b p-4 hover:bg-gray-50  transition-all ease-in-out  duration-200 cursor-pointer"
+                                key={index}
+                                onClick={() => handleAddData(item)}
+                              >
+                                <div className="flex w-auto p-1 gap-4">
+                                  <div className="w-1/2">
+                                    <Image
+                                      src={
+                                        vehiclephoto[String(item.vehicle_type)]
+                                      }
+                                      alt="image"
+                                    ></Image>
                                   </div>
-                                  <div className="text-xs font-light flex gap-1 items-center">
-                                    {item.max_weight}
-                                    <div>
-                                      <Image
-                                        src={info_svg}
-                                        alt="info"
-                                        className="h-3 w-3"
-                                      ></Image>
+                                  <div className="flex flex-col justify-center items-start w-1/2">
+                                    <div className=" text-xl font-bold">
+                                      {item.vehicle_type}
+                                    </div>
+                                    <div className="text-xs flex gap-1 items-center">
+                                      <div className="font-medium text-gray-400 ">
+                                        {"Max Weigth:"}
+                                      </div>
+                                      <div className="text-xs font-light flex gap-1 items-center">
+                                        {item.max_weight}
+                                        <div>
+                                          <Image
+                                            src={info_svg}
+                                            alt="info"
+                                            className="h-3 w-3"
+                                          ></Image>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
 
-                            <div className="flex items-center text-sm">
-                              <div>
-                                <FaIndianRupeeSign className="text-sm" />
-                              </div>
-                              <div className="font-semibold">
-                                {item.total_amount}
-                              </div>
-                            </div>
-                          </button>
-                        </>
-                      ))}
-                      <div className="w-1/2 p-1 flex justify-center">
-                        {/* <div className="w-1/2">
-                      <div>
-                        <button
-                          onClick={() => setIsModalOpen(true)}
-                          className="bg-blue-600 text-white py-2 px-4 rounded"
-                        >
-                          Choose Payment Method
-                        </button>
-                        {isModalOpen && (
-                          <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50">
-                            <div className="bg-white w-11/12 md:w-1/3 rounded-lg shadow-lg p-6">
-                              <h2 className="text-xl font-semibold mb-4">
-                                Choose Payment Method
-                              </h2>
-                              <div className="space-y-4">
-                                {paymentType.map((item) => (
-                                  <div
-                                    key={item.id}
-                                    onClick={() => {
-                                      setPaymentTypeName(item.payment_type);
-                                      setFinalPaymentTypeId(item.id);
-                                    }}
-                                    className={`p-4 border rounded-lg cursor-pointer ${
-                                      item.payment_type === item.id
-                                        ? "border-blue-500 bg-blue-50"
-                                        : "border-gray-300"
-                                    }`}
-                                  >
-                                    {item.payment_type}
+                                <div className="flex items-center text-sm">
+                                  <div>
+                                    <FaIndianRupeeSign className="text-sm" />
                                   </div>
-                                ))}
-                              </div>
-                              <div className="mt-6 flex justify-end space-x-4">
-                                <button
-                                  onClick={() => setIsModalOpen(false)}
-                                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
-                                >
-                                  Cancel
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    handleGetEstimation();
-                                    setIsModalOpen(false);
-                                  }}
-                                  className={`py-2 px-4 font-semibold rounded ${
-                                    proceed
-                                      ? "bg-blue-600 hover:bg-blue-700 text-white"
-                                      : "bg-gray-200 text-gray-600 cursor-not-allowed"
-                                  }`}
-                                  disabled={!proceed}
-                                >
-                                  Proceed{" "}
-                                  {continue_text && `with ${continue_text}`}
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div> */}
-
-                        {/* <div className=" w-1/2"> */}
-                        <button
-                          className={`w-full border-none ${
-                            proceed ? "bg-[#2967ff]" : "bg-gray-200"
-                          } text-white p-2 font-semibold rounded-lg text-md active:scale-95 transition-all ease-in`}
-                          onClick={handleGetEstimation}
-                        >
-                          Proceed{" "}
-                          {continue_text == "" ? (
-                            <>{""}</>
-                          ) : (
-                            <>
-                              {"with"} {continue_text}
+                                  <div className="font-semibold">
+                                    {item.total_amount}
+                                  </div>
+                                </div>
+                              </button>
                             </>
-                          )}
-                        </button>
-                        {/* </div> */}
-                      </div>
+                          ))}
+                          <div className="w-1/2 p-1 flex justify-center">
+                            <button
+                              className={`w-full border-none ${
+                                proceed ? "bg-[#2967ff]" : "bg-gray-200"
+                              } text-white p-2 font-semibold rounded-lg text-md active:scale-95 transition-all ease-in`}
+                              onClick={handleGetEstimation}
+                            >
+                              Proceed{" "}
+                              {continue_text == "" ? (
+                                <>{""}</>
+                              ) : (
+                                <>
+                                  {"with"} {continue_text}
+                                </>
+                              )}
+                            </button>
+                            {/* </div> */}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </motion.div>
                 </div>
               )}
 
-              <div className="w-full flex max-md:w-full max-md:h-[450px] ">
+              <div className="w-full  flex max-md:w-full max-md:h-[450px] ">
                 {/* google maps is here */}
 
                 <GoogleMap
@@ -935,79 +946,6 @@ function Dashboard() {
           {/* this is a estimate model */}
         </motion.div>
 
-        {/* {modal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center "
-          >
-            <div className="scrollbarmap bg-white rounded-lg shadow-lg w-1/2   overflow-auto overflow-x-hidden  flex flex-col items-center max-h-[400px] ">
-              {userSelect.map((item, index) => (
-                <>
-                  <button
-                    className="w-full flex justify-between items-center border-b p-4 hover:bg-gray-50  transition-all ease-in-out  duration-200 cursor-pointer rounded-lg focus:bg-gray-100 focus:scale-100 "
-                    key={index}
-                    onClick={() => handleAddData(item)}
-                  >
-                    <div className="flex w-1/2">
-                      <div className="w-1/2">
-                        <Image
-                          src={vehiclephoto[String(item.vehicle_type)]}
-                          alt="image"
-                        ></Image>
-                      </div>
-                      <div className="flex flex-col justify-center items-start w-1/2">
-                        <div className=" text-xl font-bold">
-                          {item.vehicle_type}
-                        </div>
-                        <div className="text-xs flex gap-1 items-center">
-                          <div className="font-medium text-gray-400 ">
-                            {"Max Weigth:"}
-                          </div>
-                          <div className="text-xs font-light flex gap-1 items-center">
-                            {item.max_weight}
-                            <div>
-                              <Image
-                                src={info_svg}
-                                alt="info"
-                                className="h-3 w-3"
-                              ></Image>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center text-sm">
-                      <div>
-                        <FaIndianRupeeSign className="text-sm" />
-                      </div>
-                      <div className="font-semibold">{item.total_amount}</div>
-                    </div>
-                  </button>
-                </>
-              ))}
-              <div className="sticky bottom-4  w-11/12">
-                <button
-                  className={`w-full border-none ${
-                    proceed ? "bg-black" : "bg-gray-200"
-                  } text-white p-2 font-semibold rounded-sm text-lg active:scale-95 transition-all ease-in`}
-                  onClick={handleGetEstimation}
-                >
-                  Proceed{" "}
-                  {continue_text == "" ? (
-                    <>{""}</>
-                  ) : (
-                    <>
-                      {"with"} {continue_text}
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )} */}
         {payment && (
           <>
             <div className="w-full rounded-lg flex gap-2 p-4 max-md:flex max-md:flex-col max-md:w-auto ">
@@ -1023,14 +961,14 @@ function Dashboard() {
                   }}
                   className="flex flex-col gap-1 border rounded-lg"
                 >
-                  <div className="flex flex-wrap">
+                  <div className="flex flex-wrap items-center justify-center">
                     {paymentType.map((item) => (
                       <button
                         key={item.id}
-                        className={`border p-2 m-1 rounded-t-lg focus:outline-none focus:bg-blue-200 ${
+                        className={`flex items-center justify-center px-4 py-2 m-1 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           paymentTypeName === item.payment_type
-                            ? "bg-blue-200 border-blue-400 text-blue-800"
-                            : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                         }`}
                         onClick={() => {
                           setPaymentTypeName(item.payment_type);
@@ -1070,7 +1008,7 @@ function Dashboard() {
                           }
                         />
                         <button
-                          className=" w-1/4 bg-[#2967ff] rounded-md text-white font-semibold text-lg p-2 "
+                          className=" w-1/4 bg-[#2967ff] rounded-md text-white font-semibold text-lg p-2 max-md:text-base "
                           onClick={handleCheckCoupon}
                         >
                           {removeCoupon ? <>{"remove"}</> : <>{"Apply"}</>}
@@ -1151,18 +1089,18 @@ function Dashboard() {
                           </div>
                         </>
                       )}
-                      <div className="flex gap-2 w-full">
-                        <div className="w-1/2">
+                      <div className="flex gap-2 w-full max-md:flex-col max-md:w-full">
+                        <div className="w-1/2 max-md:w-auto">
                           <label
                             htmlFor="categories"
-                            className="text-sm font-medium mb-1"
+                            className="text-sm font-medium mb-1 max-md:text-xs max-md:font-normal"
                           >
-                            Select Categories{" "}
+                            Select Categories
                             <span className="text-red-500">*</span>
                           </label>
                           <select
                             id="categories"
-                            className="p-2 focus:outline-[#2967ff] border border-gray-400 rounded-md w-full font-medium text-black text-sm"
+                            className="p-2 focus:outline-[#2967ff] border border-gray-400 rounded-md w-full font-medium text-black text-sm max-md:text-xs"
                             onChange={(e) => handlesubcategory(e.target.value)}
                             defaultValue="select your option" // Add this line
                           >
@@ -1176,17 +1114,17 @@ function Dashboard() {
                             ))}
                           </select>
                         </div>
-                        <div className="w-1/2">
+                        <div className="w-1/2 max-md:w-auto">
                           <label
                             htmlFor="subcategories"
-                            className="text-sm font-medium mb-1"
+                            className="text-sm font-medium mb-1 max-md:text-xs max-md:font-normal"
                           >
                             Select Subcategories
                             <span className="text-red-500">*</span>
                           </label>
                           <select
                             id="subcategories"
-                            className="p-2 focus:outline-[#2967ff] border border-gray-400 rounded-md w-full font-light text-black text-sm"
+                            className="p-2 focus:outline-[#2967ff] border border-gray-400 rounded-md w-full font-medium text-black text-sm max-md:text-xs"
                             onChange={(e) =>
                               setFinalSubCategoryId(e.target.value)
                             }
@@ -1206,7 +1144,7 @@ function Dashboard() {
                       </div>
                       <div className="flex w-full ">
                         <button
-                          className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center"
+                          className="w-full bg-[#2967ff] text-white font-semibold text-lg p-2 rounded-md text-center max-md:text-base"
                           onClick={final_Book}
                         >
                           Proceed
@@ -1234,20 +1172,20 @@ function Dashboard() {
                   <p className="text-md text-gray-600 font-light max-[916px]:text-sm">
                     Check your Payment Details
                   </p>
-                  <div className="border-b border-gray-300 w-full flex justify-between items-center py-4 max-md:flex-col">
+                  <div className="border-b border-gray-300 w-full flex justify-between items-center py-4 max-md:flex-col ">
                     <div className="flex items-center gap-2 ">
                       <HiOutlineLocationMarker className="text-green-500 text-xl" />
                       <div>
                         <p className="text-sm font-semibold text-gray-700">
                           From
                         </p>
-                        <p className="text-sm text-gray-600 break-words max-md:text-clip max-md:w-14">
+                        <p className="text-sm text-gray-600 break-words max-md:text-clip max-md:w-auto">
                           {fromlocation}
                         </p>
                       </div>
                     </div>
 
-                    <div className="mx-4">
+                    <div className="mx-4 max-md:m-3">
                       <IoIosArrowRoundForward className="text-gray-400 text-2xl max-md:rotate-90 " />
                     </div>
 
@@ -1257,7 +1195,7 @@ function Dashboard() {
                         <p className="text-sm font-semibold text-gray-700">
                           To
                         </p>
-                        <p className="text-sm text-gray-600 break-words max-w-xs">
+                        <p className="text-sm text-gray-600 break-words max-md:text-clip max-md:w-auto">
                           {tolocation}
                         </p>
                       </div>
@@ -1337,23 +1275,36 @@ function Dashboard() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000000000000] flex justify-center items-center "
+            className="fixed top-0 left-0 w-full h-full max-md:overflow-hidden bg-black bg-opacity-50 z-[100] flex justify-center items-center "
           >
-            <div className="bg-white rounded-lg shadow-lg w-1/2  flex flex-col items-start justify-start p-4 gap-3">
-              <div className="text-xl font-semibold">
+            <div className="bg-white rounded-lg shadow-lg w-1/2 max-md:w-auto  flex flex-col items-start justify-start p-4 gap-3">
+              <div className="text-xl font-semibold ">
                 Are you sure you want to book?
               </div>
               <div className="w-full items-center justify-end flex gap-2 ">
-                <div className="w-2/5 flex gap-4">
+                <div className="w-2/5 max-md:w-auto flex gap-4">
                   <button
-                    className="w-1/2 bg-[#2967ff] py-1 px-2 text-lg rounded text-white hover:bg-[#2152cc]  transition ease-in duration-150"
+                    className={`w-1/2 max-md:w-auto bg-[#2967ff] py-1 px-2 text-lg rounded text-white hover:bg-[#2152cc] transition ease-in duration-150 flex items-center justify-center ${
+                      isLoading ? "opacity-75 cursor-not-allowed" : ""
+                    }`}
                     onClick={handleBook}
+                    disabled={isLoading}
                   >
-                    Ok
+                    {isLoading ? (
+                      <div className="flex items-center justify-center ">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="ml-2">Loading...</span>
+                      </div>
+                    ) : (
+                      "Confirm"
+                    )}
                   </button>
                   <button
-                    className="w-1/2 border border-black text-black py-1 px-2 text-lg rounded-md hover:border-[#2967ff]  transition ease-in duration-150 "
+                    className={`w-1/2 border border-black text-black py-1 px-2 text-lg rounded-md hover:border-[#2967ff] transition ease-in duration-150 ${
+                      isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                     onClick={() => setFinalConfirmationModal(false)}
+                    disabled={isLoading}
                   >
                     Cancel
                   </button>
@@ -1361,6 +1312,27 @@ function Dashboard() {
               </div>
             </div>
           </motion.div>
+        )}
+
+        {confirm && (
+          <>
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 grid place-items-center">
+              <div className="bg-white rounded-xl shadow-lg p-4 text-center w-[300px]">
+                <div className="mx-auto  grid place-content-center w-full">
+                  <Image
+                    src={confirmPayment}
+                    width={200}
+                    height={200}
+                    alt="Confirmation mark"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Congratulations!
+                </h3>
+                <p className="text-gray-600">Your order has been created.</p>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>

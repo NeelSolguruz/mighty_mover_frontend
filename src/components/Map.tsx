@@ -988,7 +988,7 @@ export default function Map() {
               </div>
             </motion.div>
           )}
-         
+          {}
           {payment && (
             <>
               <div className="w-full rounded-lg flex gap-2 p-4">

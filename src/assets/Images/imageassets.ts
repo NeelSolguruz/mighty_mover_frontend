@@ -111,8 +111,10 @@ import lock from "./icons/lock-alt.svg";
 import notifications_svg from "./icons/notifications_svg.svg";
 import info_svg from "./icons/info-circle.svg";
 import successAnimationGIFimage from "./animation/successAnimationGIF.gif";
+import confirmPayment from "./animation/Checkmark.gif";
 export {
   successAnimationGIFimage,
+  confirmPayment,
   info_svg,
   notifications_svg,
   check,

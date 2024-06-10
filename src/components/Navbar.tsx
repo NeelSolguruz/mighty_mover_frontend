@@ -319,7 +319,7 @@ export default function Navbar() {
           />
         </div>
       ) : (
-        // this is header code 
+        // this is header code
         <div
           className={`sticky top-0 flex shadow-md  border-2 w-full  h-16 items-center  justify-between bg-white text-zinc-900 z-10 px-2`}
         >
@@ -494,7 +494,7 @@ export default function Navbar() {
           <div className="">
             {user?.user?.email || driver?.driver?.email ? (
               <div className="flex justify-end gap-2 items-center w-full px-2">
-                <div>
+                <div className="relative">
                   <button
                     className="rounded-full hover:bg-gray-200 active:bg-gray-300 p-2"
                     onClick={handleNotification}
@@ -514,7 +514,7 @@ export default function Navbar() {
                         stiffness: 300,
                         duration: 0.3,
                       }}
-                      className="fixed border shadow-md overflow-auto max-h-96 top-[64px] w-[400px] max-[531px]:w-[300px] max-[376px]:w-[200px] right-32 max-lg:right-12 bg-white z-[1000000] "
+                      className="absolute border shadow-md overflow-auto max-h-96  w-[400px] max-md:w-auto -ml-[350px] bg-white z-[1000000] "
                     >
                       <DisplayNotifications />
                     </motion.div>
@@ -523,7 +523,7 @@ export default function Navbar() {
                   )}
                 </div>
                 <div className="flex items-center max-lg:hidden">
-                  <div className="bg-[#2967ff] text-white rounded-full h-[40px] w-[40px] flex justify-center items-center">
+                  <div className="bg-[#2967ff] text-white rounded-2xl h-[35px] w-[50px] flex justify-center items-center">
                     {user.user.user != null ? (
                       user?.user?.user?.split("")[0].toUpperCase()
                     ) : (

@@ -10,13 +10,17 @@ function RoutePermission() {
   const router = useRouter();
   const pathname = usePathname();
   const user = useAppSelector((state) => state.user.user.token);
-  const protectedRoutes = ["/Booking", "/2-wheeler", "/order-history"];
+  const protectedRoutes = [
+    "/Booking",
+    "/2-wheeler",
+    "/order-history",
+    "/orderSummary",
+  ];
 
   useLayoutEffect(() => {
     if (protectedRoutes.includes(pathname) && !user) {
       router.push("/login");
-    }
-    else if (user && !protectedRoutes.includes(pathname)) {
+    } else if (user && !protectedRoutes.includes(pathname)) {
       router.push("/Booking"); // Redirect to a default protected route or any other protected route
     }
   }, [router, user, pathname]);

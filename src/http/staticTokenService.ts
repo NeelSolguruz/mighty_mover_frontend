@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 // import { error } from "console";
 const config = {
-  baseURL: "http://192.168.5.137:3000",
+  baseURL: `${process.env.NEXT_PUBLIC_IpConfig}`,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

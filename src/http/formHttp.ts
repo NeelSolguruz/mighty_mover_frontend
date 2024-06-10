@@ -97,7 +97,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const form_http = axios.create({
-  baseURL: "http://192.168.5.137:3000",
+  baseURL: `${process.env.NEXT_PUBLIC_IpConfig}`,
   headers: {
     Accept: "application/json",
     "Content-Type": "multipart/form-data",

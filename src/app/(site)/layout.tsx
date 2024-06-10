@@ -23,22 +23,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={TitilliumWeb.className}>
-        <Navbar />
-
-        <Toaster
-          duration={2000}
-          richColors
-          position="top-right"
-          toastOptions={{
-            style: {
-              // background: "red",
-              // zIndex: 100,
-              // width:"250px",
-            },
-          }}
-        />
-        {children}
-        <Footer />
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <Toaster
+            duration={2000}
+            richColors
+            position="top-right"
+            toastOptions={{
+              style: {
+                // background: "red",
+                // zIndex: 100,
+                // width:"250px",
+              },
+            }}
+          />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
       </body>
     </html>
   );

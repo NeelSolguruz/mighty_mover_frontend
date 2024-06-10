@@ -78,6 +78,7 @@
 import { useAppSelector } from "@/redux/hooks";
 import axios, { AxiosError } from "axios";
 import { RootState, makeStore } from "./../redux/store";
+import { env } from "process";
 
 export interface ApiErrorData {
   message: string;
@@ -96,7 +97,7 @@ const generateRequestToken = (config: any) => {
 
 // Create instance of axios
 const http = axios.create({
-  baseURL: "http://192.168.5.137:3000",
+  baseURL: `${process.env.NEXT_PUBLIC_IpConfig}`,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

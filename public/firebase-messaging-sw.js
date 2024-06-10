@@ -58,3 +58,5 @@ if (messaging) {
     console.log(err);
   }
 }
+
+self.addEventListener("notificationclick", console.log);

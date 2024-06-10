@@ -15,7 +15,7 @@ import {
 export default function Footer() {
   return (
     <>
-      <div className="bg-black text-white w-full">
+      <div className="bg-black text-white w-full ">
         <div className="w-full flex flex-col items-center pt-5">
           <div className="grid grid-cols-5 max-lg:grid-cols-4 max-sm:grid-cols-2 max-sm:gap-5 w-11/12">
             <div className="items-start text-2xl font-semibold flex flex-col gap-2 max-lg:hidden">

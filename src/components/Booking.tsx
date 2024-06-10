@@ -22,7 +22,8 @@ import { useRouter } from "next/navigation";
 // import useFcmToken from "@/utils/FCM/useFcmToken";
 export default function Booking() {
   const [coupon, setcoupondata] = useState([]);
-  const [services, setServices] = useState<serviceType>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [services, setServices] = useState<serviceType[]>([]);
   const router = useRouter();
   useEffect(() => {
     fetch_coupon();
@@ -54,8 +55,10 @@ export default function Booking() {
     }
   };
   const fetch_services = async () => {
+    setIsLoading(true);
     try {
       const response = await get_all_services();
+      setIsLoading(false);
       setServices(response.data.data);
     } catch (error) {
       message_error(error);
@@ -100,35 +103,46 @@ export default function Booking() {
 
       <div className="flex justify-center">
         <div className="absolute h-56 flex justify-center bg-white top-[300px] shadow-md max-md:h-auto w-9/12 rounded-lg max-lg:static max-lg:shadow-none max-lg:mt-10 max-lg:bg-none">
-          <div className="grid grid-cols-4 max-lg:w-full max-md:grid-cols-2 max-md:gap-5 w-9/12 items-center">
-            {services.map((item, index) => (
-              <div
-                className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center cursor-pointer"
-                key={index}
-                onClick={() => handleService(item.id, item.service_type)}
-              >
-                <Image
-                  src={
-                    item?.service_type == "2 wheeler"
-                      ? bike_image
-                      : item?.service_type == "trucks"
-                      ? truck_image
-                      : item?.service_type == "all india parcel"
-                      ? all_india
-                      : item?.service_type == "packers and movers"
-                      ? packers_image
-                      : ""
-                  }
-                  alt="image"
-                  width={100}
-                  className="bg-indigo-100 rounded-lg"
-                />
-                <figcaption className="max-lg:text-sm">
-                  {item.service_type}
-                </figcaption>
+          {isLoading ? (
+            <>
+              <div className="flex flex-col justify-center items-center h-full">
+                <div className="loader ease-linear rounded-full border-8 border-t-8 border-[#2967ff] h-20 w-20"></div>
+                <p className="mt-4">Loading...</p>
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <>
+              <div className="grid grid-cols-4 max-lg:w-full max-md:grid-cols-2 max-md:gap-5 w-9/12 items-center">
+                {services.map((item, index) => (
+                  <div
+                    className="text-center transition-all hover:scale-105 font-semibold flex flex-col gap-3 items-center cursor-pointer"
+                    key={index}
+                    onClick={() => handleService(item.id, item.service_type)}
+                  >
+                    <Image
+                      src={
+                        item?.service_type == "2 wheeler"
+                          ? bike_image
+                          : item?.service_type == "trucks"
+                          ? truck_image
+                          : item?.service_type == "all india parcel"
+                          ? all_india
+                          : item?.service_type == "packers and movers"
+                          ? packers_image
+                          : ""
+                      }
+                      alt="image"
+                      width={100}
+                      className="bg-indigo-100 rounded-lg"
+                    />
+                    <figcaption className="max-lg:text-sm">
+                      {item.service_type}
+                    </figcaption>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
 

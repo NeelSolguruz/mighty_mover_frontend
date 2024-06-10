@@ -27,11 +27,14 @@ export default function DisplayNotifications() {
     setLoading(true);
     try {
       const response = await http.get("/api/v1/notifications");
-      setAllNotifications(response.data.data);
-      setLoading(false);
-      console.log(response.data.data);
+      const type = response.data.data.filter(
+        (item: any) => item.notification_type === "user"
+      );
+      setAllNotifications(type);
     } catch (error) {
       console.error("Couldn't fetch notifications", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,7 +73,7 @@ export default function DisplayNotifications() {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-[400px]">
         <h1 className="text-3xl py-2 font-bold border-b border-black w-full text-center">
           Notifications
         </h1>
